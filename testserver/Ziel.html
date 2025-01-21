@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Referer Header Zielseite</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Empfangene Header</h1>
+    <p>Diese Seite zeigt alle empfangenen HTTP-Header, einschließlich des Referer-Headers.</p>
+
+    <h2>Header-Daten:</h2>
+    <pre id="response"></pre>
+
+    <script>
+        // Wir können die Header der aktuellen Anfrage hier nicht direkt bekommen,
+        // aber wir können den Referer-Header durch JavaScript ermitteln
+        const headers = {
+            'Referer': document.referrer || 'Kein Referer'
+        };
+
+        // Zeige die Header an
+        const responseElement = document.getElementById('response');
+        responseElement.textContent = JSON.stringify(headers, null, 2);
+    </script>
+</body>
+</html>

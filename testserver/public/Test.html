@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Referer-Header</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Test der Referer-Header-Manipulation</h1>
+    <p>Drücke den Button, um eine HTTP-Anfrage mit einem Referer-Header zu senden.</p>
+    <button id="sendRequest">Anfrage senden</button>
+
+    <h2>Antwort vom Server:</h2>
+    <pre id="response"></pre>
+
+    <script>
+        // Funktion, um eine HTTP-Anfrage zu senden
+        function sendRequest() {
+            const url = 'http://localhost:3000/headers'; // URL zum Testen
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Referer': 'https://example.com/test' // Standard Referer (wird später durch das Background-Skript geändert)
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Zeige die Antwort (die Headers) in der Konsole und auf der Seite an
+                const responseElement = document.getElementById('response');
+                responseElement.textContent = JSON.stringify(data, null, 2);
+            })
+            .catch(error => {
+                console.error('Fehler bei der Anfrage:', error);
+            });
+        }
+
+        // Button-Event, um die Anfrage zu senden
+        document.getElementById('sendRequest').addEventListener('click', sendRequest);
+    </script>
+</body>
+</html>

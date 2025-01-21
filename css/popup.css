@@ -1,0 +1,120 @@
+/* Body Styling */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f7fc;
+    padding: 20px;
+    margin: 0;
+    max-width: 400px;  /* Maximale Breite für größere Displays */
+    margin: auto;
+}
+
+/* Title Styling */
+h1 {
+    color: #333;
+    text-align: center;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
+/* Styling für die Formularelemente */
+label {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 5px;
+    display: block;
+}
+
+/* Eingabefelder und Select-Boxen */
+input[type="text"],
+input[type="number"],
+select {
+    width: 100%;          /* Nimmt den maximalen Platz im Container ein */
+    padding: 8px;         /* Weniger Padding für kürzere Eingabefelder */
+    margin: 8px 0 12px;   /* Kleine Margen für eine kompakte Darstellung */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    font-size: 1rem;
+    box-sizing: border-box; /* Padding und Border zählen nicht zur Breite */
+}
+
+/* Schaltflächen */
+button {
+    width: 100%;           /* Buttons nehmen die gesamte Breite des Containers ein */
+    padding: 10px;         /* Weniger Padding für Buttons */
+    margin-top: 10px;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+button:active {
+    background-color: #388e3c;
+}
+
+/* Styling für den Clear-Button */
+#clearButton {
+    background-color: #f44336;
+}
+
+#clearButton:hover {
+    background-color: #e53935;
+}
+
+#clearButton:active {
+    background-color: #d32f2f;
+}
+
+/* Container für das Formular */
+.popup-container {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    max-width: 400px;      /* Maximale Breite für größere Displays */
+    margin: 0 auto;        /* Zentriert das Popup */
+}
+
+/* Hervorhebung, wenn ein Wert gespeichert ist */
+.highlight {
+    border: 2px solid #4CAF50;
+    background-color: #f1f8f3;
+}
+
+.highlight-0 {
+    border: 2px solid #4CAF50; /* Grün für den besten Zustand */
+    background-color: #e8f5e9;
+}
+
+.highlight-1 {
+    border: 2px solid #FFEB3B; /* Gelb für neutral */
+    background-color: #fffde7;
+}
+
+.highlight-2 {
+    border: 2px solid #FF9800; /* Orange für riskant */
+    background-color: #fff3e0;
+}
+
+.highlight-3 {
+    border: 2px solid #F44336; /* Rot für den schlechtesten Zustand */
+    background-color: #ffebee;
+}
+
+/* Styling für Formular-Gruppen */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group:last-child {
+    margin-bottom: 0;
+}

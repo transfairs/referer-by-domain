@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Referer By Domain</title>
+    <link rel="stylesheet" href="css/popup.css" />
+</head>
+<body>
+    <div class="popup-container">
+        <h1>Referer By Domain</h1>
+
+        <!-- Formular für die Eingaben -->
+        <div class="form-group">
+            <label for="domain">Domain:</label>
+            <input type="text" id="domain" placeholder="z.B. http://example.com">
+        </div>
+
+        <div class="form-group">
+            <label for="refererHeader">Wert für Referer-Header:</label>
+            <select id="refererHeader">
+                <option value="0">Kein Referer</option>
+                <option value="1">Nur Domain</option>
+                <option value="2">Voller Referer</option>
+                <option value="3">Unbeschr&auml;nkter Referer</option>
+            </select>
+        </div>
+
+        <button id="saveButton">Speichern</button>
+        <button id="clearButton" style="display: none">Speicher leeren</button>
+    </div>
+
+    <script type="module" src="js/popup.js"></script>
+</body>
+</html>
