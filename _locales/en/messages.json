@@ -1,0 +1,59 @@
+{
+  "extensionName": {
+    "message": "Referer By Domain"
+  },
+  "optionNoReferer": {
+    "message": "No Referer"
+  },
+  "optionOriginOnly": {
+    "message": "Send Origin Only"
+  },
+  "optionFullUrl": {
+    "message": "Send Full URL"
+  },
+  "optionUnlimited": {
+    "message": "Unrestricted Referer"
+  },
+  "optionsPageLink": {
+    "message": "Settings"
+  },
+  "savedStatus": {
+    "message": "Setting saved!"
+  },
+  "matchedRuleText": {
+    "message": "Matched wildcard rule: $1"
+  },
+  "currentDomainTitle": {
+    "message": "Current Domain"
+  },
+  "refererSettingTitle": {
+    "message": "Referer Setting"
+  },
+  "relatedDomainsTitle": {
+    "message": "Related Domains"
+  },
+  "optionsTitle": {
+    "message": "Referer Settings"
+  },
+  "searchPlaceholder": {
+    "message": "Search domains..."
+  },
+  "addDomainButton": {
+    "message": "+ New Domain"
+  },
+  "legendTitle": {
+    "message": "Symbol Legend"
+  },
+  "legendNoReferer": {
+    "message": "No Referer will be sent."
+  },
+  "legendOriginOnly": {
+    "message": "Only the origin will be sent."
+  },
+  "legendFullUrl": {
+    "message": "Full URL will be sent."
+  },
+  "legendUnlimited": {
+    "message": "Referer sending is unrestricted."
+  }
+}

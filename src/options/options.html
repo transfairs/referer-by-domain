@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="optionsTitle"></title>
+  <link rel="stylesheet" href="options.css">
+  <link rel="shortcut icon" href="../../icons/gear.png" />
+</head>
+<body>
+  <div class="container">
+    <h1><span data-i18n="optionsTitle"></span></h1>
+
+    <div class="controls">
+      <input type="text" id="search" placeholder="" data-placeholder-i18n="searchPlaceholder" />
+      <button id="addDomainButton"><span data-i18n="addDomainButton"></span></button>
+    </div>
+
+    <div id="domainList" class="domain-list">
+      <!-- Dynamisch eingefügte Domainkarten -->
+    </div>
+
+    <div class="legend">
+      <strong><span data-i18n="legendTitle"></span></strong><br>
+      🚫 <span data-i18n="legendNoReferer"></span><br>
+      🌍 <span data-i18n="legendOriginOnly"></span><br>
+      🔗 <span data-i18n="legendFullUrl"></span><br>
+      ♾️ <span data-i18n="legendUnlimited"></span>
+    </div>
+  </div>
+
+  <script src="options.js"></script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+{
+  "extensionName": {
+    "message": "Referer nach Domain"
+  },
+  "optionNoReferer": {
+    "message": "Kein Referer"
+  },
+  "optionOriginOnly": {
+    "message": "Nur Ursprung senden"
+  },
+  "optionFullUrl": {
+    "message": "Vollständige URL senden"
+  },
+  "optionUnlimited": {
+    "message": "Referer uneingeschränkt senden"
+  },
+  "optionsPageLink": {
+    "message": "Einstellungen"
+  },
+  "savedStatus": {
+    "message": "Einstellung gespeichert!"
+  },
+  "matchedRuleText": {
+    "message": "Wildcard-Regel erkannt: $1"
+  },
+  "currentDomainTitle": {
+    "message": "Aktuelle Domain"
+  },
+  "refererSettingTitle": {
+    "message": "Referer-Einstellung"
+  },
+  "relatedDomainsTitle": {
+    "message": "Verwandte Domains"
+  },
+  "optionsTitle": {
+    "message": "Referer-Einstellungen"
+  },
+  "searchPlaceholder": {
+    "message": "Domains durchsuchen..."
+  },
+  "addDomainButton": {
+    "message": "+ Neue Domain"
+  },
+  "legendTitle": {
+    "message": "Symbolerklärung"
+  },
+  "legendNoReferer": {
+    "message": "Es wird kein Referer gesendet."
+  },
+  "legendOriginOnly": {
+    "message": "Nur der Ursprung wird gesendet."
+  },
+  "legendFullUrl": {
+    "message": "Die vollständige URL wird gesendet."
+  },
+  "legendUnlimited": {
+    "message": "Der Referer wird ohne Einschränkung gesendet."
+  }
+}

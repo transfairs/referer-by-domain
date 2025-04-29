@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title data-i18n="extensionName"></title>
+  <link rel="stylesheet" href="popup.css" />
+  <link rel="shortcut icon" href="../../icons/gear.png" />
+</head>
+<body>
+
+  <h1 class="header-title">
+    <span data-i18n="extensionName"></span>
+  </h1>
+
+  <div class="section">
+    <div class="section-title" data-i18n="currentDomainTitle"></div>
+    <div class="input-wrapper">
+      <input type="text" id="domainInput" placeholder="e.g. example.com" />
+    </div>
+    <div class="status" id="status"></div>
+
+  </div>
+
+  <div class="section">
+    <div class="section-title" data-i18n="refererSettingTitle"></div>
+    <div class="referer-options">
+      <button id="option-0" data-mode="0">🚫 <span data-i18n="optionNoReferer"></span></button>
+      <button id="option-1" data-mode="1">🌍 <span data-i18n="optionOriginOnly"></span></button>
+      <button id="option-2" data-mode="2">🔗 <span data-i18n="optionFullUrl"></span></button>
+      <button id="option-3" data-mode="3">♾️ <span data-i18n="optionUnlimited"></span></button>
+    </div>
+  </div>
+
+  <div class="section" id="relatedDomainsSection" style="display:none;">
+    <div class="section-title" data-i18n="relatedDomainsTitle"></div>
+    <div class="related-domains" id="relatedDomainsList"></div>
+  </div>
+
+  <div class="link-options">
+    <a href="../options/options.html" target="_blank" id="optionsLink">
+      ⚙️ <span data-i18n="optionsPageLink"></span>
+    </a>
+  </div>
+
+  <script type="module" src="popup.js"></script>
+</body>
+</html>

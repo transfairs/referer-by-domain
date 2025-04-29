@@ -1,0 +1,127 @@
+body {
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  background: #f4f6f8;
+  margin: 0;
+  padding: 20px;
+}
+
+.container {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  max-width: 700px;
+  margin: auto;
+}
+
+h1 {
+  font-size: 20px;
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.controls {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  justify-content: center;
+}
+
+#search {
+  flex-grow: 1;
+  padding: 8px 12px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+#addDomainButton {
+  padding: 8px 12px;
+  background-color: #0078d7;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+#addDomainButton:hover {
+  background-color: #005ea2;
+}
+
+.domain-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.domain-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #ffffff;
+  border: 1px solid #ccc;
+  border-left: 4px solid #0078d7;
+  border-radius: 6px;
+  padding: 10px 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.domain-name {
+  flex-grow: 1;
+  font-size: 15px;
+  color: #333;
+}
+
+.mode-buttons {
+  display: flex;
+  gap: 6px;
+  margin-left: 10px;
+}
+
+.mode-button {
+  padding: 6px;
+  font-size: 16px;
+  border: 1px solid #0078d7;
+  border-radius: 6px;
+  background: #e8f1fb;
+  cursor: pointer;
+}
+
+.mode-button.selected {
+  background: #0078d7;
+  color: white;
+}
+
+.mode-button:hover {
+  background: #d0e7ff;
+}
+
+.delete-button {
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: #F44336;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.delete-button:hover {
+  color: #D32F2F;
+}
+
+.placeholder {
+  text-align: center;
+  color: #888;
+  padding: 20px;
+  font-size: 14px;
+}
+
+.legend {
+  margin-top: 30px;
+  font-size: 13px;
+  color: #666;
+  line-height: 1.6;
+  text-align: center;
+}

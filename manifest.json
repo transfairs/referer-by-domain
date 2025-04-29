@@ -1,47 +1,49 @@
 {
   "manifest_version": 3,
   "name": "Referer By Domain",
-  "description": "Set referer type per domain. The intention is to mock the behaviour of network.http.sendRefererHeader for individual domains.",
+  "description": "Set referer type per domain. Simulates network.http.sendRefererHeader behaviour for individual domains.",
   "version": "1.0",
-  "author": "Robin Trauer",
+  "author": "Transfairs",
+  "default_locale": "en",
   "icons": {
     "16": "icons/gear-16x16.png",
+    "32": "icons/gear-32x32.png",
     "48": "icons/gear-48x48.png",
     "128": "icons/gear-128x128.png"
   },
   "permissions": [
-    "webRequest",
-    "webRequestBlocking",
-    "tabs",
     "storage",
-    "activeTab"
+    "webRequest",
+    "webRequestBlocking"
   ],
-  "host_permissions": ["<all_urls>"],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "scripts": ["src/background/background.js"],
+    "type": "module"
+  },
   "action": {
-    "default_popup": "popup.html",
+    "default_popup": "src/popup/popup.html",
     "default_title": "Referer By Domain",
     "default_icon": {
       "16": "icons/gear-16x16.png",
       "32": "icons/gear-32x32.png",
-      "48": "icons/gear-48x48.png"
+      "48": "icons/gear-48x48.png",
+      "128": "icons/gear-128x128.png"
     }
   },
-  "background": {
-    "scripts": ["js/background.js"],
-    "type": "module"
-  },
   "options_ui": {
-    "page": "options.html",
+    "page": "src/options/options.html",
     "open_in_tab": true
   },
   "web_accessible_resources": [
     {
       "resources": [
-        "resources/*"
+        "icons/*",
+        "src/assets/*"
       ],
-      "matches": [
-        "<all_urls>"
-      ]
+      "matches": ["<all_urls>"]
     }
   ]
 }

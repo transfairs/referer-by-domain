@@ -1,0 +1,135 @@
+body {
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  font-size: 14px;
+  padding: 12px;
+  padding-top: 6px;
+  width: 270px;
+  background: #f4f6f8;
+  color: #222;
+  overflow-x: hidden;
+}
+
+.section {
+  background-color: #ffffff;
+  padding: 12px;
+  margin-bottom: 16px;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+
+.section-title {
+  font-weight: 600;
+  font-size: 13px;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.input-wrapper {
+  display: flex;
+  align-items: center;
+  background: #f0f2f5;
+  border-radius: 6px;
+  padding: 6px 8px;
+  border: 1px solid #ccc;
+}
+
+#domainInput {
+  width: 100%;
+  font-size: 14px;
+  padding: 6px;
+  border: none;
+  background: transparent;
+  outline: none;
+}
+
+.referer-options {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.referer-options button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px;
+  font-size: 14px;
+  background-color: #ffffff;
+  border: 1px solid #0078d7;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.referer-options button:hover {
+  background-color: #e8f1fb;
+  transform: scale(1.01);
+}
+
+.referer-options button.active {
+  background-color: #0078d7;
+  color: white;
+}
+
+.related-domains {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.related-domain-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 10px;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-left: 4px solid #0078d7;
+  border-radius: 6px;
+  font-size: 13px;
+  color: #333;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.related-domain-card.saved {
+  border-left-color: #28a745;
+  background-color: #e6f4ea;
+}
+
+.status {
+  font-size: 12px;
+  margin-top: 8px;
+  color: #28a745;
+  padding: 4px 0;
+}
+
+.link-options {
+  font-size: 12px;
+  text-align: right;
+  margin-top: 10px;
+}
+
+.link-options a {
+  text-decoration: none;
+  color: #0078d7;
+}
+
+.link-options a:hover {
+  text-decoration: underline;
+}
+
+.header-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  margin-top: 0;
+  text-align: left;
+  padding-left: 4px;
+  padding-top: 0;
+  color: #444;
+}
+
+.related-domain-card.highlight-match {
+  background-color: #d0e7ff;
+  border-left-color: #1a73e8;
+}

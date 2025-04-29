@@ -1,0 +1,38 @@
+{
+  "name": "customreferer",
+  "version": "0.1.0",
+  "type": "commonjs",
+  "description": "Referer By Domain: A Firefox extension to control the Referer header per domain.",
+  "author": "Transfairs",
+  "license": "GPL-3.0-or-later",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "start-server": "node test/testserver/server.js"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/transfairs/custom-referer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/transfairs/custom-referer/issues"
+  },
+  "homepage": "https://github.com/transfairs/custom-referer#readme",
+  "devDependencies": {
+    "@babel/core": "^7.26.10",
+    "@babel/preset-env": "^7.26.9",
+    "babel-jest": "^29.7.0",
+    "express": "^5.1.0",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "serve-favicon": "^2.5.0"
+  },
+  "dependencies": {
+    "@babel/preset-env": "^7.26.9",
+    "babel-jest": "^29.7.0",
+    "ts-jest": "^29.3.2"
+  }
+}
