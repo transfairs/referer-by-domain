@@ -88,3 +88,16 @@ export function saveRefererHeaderForDomain(domain, value) {
         debug(`Saved refererHeader for ${domain}:`, value);
     });
 }
+
+/**
+ * Parses an HTML string and returns the direct children of the <body> element.
+ * 
+ * @param {string} html - The HTML string to be parsed. This string should contain valid HTML.
+ * @returns {HTMLElement[]} An array of `HTMLElement` objects representing the direct children of the <body> element.
+ */
+export function parseHTML(html) {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(html, 'text/html');
+
+  return Array.from(doc.body.children);
+}

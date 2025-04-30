@@ -6,6 +6,7 @@
  */
 import HelpView from './HelpView.js';
 import TabView from './TabView.js';
+import { parseHTML } from '../lib/lib.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   DomainManager.init();
@@ -51,11 +52,19 @@ class DomainManager {
     });
 
     document.querySelectorAll('[data-i18n-html]').forEach(el => {
-      const key = el.dataset.i18nHtml;
-      const msg = chrome.i18n.getMessage(key);
-      if (msg) el.innerHTML = msg;
-    });
-  
+       const key = el.dataset.i18nHtml;
+       const msg = chrome.i18n.getMessage(key);
+       if (msg) {
+         el.innerHTML = '';
+   
+         const parsedNodes = parseHTML(msg);
+   
+         parsedNodes.forEach(node => {
+           el.appendChild(node);
+         });
+       }
+     });
+
     document.querySelectorAll('[data-placeholder-i18n]').forEach(elem => {
       const key = elem.getAttribute('data-placeholder-i18n');
       const message = chrome.i18n.getMessage(key);

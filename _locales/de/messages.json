@@ -20,9 +20,6 @@
   "savedStatus": {
     "message": "Einstellung gespeichert! Bitte den Tab neuladen."
   },
-  "matchedRuleText": {
-    "message": "Wildcard-Regel erkannt: $1"
-  },
   "currentDomainTitle": {
     "message": "Aktuelle Domain"
   },

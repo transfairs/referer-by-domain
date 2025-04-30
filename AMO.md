@@ -9,7 +9,7 @@ Steuern Sie den Referer-Header pro Domain. Verbesserter Datenschutz und Kompatib
 ## 🇬🇧 English
 **Referer By Domain** gives you fine-grained control over how your browser sends referer headers.
 You can:
-- disable Referers for specific domains,
+- disable referrers for specific domains,
 - send only the origin (e.g. https://example.com/),
 - send the full URL (e.g. https://example.com/path/page.html), or
 - leave Referers unrestricted.

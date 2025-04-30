@@ -20,9 +20,6 @@
   "savedStatus": {
     "message": "Setting saved! Please, reload the tab."
   },
-  "matchedRuleText": {
-    "message": "Matched wildcard rule: $1"
-  },
   "currentDomainTitle": {
     "message": "Current Domain"
   },

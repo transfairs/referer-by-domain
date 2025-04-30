@@ -36,13 +36,6 @@ export default class TabView {
       });
     });
   
-    // Replace inner HTML using i18n message keys
-    document.querySelectorAll('[data-i18n-html]').forEach(elem => {
-      const key = elem.dataset.i18nHtml;
-      const html = chrome.i18n.getMessage(key);
-      if (html) elem.innerHTML = html;
-    });
-
     // Switch to tab based on URL hash (if present)
     if (initialTab) {
       TabView.switchTab(initialTab);
