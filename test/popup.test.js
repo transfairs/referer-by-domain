@@ -56,7 +56,7 @@ test('showStatus sets and clears status message', () => {
   jest.useFakeTimers();
   PopupManager.showStatus('Saved!');
   expect(document.getElementById('status').textContent).toBe('Saved!');
-  jest.advanceTimersByTime(2000);
+  jest.advanceTimersByTime(3000);
   expect(document.getElementById('status').textContent).toBe('');
 });
 

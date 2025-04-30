@@ -5,15 +5,6 @@
 // Import the functions and classes to be tested
 import DomainManager from '../src/options/options.js';
 
-global.chrome = {
-  storage: {
-    local: {
-      get: jest.fn(),
-      set: jest.fn()
-    }
-  }
-};
-
 beforeEach(() => {
   document.body.innerHTML = `
     <input id="search" />
@@ -21,6 +12,18 @@ beforeEach(() => {
   `;
   DomainManager.domainList = document.getElementById('domainList');
   DomainManager.searchInput = document.getElementById('search');
+
+  global.chrome = {
+    storage: {
+      local: {
+        get: jest.fn(),
+        set: jest.fn()
+      },
+      i18n: {
+        getMessage: jest.fn((key) => key)
+      }
+    }
+  };
 });
 
 test('loadDomains filters and renders matching domains', async () => {
@@ -70,6 +73,8 @@ test('addDomain saves new domain with default mode', async () => {
   });
   const mockSet = jest.fn();
   chrome.storage.local.set = mockSet;
+  chrome.i18n = {};
+  chrome.i18n.getMessage = mockSet;
   global.prompt = jest.fn(() => "newdomain.com");
   DomainManager.loadDomains = jest.fn();
   await DomainManager.addDomain();

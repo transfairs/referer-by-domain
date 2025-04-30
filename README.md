@@ -1,25 +1,44 @@
 # Referer By Domain
 
-**Referer By Domain** is a Firefox extension that allows users to control the `Referer` header based on the domain.  
-It simulates the behaviour of the `network.http.sendRefererHeader` preference on a per-domain basis.
+**Referer By Domain** is a Firefox extension that allows users to control the `Referer` header on a per-domain basis.  
+It simulates the behaviour of `network.http.sendRefererHeader`, but with fine-grained control.
 
 ---
 
 ## ✨ Features
 
-- 🌐 Set different `Referer` policies depending on the visited domain.
-- 🎯 Choose between sending no referer, only the origin, or the full URL.
-- ⚡ Lightweight and privacy-focused.
+- 🌐 Set different `Referer` policies depending on the visited domain
+- 🧩 Wildcard support (e.g. `*.example.com`)
+- 🔄 Automatically detects **related domains** used by each site (e.g. APIs, CDNs)
+- 🌍 Localised in 🇬🇧 English and 🇩🇪 German
+- 📘 Built-in help section with tabbed overview
+- 🎯 Choose between no Referer, only origin, full URL, or unrestricted
+- ⚡ Lightweight and privacy-focused
 
 ---
 
-## ⚙️ Options
+## ⚙️ Referer Modes
 
-The options page allows users to configure the `sendRefererHeader` mode:
+The options page lets you configure Referer behaviour for any domain:
 
-- **0**: 🚫 Do not send a referer.
-- **1**: 🏠 Send only the origin.
-- **2**: 🌎 Send the full URL.
+| Mode | Value | Behaviour |
+|:----:|:-----:|:----------|
+| 🚫   | 0     | Do not send a Referer |
+| 🏠   | 1     | Send only the origin (e.g. `https://example.com`) |
+| 🌎   | 2     | Send the full URL |
+| ♾️   | 3     | Send Referer without restrictions |
+
+Wildcard rules (e.g. `*.example.com`) apply to all matching subdomains.
+
+---
+
+## 🔍 Related Domains
+
+When a website loads resources from other domains (like `api.example.com`),  
+those related domains are automatically detected and displayed in the popup.  
+You can configure them just like the main domain.
+
+Use this to fix login flows, media delivery, or API calls that depend on Referer headers.
 
 ---
 
@@ -32,9 +51,9 @@ npm install
 npm test
 ```
 
-### Project Test Structure
+###  Test Structure
 
-`test/*.test.js`: Unit tests for `src/*/*.js`.
+`test/*.test.js`: Unit tests for core logic (`src/*/*.js`).
 
 ### Development
 `test/testserver/`: Simple Express server for manual header testing.
@@ -49,20 +68,19 @@ Open `http://localhost:3000/Test.html` and fire your requests.
 
 ## 🚀 Future Improvements
 
-- Support complex per-domain rules (wildcards, regex).
-- Potential switch to Manifest V3 when Firefox support stabilises.
+- Support complex domain rules (wildcards inside domain name, regex).
+- Auto-reload of tabs on rule change
+- Dark Mode for all screens
 
 ---
 
 ## 🤝 Contributing
 
-We welcome contributions to improve the add-on.  
-If you find any issues or have suggestions, feel free to open an issue or submit a pull request.
+Feedback, bug reports and pull requests are welcome.
+Feel free to open an <a href="https://github.com/transfairs/referer-by-domain/issues">issue or contribute directly.
 
 ---
 
 ## 📜 License
 
-This project is open-source and licensed under the **GNU General Public License v3.0**.
-
-For more details, see the [LICENSE](LICENSE) file.
+This project is open-source and licensed under the **GNU General Public License v3.0**. See the [LICENSE](LICENSE) file for details.

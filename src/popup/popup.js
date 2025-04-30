@@ -3,6 +3,7 @@
  * @description Handles popup interactions for managing referer header settings in the browser extension UI.
  */
 
+import * as logger from '../lib/logger.js';
 import { saveRefererHeaderForDomain, domainMatchesWildcard } from '../lib/lib.js';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -41,8 +42,15 @@ class PopupManager {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       if (tabs.length === 0) return;
 
-      const url = new URL(tabs[0].url);
-      const activeDomain = url.hostname;
+      let activeDomain = "";
+      if (Array.isArray(tabs) && tabs.length > 0 && typeof tabs[0].url === "string") {
+        try {
+          const url = new URL(tabs[0].url);
+          activeDomain = url.hostname.toLowerCase();
+        } catch (e) {
+          logger.warn("Invalid URL:", tabs[0].url, e);
+        }
+      }
 
       const domainInput = document.getElementById('domainInput');
       domainInput.value = activeDomain;
@@ -51,7 +59,7 @@ class PopupManager {
       this.loadRelatedDomains(activeDomain);
 
       domainInput.addEventListener('input', () => {
-        const typedDomain = domainInput.value.trim();
+        const typedDomain = domainInput.value.trim().toLowerCase();
         if (typedDomain.length > 0) {
           this.loadDomainSettings(typedDomain);
         }
@@ -60,7 +68,7 @@ class PopupManager {
       document.querySelectorAll('.referer-options button').forEach(button => {
         button.addEventListener('click', () => {
           const mode = parseInt(button.dataset.mode, 10);
-          const domain = domainInput.value.trim();
+          const domain = domainInput.value.trim().toLowerCase();
           if (domain.length > 0) {
             saveRefererHeaderForDomain(domain, mode);
             this.showStatus(chrome.i18n.getMessage('savedStatus'));
@@ -80,6 +88,7 @@ class PopupManager {
     chrome.storage.local.get('refererHeaders', (result) => {
       const refererHeaders = result.refererHeaders || {};
       let matchedValue = null;
+      let matchedDomain = null;
 
       if (refererHeaders.hasOwnProperty(domain)) {
         matchedValue = refererHeaders[domain];
@@ -87,6 +96,7 @@ class PopupManager {
         for (const savedDomain in refererHeaders) {
           if (savedDomain.startsWith('*') && domainMatchesWildcard(domain, savedDomain)) {
             matchedValue = refererHeaders[savedDomain];
+            matchedDomain = savedDomain;
             break;
           }
         }
@@ -94,9 +104,28 @@ class PopupManager {
 
       if (matchedValue !== null) {
         this.highlightSelectedButton(matchedValue);
+        if (matchedDomain) {
+          this.showWildcardMatch(matchedDomain);
+        }
       }
     });
   }
+  
+  /**
+   * Show matched domain if it is a wildcard domain (e.g., *.example.com)
+   * @param {text} matchDomain
+   */
+  static showWildcardMatch(matchDomain) {
+    const matchInfoEl = document.getElementById('matchInfo');
+    matchInfoEl.textContent = chrome.i18n.getMessage('matchedRuleText', matchDomain);
+    matchInfoEl.style.display = 'block';
+    matchInfoEl.onclick = () => {
+      const input = document.getElementById('domainInput');
+      input.value = matchDomain;
+      this.loadDomainSettings(matchDomain);
+    };
+  }
+
 
   /**
    * Highlight the selected referer mode button.
@@ -130,20 +159,30 @@ class PopupManager {
     statusEl.textContent = message;
     setTimeout(() => {
       statusEl.textContent = '';
-    }, 2000);
+    }, 3000);
   }
+  
+  /*
+  static reloadActiveTab() {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      if (tabs.length > 0 && tabs[0].id) {
+        chrome.tabs.reload(tabs[0].id);
+      }
+    });
+  }
+  */
 
   /**
    * Load domains related to the current domain from background script.
    * @param {string} domain 
    */
   static loadRelatedDomains(domain) {
-    console.debug('[popup] Requesting related domains for:', domain);
+    logger.debug('[popup] Requesting related domains for:', domain);
     chrome.runtime.sendMessage({ type: 'getAllRelations' }, (response) => {
-      console.debug('[popup] Received response from background:', response);
+      logger.debug('[popup] Received response from background:', response);
 
       if (!response || !response.relations) {
-        console.error('[popup] No relations received.');
+        logger.error('[popup] No relations received.');
         return;
       }
 
@@ -154,7 +193,7 @@ class PopupManager {
         if (relations.hasOwnProperty(initiator)) {
           const targets = relations[initiator];
           if (targets.includes(domain)) {
-            relatedDomains.push(initiator);
+            relatedDomains.push(initiator.toLowerCase());
           }
           if (initiator === domain) {
             relatedDomains.push(...targets);
@@ -162,7 +201,7 @@ class PopupManager {
         }
       }
 
-      console.debug('[popup] Related domains found:', relatedDomains);
+      logger.debug('[popup] Related domains found:', relatedDomains);
 
       const section = document.getElementById('relatedDomainsSection');
       const list = document.getElementById('relatedDomainsList');

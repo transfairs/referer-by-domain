@@ -5,30 +5,57 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title data-i18n="optionsTitle"></title>
   <link rel="stylesheet" href="options.css">
+  <link rel="stylesheet" href="help.css">
   <link rel="shortcut icon" href="../../icons/gear.png" />
 </head>
 <body>
-  <div class="container">
-    <h1><span data-i18n="optionsTitle"></span></h1>
+  <nav class="tabbar">
+    <button data-tab="settings" class="active" data-i18n="settingsTab">⚙️ Settings</button>
+    <button data-tab="help" data-i18n="helpTab">❓ Help</button>
+  </nav>
+  <main>
+    <section id="tab-settings" class="tab-content active">
+      <div class="container">
+    
+        <div class="controls">
+          <input type="text" id="search" placeholder="" data-placeholder-i18n="searchPlaceholder" />
+          <button id="addDomainButton"><span data-i18n="addDomainButton"></span></button>
+        </div>
+    
+        <div id="domainList" class="domain-list">
+          <!-- Dynamically added domain cards -->
+        </div>
+    
+        <div class="legend">
+          <strong><span data-i18n="legendTitle"></span></strong><br>
+          🚫 <span data-i18n="legendNoReferer"></span><br>
+          🌍 <span data-i18n="legendOriginOnly"></span><br>
+          🔗 <span data-i18n="legendFullUrl"></span><br>
+          ♾️ <span data-i18n="legendUnlimited"></span>
+        </div>
+      </div>
+    </section>
 
-    <div class="controls">
-      <input type="text" id="search" placeholder="" data-placeholder-i18n="searchPlaceholder" />
-      <button id="addDomainButton"><span data-i18n="addDomainButton"></span></button>
-    </div>
-
-    <div id="domainList" class="domain-list">
-      <!-- Dynamisch eingefügte Domainkarten -->
-    </div>
-
-    <div class="legend">
-      <strong><span data-i18n="legendTitle"></span></strong><br>
-      🚫 <span data-i18n="legendNoReferer"></span><br>
-      🌍 <span data-i18n="legendOriginOnly"></span><br>
-      🔗 <span data-i18n="legendFullUrl"></span><br>
-      ♾️ <span data-i18n="legendUnlimited"></span>
-    </div>
-  </div>
-
-  <script src="options.js"></script>
+    <section id="tab-help" class="tab-content">
+      <div class="container">
+        <div class="help-subtabs">
+          <button data-tab="help_overview" data-i18n="tabOverview" class="active">🧭 Overview</button>
+          <button data-tab="help_function" data-i18n="tabFunction">⚙️ Functionality</button>
+          <button data-tab="help_usecases" data-i18n="tabUseCases">💬 Use Cases</button>
+          <button data-tab="help_priv" data-i18n="tabPrivacy">🛡️ Privacy</button>
+          <button data-tab="help_tips" data-i18n="tabTips">🔧 Tips</button>
+        </div>
+        
+        <div class="help-section">
+          <section id="help_overview" class="tab-content active" data-i18n-html="helpOverview"></section>
+          <section id="help_function" class="tab-content" data-i18n-html="helpFunction"></section>
+          <section id="help_usecases" class="tab-content" data-i18n-html="helpUseCases"></section>
+          <section id="help_priv" class="tab-content" data-i18n-html="helpPrivacy"></section>
+          <section id="help_tips" class="tab-content" data-i18n-html="helpTips"></section>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script src="options.js" type="module"></script>
 </body>
 </html>

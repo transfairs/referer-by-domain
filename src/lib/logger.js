@@ -11,13 +11,11 @@ export function debug(...args) {
 }
 
 /**
- * Outputs info messages to the console if debug mode is enabled.
+ * Outputs info messages to the console
  * @param  {...any} args - Arguments to pass to console.info.
  */
 export function info(...args) {
-    if (isDebugMode()) {
-        console.info(...args);
-    }
+    console.info(...args);
 }
 
 /**
@@ -28,4 +26,12 @@ export function warn(...args) {
     if (isDebugMode()) {
         console.warn(...args);
     }
+}
+
+/**
+ * Outputs error messages to the console
+ * @param  {...any} args - Arguments to pass to console.warn.
+ */
+export function error(...args) {
+    console.error(...args);
 }

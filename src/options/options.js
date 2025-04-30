@@ -1,11 +1,18 @@
 /**
  * @file options.js
  * @description Manage domain referer settings with interactive UI for a browser extension.
+ *
+ * @since 2025-04-28
  */
+import HelpView from './HelpView.js';
+import TabView from './TabView.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   DomainManager.init();
+  TabView.init();
+  HelpView.init();
 });
+
 
 /**
  * Class responsible for managing domain rules in the extension options page.
@@ -27,7 +34,7 @@ class DomainManager {
     this.addDomainButton = document.getElementById('addDomainButton');
 
     this.applyI18n();
-    this.addDomainButton.addEventListener('click', () => this.addDomain());
+    this.addDomainButton.addEventListener('click', () => this.addDomain(this.searchInput.value));
     this.searchInput.addEventListener('input', () => this.loadDomains());
 
     this.loadDomains();
@@ -43,6 +50,12 @@ class DomainManager {
       if (message) elem.innerText = message;
     });
 
+    document.querySelectorAll('[data-i18n-html]').forEach(el => {
+      const key = el.dataset.i18nHtml;
+      const msg = chrome.i18n.getMessage(key);
+      if (msg) el.innerHTML = msg;
+    });
+  
     document.querySelectorAll('[data-placeholder-i18n]').forEach(elem => {
       const key = elem.getAttribute('data-placeholder-i18n');
       const message = chrome.i18n.getMessage(key);
@@ -59,7 +72,7 @@ class DomainManager {
       const domains = result.refererHeaders || {};
 
       if (typeof domains !== 'object') {
-        console.error('Error: Expected refererHeaders object is missing or invalid.', domains);
+        logger.error('Error: Expected refererHeaders object is missing or invalid.', domains);
         return;
       }
 
@@ -80,7 +93,7 @@ class DomainManager {
 
       matchingDomains.forEach(([domain, mode]) => this.renderDomainCard(domain, mode));
     } catch (error) {
-      console.error('Failed to load domains:', error);
+      logger.error('Failed to load domains:', error);
     }
   }
 
@@ -143,7 +156,7 @@ class DomainManager {
       await chrome.storage.local.set({ refererHeaders: domains });
       this.loadDomains();
     } catch (error) {
-      console.error(`Failed to update domain ${domain}:`, error);
+      logger.error(`Failed to update domain ${domain}:`, error);
     }
   }
 
@@ -162,24 +175,33 @@ class DomainManager {
       await chrome.storage.local.set({ refererHeaders: domains });
       this.loadDomains();
     } catch (error) {
-      console.error(`Failed to delete domain ${domain}:`, error);
+      logger.error(`Failed to delete domain ${domain}:`, error);
     }
   }
 
   /**
    * Prompt user to add a new domain.
    */
-  static async addDomain() {
-    const newDomain = prompt('Enter new domain:');
+  static async addDomain(domain) {
+    const newDomain = prompt(chrome.i18n.getMessage("promptNewDomain"), domain);
     if (newDomain) {
+      const trimmed = newDomain.trim().toLowerCase();
+      if (trimmed.length === 0) return;
       try {
         const result = await chrome.storage.local.get('refererHeaders');
         const domains = result.refererHeaders || {};
-        domains[newDomain.trim()] = 0; // Default to "No Referer"
+        
+        if (domains.hasOwnProperty(trimmed)) {
+          alert(chrome.i18n.getMessage("domainAlreadyExists"));
+          this.addDomain(trimmed);
+          return;
+        }
+
+        domains[trimmed] = 0; // Default to "No Referer"
         await chrome.storage.local.set({ refererHeaders: domains });
         this.loadDomains();
       } catch (error) {
-        console.error('Failed to add domain:', error);
+        logger.error('Failed to add domain:', error);
       }
     }
   }

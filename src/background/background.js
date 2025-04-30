@@ -78,7 +78,7 @@ function updateActiveDomains() {
           const url = new URL(tab.url);
           activeDomains.add(url.hostname);
         } catch (error) {
-          if (isDebugMode()) console.error('Invalid tab URL', tab.url);
+          logger.error('Invalid tab URL', tab.url);
         }
       }
     });
@@ -89,9 +89,9 @@ function updateActiveDomains() {
 chrome.webRequest.onBeforeRequest.addListener(
   (details) => {
     try {
-      console.debug(`[background] In try`, details.documentUrl, details.url, (!details.documentUrl || !details.url));
+      logger.debug(`[background] In try`, details.documentUrl, details.url, (!details.documentUrl || !details.url));
       if (!details.documentUrl || !details.url) return;
-      console.debug(`[background] After first if`, (!details.documentUrl.startsWith('http') || !details.url.startsWith('http')));
+      logger.debug(`[background] After first if`, (!details.documentUrl.startsWith('http') || !details.url.startsWith('http')));
       if (!details.documentUrl.startsWith('http') || !details.url.startsWith('http')) return;
 
       const initiatorUrl = new URL(details.documentUrl);
@@ -100,7 +100,7 @@ chrome.webRequest.onBeforeRequest.addListener(
       const initiatorDomain = initiatorUrl.hostname;
       const targetDomain = targetUrl.hostname;
 
-      console.debug(`[background] Observed Request: ${initiatorDomain} → ${targetDomain}`);
+      logger.debug(`[background] Observed Request: ${initiatorDomain} → ${targetDomain}`);
 
       // Ignore same domain requests
       if (initiatorDomain === targetDomain) return;
@@ -110,10 +110,10 @@ chrome.webRequest.onBeforeRequest.addListener(
       }
       domainRelations[initiatorDomain].add(targetDomain);
 
-      console.debug(`[background] Updated domainRelations:`, JSON.parse(JSON.stringify(simplifyRelations())));
+      logger.debug(`[background] Updated domainRelations:`, JSON.parse(JSON.stringify(simplifyRelations())));
 
     } catch (error) {
-      console.error('[background] Error processing webRequest', error);
+      logger.error('[background] Error processing webRequest', error);
     }
   },
   {
@@ -134,12 +134,12 @@ function simplifyRelations() {
 
 // Provide related domains OR all relations
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  console.debug("[background] Received message:", message);
+  logger.debug("[background] Received message:", message);
 
   if (message.type === 'getRelatedDomains') {
     const mainDomain = message.domain;
     const related = domainRelations[mainDomain] ? Array.from(domainRelations[mainDomain]) : [];
-    console.debug(`[background] getRelatedDomains for "${mainDomain}":`, related);
+    logger.debug(`[background] getRelatedDomains for "${mainDomain}":`, related);
     sendResponse({ related });
   }
 
@@ -148,7 +148,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     for (const [initiator, targets] of Object.entries(domainRelations)) {
       simplifiedRelations[initiator] = Array.from(targets);
     }
-    console.debug("[background] getAllRelations result:", simplifiedRelations);
+    logger.debug("[background] getAllRelations result:", simplifiedRelations);
     sendResponse({ relations: simplifiedRelations });
   }
 });

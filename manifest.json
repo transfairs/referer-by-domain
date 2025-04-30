@@ -1,9 +1,10 @@
 {
   "manifest_version": 3,
   "name": "Referer By Domain",
-  "description": "Set referer type per domain. Simulates network.http.sendRefererHeader behaviour for individual domains.",
-  "version": "1.0",
+  "description": "Control the Referer header per domain. Improve privacy and compatibility with fine-grained rules.",
+  "version": "1.0.0",
   "author": "Transfairs",
+  "homepage_url": "https://github.com/transfairs/referer-by-domain",
   "default_locale": "en",
   "icons": {
     "16": "icons/gear-16x16.png",

@@ -18,7 +18,7 @@
     "message": "Settings"
   },
   "savedStatus": {
-    "message": "Setting saved!"
+    "message": "Setting saved! Please, reload the tab."
   },
   "matchedRuleText": {
     "message": "Matched wildcard rule: $1"
@@ -31,6 +31,9 @@
   },
   "relatedDomainsTitle": {
     "message": "Related Domains"
+  },
+  "settingsTab": {
+    "message": "⚙️ Settings"
   },
   "optionsTitle": {
     "message": "Referer Settings"
@@ -55,5 +58,37 @@
   },
   "legendUnlimited": {
     "message": "Referer sending is unrestricted."
+  },
+  "matchedRuleText": {
+    "message": "⭐ Matched wildcard rule: $1"
+  },
+  "promptNewDomain": {
+    "message": "Enter new domain:"
+  },
+  "domainAlreadyExists": {
+    "message": "This domain is already configured."
+  },
+  "helpTitle": { "message": "Help" },
+  "helpTab": { "message": "❓ Help" },
+  "tabOverview": { "message": "🧭 Overview" },
+  "tabFunction": { "message": "⚙️ Funktionality" },
+  "tabUseCases": { "message": "💬 Use Cases" },
+  "tabPrivacy": { "message": "🛡️ Privacy" },
+  "tabTech": { "message": "🧪 Technical" },
+  "tabTips": { "message": "🔧 Tips" },
+  "helpOverview": {
+    "message": "<h2>What this extension does</h2><p>This extension allows you to control the sending of <code>Referer</code> headers to websites on a per-domain basis.</p><p>This can improve privacy and solve compatibility issues with services that expect specific Referer values.</p><h2>🏠 Contact</h2><p>This project is open source and available on <a href=\"https://github.com/transfairs/referer-by-domain\" target=\"_blank\" rel=\"noopener noreferrer\">GitHub</a>.</p><div class=\"contact-box\"><a class=\"contact-item github\" href=\"https://github.com/transfairs\" target=\"_blank\" rel=\"noopener noreferrer\"><img src=\"../assets/github.svg\" alt=\"GitHub\"> GitHub</a><a class=\"contact-item linkedin\" href=\"https://www.linkedin.com/in/robin-trauer/\" target=\"_blank\" rel=\"noopener noreferrer\"><img src=\"../assets/linkedin.png\" alt=\"LinkedIn\"> LinkedIn</a><a class=\"contact-item youtube\" href=\"https://www.youtube.com/@Transfairs\" target=\"_blank\" rel=\"noopener noreferrer\"><img src=\"../assets/youtube.svg\" alt=\"YouTube\"> YouTube</a></div><p style=\"text-align: center\"><a href=\"https://www.flaticon.com/free-icons/linkedin\" title=\"linkedin icons\" target=\"_blank\">Linkedin icons created by Freepik - Flaticon</a></p>"
+  },
+  "helpFunction": {
+    "message": "<h2>How it works</h2><p>You can assign one of four Referer modes to each domain:</p><ul><li>🚫 Send no Referer</li><li>🌍 Send only the origin (e.g. <code>https://example.com</code>)</li><li>🔗 Send the full URL</li><li>♾️ Allow Referer without restriction</li></ul><p>Wildcard rules like <code>*.example.com</code> can cover all subdomains. If such a rule is already in place, it will be indicated.</p><h2>Related Domains</h2><p><strong>Related domains</strong> are automatically detected by the background script. These are domains contacted from the current page, such as:</p><ul><li>CDNs (e.g. <code>cdn.example.com</code>)</li><li>APIs (<code>api.example.com</code>)</li><li>Authentication services (<code>login.partner.com</code>)</li><li>Third-party content providers</li></ul><p>The extension identifies these by observing actual network connections.</p><h3>🧩 Why related domains are useful</h3><ul><li><b>Visibility:</b> Shows which domains a page is interacting with.</li><li><b>Convenience:</b> Immediately see which domains may require Referer settings to enable full functionality.</li><li><b>Quick access:</b> They appear as clickable suggestions in the popup.</li><li><b>Consistency:</b> Use the same Referer mode across all involved domains.</li></ul><h3>🛠 How to use related domains</h3><ol><li>Open the popup.</li><li>Review the list of \"Related Domains\".</li><li>Click on one to insert it into the input field.</li><li>Assign a Referer mode to that domain.</li></ol>"
+  },
+  "helpUseCases": {
+    "message": "<h2>General</h2><ul><li>🛡️ Prevent websites from seeing where you came from.</li><li>🔐 Enable login or download functions that depend on specific referers.</li><li>🌐 Define consistent rules for all subdomains of a service.</li></ul><h2>Login issues</h2><p>If you have disabled the referer header globally (see 🔧 Tips), some websites may block login even if the page loads fine. This often affects requests to a related domain.</p><p>In the following example, login at <code>my.example.com</code> fails unless <code>api.example.com</code> has a suitable referer mode:</p><div class=\"image-pair\"><figure><img src=\"../assets/login-fails.png\" alt=\"Login fails\" width=\"300\" /><figcaption>❌ Before - Login attempt fails</figcaption></figure><p>In the image below, the referer for <code>api.example.com</code> is set to \"🌍 Origin only\". The login fields appear:</p><figure><img src=\"../assets/login-works.png\" alt=\"Login works\" width=\"300\" /><figcaption>✅ After - Referer set for <code>api.example.com</code></figcaption></figure></div><p><code>api.example.com</code> was detected and listed as a \"Related Domain\" by the extension.</p>"
+  },
+  "helpPrivacy": {
+    "message": "<h2>Privacy</h2><ul><li>✅ All settings are stored <strong>locally</strong> in your browser.</li><li>✅ No data is transmitted or synchronised.</li><li>✅ No tracking, analytics, or remote requests involved.</li></ul>"
+  },
+  "helpTips": {
+    "message": "<h2>Fully disable default Referer</h2><p>If you want Firefox to stop sending referer headers by default, you can change the following advanced setting:</p><ol><li>Enter <code>about:config</code> in the address bar.</li><li>Search for <code>network.http.sendRefererHeader</code>.</li><li>Set the value to <code>0</code>.</li></ol><p>This extension aims to mimic this setting’s behaviour, but on a per-domain basis instead of globally.</p><p>With the referer disabled by default, this extension becomes especially valuable.</p><h2>Miscellaneous</h2><ul><li>Use <code>*.example.com</code> to cover all subdomains.</li><li>Existing rules can be edited in the settings.</li><li>Clicking on a related domain in the popup opens it for editing.</li><li>If a wildcard rule matches, it is shown and can be modified.</li></ul>"
   }
 }

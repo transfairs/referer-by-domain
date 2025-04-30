@@ -17,6 +17,7 @@
     <div class="input-wrapper">
       <input type="text" id="domainInput" placeholder="e.g. example.com" />
     </div>
+    <div id="matchInfo" class="match-info" style="display: none;"></div>
     <div class="status" id="status"></div>
 
   </div>
@@ -37,8 +38,11 @@
   </div>
 
   <div class="link-options">
-    <a href="../options/options.html" target="_blank" id="optionsLink">
-      ⚙️ <span data-i18n="optionsPageLink"></span>
+    <a class="popup-link" href="../options/options.html#help" target="_blank">
+      <span class="icon">❓</span> <span class="label" data-i18n="helpTitle">Help</span>
+    </a>
+    <a class="popup-link" href="../options/options.html" target="_blank">
+      <span class="icon">⚙️</span> <span class="label" data-i18n="optionsPageLink">Settings</span>
     </a>
   </div>
 
