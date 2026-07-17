@@ -21,17 +21,19 @@ export default class PopupManager {
     this.applyTranslations();
     this.initialisePopup();
     this.bindPopupLinks();
+    this.bindReloadButton();
   }
 
   /**
-   * Ensure the popup closes after following a Settings/Help link.
-   * Some browsers (e.g. Firefox) don't reliably close the popup on their own
-   * when a target="_blank" link is clicked, since the new tab doesn't always
-   * steal focus away from the popup window.
+   * Open Settings/Help links as tabs instead of following the anchor's
+   * target="_blank" default, which some browsers resolve to a new window
+   * rather than a tab when triggered from an extension popup.
    */
   static bindPopupLinks() {
     document.querySelectorAll('.popup-link').forEach(link => {
-      link.addEventListener('click', () => {
+      link.addEventListener('click', (event) => {
+        event.preventDefault();
+        chrome.tabs.create({ url: link.href });
         window.close();
       });
     });
@@ -66,19 +68,13 @@ export default class PopupManager {
           logger.warn("Invalid URL:", tabs[0].url, e);
         }
       }
+      this.activeTabId = tabs[0].id;
 
       const domainInput = document.getElementById('domainInput');
       domainInput.value = activeDomain;
 
       this.loadDomainSettings(activeDomain);
       this.loadRelatedDomains(activeDomain);
-
-      domainInput.addEventListener('input', () => {
-        const typedDomain = domainInput.value.trim().toLowerCase();
-        if (typedDomain.length > 0) {
-          this.loadDomainSettings(typedDomain);
-        }
-      });
 
       document.querySelectorAll('.referer-options button').forEach(button => {
         button.addEventListener('click', () => {
@@ -88,6 +84,7 @@ export default class PopupManager {
             saveRefererHeaderForDomain(domain, mode);
             this.showStatus(chrome.i18n.getMessage('savedStatus'));
             this.highlightSelectedButton(mode);
+            this.toggleReloadButton(domain === activeDomain);
           }
         });
       });
@@ -138,6 +135,9 @@ export default class PopupManager {
       const input = document.getElementById('domainInput');
       input.value = matchDomain;
       this.loadDomainSettings(matchDomain);
+      // A wildcard pattern is never the active tab's exact domain, so
+      // reloading it wouldn't apply to what's currently selected.
+      this.toggleReloadButton(false);
     };
   }
 
@@ -176,16 +176,33 @@ export default class PopupManager {
       statusEl.textContent = '';
     }, 3000);
   }
-  
-  /*
-  static reloadActiveTab() {
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      if (tabs.length > 0 && tabs[0].id) {
-        chrome.tabs.reload(tabs[0].id);
-      }
-    });
+
+  /**
+   * Show or hide the "reload tab" button, offered only when the setting
+   * just saved applies to the currently open tab's domain.
+   * @param {boolean} show
+   */
+  static toggleReloadButton(show) {
+    const reloadButton = document.getElementById('reloadTabButton');
+    reloadButton.style.display = show ? 'inline-block' : 'none';
   }
-  */
+
+  /**
+   * Wire up the reload-tab button shown after saving a setting.
+   */
+  static bindReloadButton() {
+    document.getElementById('reloadTabButton').addEventListener('click', () => this.reloadActiveTab());
+  }
+
+  /**
+   * Reload the tab that was active when the popup opened, then close the popup.
+   */
+  static reloadActiveTab() {
+    if (this.activeTabId != null) {
+      chrome.tabs.reload(this.activeTabId);
+    }
+    window.close();
+  }
 
   /**
    * Load domains related to the current domain from background script.
@@ -222,48 +239,63 @@ export default class PopupManager {
       const list = document.getElementById('relatedDomainsList');
       list.innerHTML = '';
 
-      if (relatedDomains.length > 0) {
-        chrome.storage.local.get('refererHeaders', (result) => {
-          const refererHeaders = result.refererHeaders || {};
-
-          relatedDomains.forEach(d => {
-            const card = document.createElement('div');
-            card.className = 'related-domain-card';
-
-            const domainName = document.createElement('div');
-            domainName.style.fontSize = '12px';
-            domainName.style.fontWeight = 'bold';
-
-            if (refererHeaders.hasOwnProperty(d)) {
-              domainName.textContent = `${d}`;
-              card.classList.add('saved');
-            } else {
-              domainName.textContent = d;
-            }
-
-            const info = document.createElement('div');
-            info.className = 'related-domain-info';
-            info.textContent = '🔍';
-
-            card.appendChild(domainName);
-            card.appendChild(info);
-
-            card.addEventListener('click', () => {
-              document.getElementById('domainInput').value = d;
-              PopupManager.loadDomainSettings(d);
-
-              document.querySelectorAll('.related-domain-card').forEach(c => c.classList.remove('highlight-match'));
-              card.classList.add('highlight-match');
-            });
-
-            list.appendChild(card);
-          });
-        });
-
+      if (relatedDomains.length === 0) {
+        // No open tabs / invalid URL: nothing meaningful to show.
+        if (!domain) {
+          section.style.display = 'none';
+          return;
+        }
+        // Related domains are only known once the extension has observed
+        // this page's requests; explain that instead of silently hiding.
+        const empty = document.createElement('div');
+        empty.className = 'related-domains-empty';
+        empty.textContent = chrome.i18n.getMessage('noRelatedDomains');
+        list.appendChild(empty);
         section.style.display = 'block';
-      } else {
-        section.style.display = 'none';
+        return;
       }
+
+      chrome.storage.local.get('refererHeaders', (result) => {
+        const refererHeaders = result.refererHeaders || {};
+
+        relatedDomains.forEach(d => {
+          const card = document.createElement('div');
+          card.className = 'related-domain-card';
+
+          const domainName = document.createElement('div');
+          domainName.style.fontSize = '12px';
+          domainName.style.fontWeight = 'bold';
+
+          if (refererHeaders.hasOwnProperty(d)) {
+            domainName.textContent = `${d}`;
+            card.classList.add('saved');
+          } else {
+            domainName.textContent = d;
+          }
+
+          const info = document.createElement('div');
+          info.className = 'related-domain-info';
+          info.textContent = '🔍';
+
+          card.appendChild(domainName);
+          card.appendChild(info);
+
+          card.addEventListener('click', () => {
+            document.getElementById('domainInput').value = d;
+            PopupManager.loadDomainSettings(d);
+            // Related domains are always distinct from the domain they were
+            // looked up for, so this is never the active tab's own domain.
+            PopupManager.toggleReloadButton(false);
+
+            document.querySelectorAll('.related-domain-card').forEach(c => c.classList.remove('highlight-match'));
+            card.classList.add('highlight-match');
+          });
+
+          list.appendChild(card);
+        });
+      });
+
+      section.style.display = 'block';
     });
   }
 }

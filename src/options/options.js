@@ -21,10 +21,10 @@ document.addEventListener('DOMContentLoaded', () => {
  */
 export default class DomainManager {
   static refererModes = [
-    { mode: 0, label: "🚫" }, // No Referer
-    { mode: 1, label: "🌍" }, // Origin
-    { mode: 2, label: "🔗" }, // Unsafe URL
-    { mode: 3, label: "♾️" }  // Always
+    { mode: 0, label: "🚫", titleKey: "legendNoReferer" },   // No Referer
+    { mode: 1, label: "🌍", titleKey: "legendOriginOnly" },  // Origin
+    { mode: 2, label: "🔗", titleKey: "legendFullUrl" },     // Unsafe URL
+    { mode: 3, label: "♾️", titleKey: "legendUnlimited" }    // Always
   ];
 
   /**
@@ -124,23 +124,32 @@ export default class DomainManager {
 
     const modeButtons = document.createElement('div');
     modeButtons.className = 'mode-buttons';
-    this.refererModes.forEach(({ mode: modeValue, label }) => {
+    this.refererModes.forEach(({ mode: modeValue, label, titleKey }) => {
       const button = document.createElement('button');
       button.textContent = label;
       button.className = 'mode-button';
+      button.title = chrome.i18n.getMessage(titleKey);
       if (modeValue === mode) button.classList.add('selected');
 
       button.addEventListener('click', () => this.updateDomainMode(domain, modeValue));
       modeButtons.appendChild(button);
     });
 
+    const editButton = document.createElement('button');
+    editButton.textContent = '✏️';
+    editButton.className = 'edit-button';
+    editButton.title = chrome.i18n.getMessage('editDomainButton');
+    editButton.addEventListener('click', () => this.editDomain(domain));
+
     const deleteButton = document.createElement('button');
     deleteButton.textContent = '🗑️';
     deleteButton.className = 'delete-button';
+    deleteButton.title = chrome.i18n.getMessage('deleteDomainButton');
     deleteButton.addEventListener('click', () => this.deleteDomain(domain));
 
     card.appendChild(domainName);
     card.appendChild(modeButtons);
+    card.appendChild(editButton);
     card.appendChild(deleteButton);
 
     this.domainList.appendChild(card);
@@ -186,6 +195,36 @@ export default class DomainManager {
       this.loadDomains();
     } catch (error) {
       logger.error(`Failed to delete domain ${domain}:`, error);
+    }
+  }
+
+  /**
+   * Prompt user to rename an existing domain, keeping its referer mode.
+   * @param {string} domain
+   */
+  static async editDomain(domain) {
+    const newDomain = prompt(chrome.i18n.getMessage("promptEditDomain"), domain);
+    if (newDomain === null) return;
+
+    const trimmed = newDomain.trim().toLowerCase();
+    if (trimmed.length === 0 || trimmed === domain) return;
+
+    try {
+      const result = await chrome.storage.local.get('refererHeaders');
+      const domains = result.refererHeaders || {};
+
+      if (domains.hasOwnProperty(trimmed)) {
+        alert(chrome.i18n.getMessage("domainAlreadyExists"));
+        this.editDomain(domain);
+        return;
+      }
+
+      domains[trimmed] = domains[domain];
+      delete domains[domain];
+      await chrome.storage.local.set({ refererHeaders: domains });
+      this.loadDomains();
+    } catch (error) {
+      logger.error(`Failed to rename domain ${domain}:`, error);
     }
   }
 

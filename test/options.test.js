@@ -127,6 +127,10 @@ test('renderDomainCard applies the fade-in animation and wires up mode/delete bu
   const deleteSpy = jest.spyOn(DomainManager, 'deleteDomain').mockImplementation(() => {});
   card.querySelector('.delete-button').click();
   expect(deleteSpy).toHaveBeenCalledWith('example.com');
+
+  const editSpy = jest.spyOn(DomainManager, 'editDomain').mockImplementation(() => {});
+  card.querySelector('.edit-button').click();
+  expect(editSpy).toHaveBeenCalledWith('example.com');
 });
 
 test('updateDomainMode updates storage and reloads list', async () => {
@@ -266,6 +270,92 @@ test('addDomain logs an error when storage fails', async () => {
   chrome.storage.local.get.mockRejectedValue(new Error('fail'));
   await DomainManager.addDomain('');
   expect(spy).toHaveBeenCalledWith('Failed to add domain:', expect.any(Error));
+});
+
+describe('editDomain()', () => {
+  test('does nothing when the prompt is cancelled', async () => {
+    global.prompt = jest.fn(() => null);
+    const mockSet = jest.fn();
+    chrome.storage.local.set = mockSet;
+    await DomainManager.editDomain('example.com');
+    expect(mockSet).not.toHaveBeenCalled();
+    expect(chrome.storage.local.get).not.toHaveBeenCalled();
+  });
+
+  test('does nothing when the trimmed input is empty', async () => {
+    global.prompt = jest.fn(() => '   ');
+    const mockSet = jest.fn();
+    chrome.storage.local.set = mockSet;
+    await DomainManager.editDomain('example.com');
+    expect(mockSet).not.toHaveBeenCalled();
+    expect(chrome.storage.local.get).not.toHaveBeenCalled();
+  });
+
+  test('does nothing when the new name is unchanged after trimming/lowercasing', async () => {
+    global.prompt = jest.fn(() => '  Example.com  ');
+    const mockSet = jest.fn();
+    chrome.storage.local.set = mockSet;
+    await DomainManager.editDomain('example.com');
+    expect(mockSet).not.toHaveBeenCalled();
+    expect(chrome.storage.local.get).not.toHaveBeenCalled();
+  });
+
+  test('renames a domain, keeping its mode, and reloads the list', async () => {
+    chrome.storage.local.get.mockResolvedValue({
+      refererHeaders: { 'old.com': 2, 'other.com': 0 }
+    });
+    const mockSet = jest.fn();
+    chrome.storage.local.set = mockSet;
+    global.prompt = jest.fn(() => 'new.com');
+    jest.spyOn(DomainManager, "loadDomains").mockImplementation(() => {});
+
+    await DomainManager.editDomain('old.com');
+
+    expect(mockSet).toHaveBeenCalledWith({
+      refererHeaders: { 'other.com': 0, 'new.com': 2 }
+    });
+    expect(DomainManager.loadDomains).toHaveBeenCalled();
+  });
+
+  test('defaults to an empty map when nothing is stored', async () => {
+    chrome.storage.local.get.mockResolvedValue({});
+    const mockSet = jest.fn();
+    chrome.storage.local.set = mockSet;
+    global.prompt = jest.fn(() => 'new.com');
+    jest.spyOn(DomainManager, "loadDomains").mockImplementation(() => {});
+
+    await DomainManager.editDomain('old.com');
+
+    expect(mockSet).toHaveBeenCalledWith({
+      refererHeaders: { 'new.com': undefined }
+    });
+  });
+
+  test('alerts and re-prompts when the new name already exists', async () => {
+    chrome.storage.local.get.mockResolvedValue({
+      refererHeaders: { 'old.com': 1, 'existing.com': 0 }
+    });
+    global.alert = jest.fn();
+    global.prompt = jest.fn()
+      .mockReturnValueOnce('existing.com')
+      .mockReturnValueOnce(null);
+    const mockSet = jest.fn();
+    chrome.storage.local.set = mockSet;
+
+    await DomainManager.editDomain('old.com');
+
+    expect(global.alert).toHaveBeenCalledWith('domainAlreadyExists');
+    expect(global.prompt).toHaveBeenCalledTimes(2);
+    expect(mockSet).not.toHaveBeenCalled();
+  });
+
+  test('logs an error when storage fails', async () => {
+    const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    global.prompt = jest.fn(() => 'new.com');
+    chrome.storage.local.get.mockRejectedValue(new Error('fail'));
+    await DomainManager.editDomain('old.com');
+    expect(spy).toHaveBeenCalledWith('Failed to rename domain old.com:', expect.any(Error));
+  });
 });
 
 describe('applyI18n()', () => {

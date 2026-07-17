@@ -103,6 +103,19 @@ h1 {
   background: #d0e7ff;
 }
 
+.edit-button {
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: #0078d7;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.edit-button:hover {
+  color: #005ea2;
+}
+
 .delete-button {
   background: none;
   border: none;
@@ -211,6 +224,7 @@ h1 {
 /* Larger touch targets on touchscreens (e.g. Firefox for Android) */
 @media (pointer: coarse) {
   .mode-button,
+  .edit-button,
   .delete-button,
   #addDomainButton,
   .tabbar button,

@@ -16,10 +16,13 @@
   <div class="section">
     <div class="section-title" data-i18n="currentDomainTitle"></div>
     <div class="input-wrapper">
-      <input type="text" id="domainInput" placeholder="e.g. example.com" />
+      <input type="text" id="domainInput" placeholder="e.g. example.com" readonly />
     </div>
     <div id="matchInfo" class="match-info" style="display: none;"></div>
-    <div class="status" id="status"></div>
+    <div class="status-row">
+      <div class="status" id="status"></div>
+      <button id="reloadTabButton" class="reload-button" style="display: none;" data-i18n="reloadTabButton"></button>
+    </div>
 
   </div>
 

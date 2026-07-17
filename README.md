@@ -69,7 +69,6 @@ Open `http://localhost:3000/Test.html` and fire your requests.
 ## 🚀 Future Improvements
 
 - Support complex domain rules (wildcards inside domain name, regex).
-- Auto-reload of tabs on rule change
 - Dark Mode for all screens
 
 ---

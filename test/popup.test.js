@@ -7,8 +7,9 @@ import * as logger from '../src/lib/logger.js';
 
 function setupDom() {
   document.body.innerHTML = `
-    <input id="domainInput" />
+    <input id="domainInput" readonly />
     <div id="matchInfo" style="display: none;"></div>
+    <button id="reloadTabButton" style="display: none;"></button>
     <div class="referer-options">
       <button data-mode="0"></button>
       <button data-mode="1"></button>
@@ -36,7 +37,9 @@ beforeEach(() => {
       }
     },
     tabs: {
-      query: jest.fn()
+      query: jest.fn(),
+      create: jest.fn(),
+      reload: jest.fn()
     },
     runtime: {
       sendMessage: jest.fn()
@@ -122,17 +125,19 @@ describe('loadDomainSettings()', () => {
     expect(() => PopupManager.loadDomainSettings('unknown.com')).not.toThrow();
   });
 
-  test('clicking the wildcard match info re-runs loadDomainSettings for the matched domain', () => {
+  test('clicking the wildcard match info re-runs loadDomainSettings for the matched domain and hides the reload button', () => {
     chrome.storage.local.get.mockImplementation((key, callback) => {
       callback({ refererHeaders: { '*.example.com': 2 } });
     });
     PopupManager.loadDomainSettings('sub.example.com');
+    PopupManager.toggleReloadButton(true);
 
     const loadSpy = jest.spyOn(PopupManager, 'loadDomainSettings').mockImplementation(() => {});
     document.getElementById('matchInfo').onclick();
 
     expect(document.getElementById('domainInput').value).toBe('*.example.com');
     expect(loadSpy).toHaveBeenCalledWith('*.example.com');
+    expect(document.getElementById('reloadTabButton').style.display).toBe('none');
   });
 });
 
@@ -195,26 +200,6 @@ describe('initialisePopup()', () => {
     expect(document.getElementById('domainInput').value).toBe('');
   });
 
-  test('typing a domain triggers loadDomainSettings only when non-empty', () => {
-    chrome.tabs.query.mockImplementation((opts, callback) => callback([{ url: 'https://example.com/' }]));
-    chrome.storage.local.get.mockImplementation((key, callback) => callback({ refererHeaders: {} }));
-    chrome.runtime.sendMessage.mockImplementation((msg, callback) => callback({ relations: {} }));
-
-    PopupManager.initialisePopup();
-
-    const loadSpy = jest.spyOn(PopupManager, 'loadDomainSettings').mockImplementation(() => {});
-    const domainInput = document.getElementById('domainInput');
-
-    domainInput.value = '  other.com  ';
-    domainInput.dispatchEvent(new Event('input'));
-    expect(loadSpy).toHaveBeenCalledWith('other.com');
-
-    loadSpy.mockClear();
-    domainInput.value = '   ';
-    domainInput.dispatchEvent(new Event('input'));
-    expect(loadSpy).not.toHaveBeenCalled();
-  });
-
   test('clicking a referer option saves the setting only when a domain is present', () => {
     chrome.tabs.query.mockImplementation((opts, callback) => callback([{ url: 'https://example.com/' }]));
     chrome.storage.local.get.mockImplementation((key, callback) => callback({ refererHeaders: {} }));
@@ -233,11 +218,80 @@ describe('initialisePopup()', () => {
     });
     expect(document.getElementById('status').textContent).toBe('savedStatus');
     expect(buttons[1].classList.contains('active')).toBe(true);
+    // 'clicked.com' isn't the active tab's domain ('example.com'), so reloading it wouldn't do anything.
+    expect(document.getElementById('reloadTabButton').style.display).toBe('none');
 
     chrome.storage.local.set.mockClear();
     domainInput.value = '   ';
     buttons[2].click();
     expect(chrome.storage.local.set).not.toHaveBeenCalled();
+  });
+
+  test('offers to reload the tab when the saved domain matches the active tab', () => {
+    chrome.tabs.query.mockImplementation((opts, callback) => callback([{ id: 7, url: 'https://example.com/' }]));
+    chrome.storage.local.get.mockImplementation((key, callback) => callback({ refererHeaders: {} }));
+    chrome.storage.local.set = jest.fn();
+    chrome.runtime.sendMessage.mockImplementation((msg, callback) => callback({ relations: {} }));
+
+    PopupManager.initialisePopup();
+
+    const domainInput = document.getElementById('domainInput');
+    const buttons = document.querySelectorAll('.referer-options button');
+
+    domainInput.value = 'example.com';
+    buttons[0].click();
+
+    expect(document.getElementById('reloadTabButton').style.display).toBe('inline-block');
+  });
+});
+
+describe('showStatus()', () => {
+  test('leaves the reload button visible once the status message clears', () => {
+    // The reload button is a deliberate action the user may need a moment to
+    // reach; it shouldn't vanish on the same short timer as the status text.
+    jest.useFakeTimers();
+    PopupManager.toggleReloadButton(true);
+    PopupManager.showStatus('Saved!');
+    jest.advanceTimersByTime(3000);
+    expect(document.getElementById('status').textContent).toBe('');
+    expect(document.getElementById('reloadTabButton').style.display).toBe('inline-block');
+    jest.useRealTimers();
+  });
+});
+
+describe('toggleReloadButton()', () => {
+  test('shows and hides the reload button', () => {
+    PopupManager.toggleReloadButton(true);
+    expect(document.getElementById('reloadTabButton').style.display).toBe('inline-block');
+    PopupManager.toggleReloadButton(false);
+    expect(document.getElementById('reloadTabButton').style.display).toBe('none');
+  });
+});
+
+describe('bindReloadButton()', () => {
+  test('wires the reload button to reloadActiveTab', () => {
+    const reloadSpy = jest.spyOn(PopupManager, 'reloadActiveTab').mockImplementation(() => {});
+    PopupManager.bindReloadButton();
+    document.getElementById('reloadTabButton').click();
+    expect(reloadSpy).toHaveBeenCalled();
+  });
+});
+
+describe('reloadActiveTab()', () => {
+  test('reloads the active tab and closes the popup', () => {
+    window.close = jest.fn();
+    PopupManager.activeTabId = 42;
+    PopupManager.reloadActiveTab();
+    expect(chrome.tabs.reload).toHaveBeenCalledWith(42);
+    expect(window.close).toHaveBeenCalled();
+  });
+
+  test('closes the popup without reloading when there is no active tab id', () => {
+    window.close = jest.fn();
+    PopupManager.activeTabId = null;
+    PopupManager.reloadActiveTab();
+    expect(chrome.tabs.reload).not.toHaveBeenCalled();
+    expect(window.close).toHaveBeenCalled();
   });
 });
 
@@ -252,12 +306,24 @@ describe('loadRelatedDomains()', () => {
     expect(document.getElementById('relatedDomainsList').innerHTML).toBe('');
   });
 
-  test('hides the section when there are no related domains', () => {
+  test('shows an explanatory empty state when there are no related domains yet', () => {
     chrome.runtime.sendMessage.mockImplementation((msg, callback) => callback({ relations: {} }));
 
     PopupManager.loadRelatedDomains('example.com');
 
+    expect(document.getElementById('relatedDomainsSection').style.display).toBe('block');
+    const empty = document.querySelector('.related-domains-empty');
+    expect(empty).not.toBeNull();
+    expect(empty.textContent).toBe('noRelatedDomains');
+  });
+
+  test('hides the section entirely when there is no domain to look up', () => {
+    chrome.runtime.sendMessage.mockImplementation((msg, callback) => callback({ relations: {} }));
+
+    PopupManager.loadRelatedDomains('');
+
     expect(document.getElementById('relatedDomainsSection').style.display).toBe('none');
+    expect(document.getElementById('relatedDomainsList').innerHTML).toBe('');
   });
 
   test('shows related domains from initiators pointing at this domain and from this domain as initiator', () => {
@@ -312,16 +378,18 @@ describe('loadRelatedDomains()', () => {
     // Without the hasOwnProperty guard, the inherited 'evil.com' entry
     // would match (its targets include 'example.com') and be shown.
     expect(document.querySelectorAll('.related-domain-card').length).toBe(0);
-    expect(document.getElementById('relatedDomainsSection').style.display).toBe('none');
+    expect(document.getElementById('relatedDomainsSection').style.display).toBe('block');
+    expect(document.querySelector('.related-domains-empty')).not.toBeNull();
   });
 
-  test('clicking a related domain card loads its settings and highlights it', () => {
+  test('clicking a related domain card loads its settings, hides the reload button, and highlights it', () => {
     chrome.runtime.sendMessage.mockImplementation((msg, callback) => callback({
       relations: { 'example.com': ['target-a.com'] }
     }));
     chrome.storage.local.get.mockImplementation((key, callback) => callback({ refererHeaders: {} }));
 
     PopupManager.loadRelatedDomains('example.com');
+    PopupManager.toggleReloadButton(true);
 
     const loadSpy = jest.spyOn(PopupManager, 'loadDomainSettings').mockImplementation(() => {});
     const card = document.querySelector('.related-domain-card');
@@ -330,6 +398,7 @@ describe('loadRelatedDomains()', () => {
     expect(document.getElementById('domainInput').value).toBe('target-a.com');
     expect(loadSpy).toHaveBeenCalledWith('target-a.com');
     expect(card.classList.contains('highlight-match')).toBe(true);
+    expect(document.getElementById('reloadTabButton').style.display).toBe('none');
   });
 });
 
