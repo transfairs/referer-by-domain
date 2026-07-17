@@ -504,6 +504,50 @@ describe('initLanguageSelect()', () => {
   });
 });
 
+describe('updateAiNotice()', () => {
+  test('does nothing when the notice element is not present on the page', async () => {
+    await expect(DomainManager.updateAiNotice()).resolves.toBeUndefined();
+  });
+
+  test('hides the notice when the active language is not AI-translated', async () => {
+    document.body.insertAdjacentHTML('beforeend', '<div id="aiTranslationNotice"></div><button id="aiNoticeDismiss"></button>');
+    chrome.i18n.getUILanguage = jest.fn(() => 'en-US');
+
+    await DomainManager.updateAiNotice();
+
+    expect(document.getElementById('aiTranslationNotice').hidden).toBe(true);
+  });
+
+  test('hides the notice when it was already dismissed for the active language', async () => {
+    document.body.insertAdjacentHTML('beforeend', '<div id="aiTranslationNotice"></div><button id="aiNoticeDismiss"></button>');
+    chrome.i18n.getUILanguage = jest.fn(() => 'fr-FR');
+    chrome.storage.local.get.mockResolvedValue({ dismissedAiNoticeLanguages: ['fr'] });
+
+    await DomainManager.updateAiNotice();
+
+    expect(document.getElementById('aiTranslationNotice').hidden).toBe(true);
+  });
+
+  test('shows the notice for an undismissed AI-translated language, and dismissing it persists and hides it', async () => {
+    document.body.insertAdjacentHTML('beforeend', '<div id="aiTranslationNotice"></div><button id="aiNoticeDismiss"></button>');
+    chrome.i18n.getUILanguage = jest.fn(() => 'fr-FR');
+    chrome.storage.local.get.mockResolvedValue({});
+
+    await DomainManager.updateAiNotice();
+
+    const notice = document.getElementById('aiTranslationNotice');
+    const dismissButton = document.getElementById('aiNoticeDismiss');
+    expect(notice.hidden).toBe(false);
+    expect(dismissButton.title).toBe('aiTranslatedDismiss');
+    expect(dismissButton.getAttribute('aria-label')).toBe('aiTranslatedDismiss');
+
+    await dismissButton.onclick();
+
+    expect(chrome.storage.local.set).toHaveBeenCalledWith({ dismissedAiNoticeLanguages: ['fr'] });
+    expect(notice.hidden).toBe(true);
+  });
+});
+
 describe('module bootstrap', () => {
   test('DOMContentLoaded wires up DomainManager (and TabView/HelpView) without error', async () => {
     document.body.innerHTML = `

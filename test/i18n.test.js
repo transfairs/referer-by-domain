@@ -9,6 +9,10 @@ import {
   initLanguage,
   getMessage,
   applyI18n,
+  isAiTranslated,
+  getActiveLanguage,
+  isAiNoticeDismissed,
+  dismissAiNotice,
   DEFAULT_LANGUAGE
 } from '../src/lib/i18n.js';
 import * as logger from '../src/lib/logger.js';
@@ -32,7 +36,8 @@ beforeEach(async () => {
         if (key === 'greeting') return 'Hello';
         if (key === 'withSub') return `Hi $1${Array.isArray(subs) && subs[1] ? ', $2' : ''}`;
         return '';
-      })
+      }),
+      getUILanguage: jest.fn(() => 'en-US')
     }
   };
   global.fetch = jest.fn();
@@ -202,5 +207,73 @@ describe('applyI18n()', () => {
     chrome.i18n.getMessage = jest.fn(() => 'Hello');
     applyI18n();
     expect(document.querySelector('[data-i18n="greeting"]').textContent).toBe('Hello');
+  });
+});
+
+describe('isAiTranslated()', () => {
+  test('is true for languages produced by AI translation', () => {
+    expect(isAiTranslated('fr')).toBe(true);
+    expect(isAiTranslated('ja')).toBe(true);
+  });
+
+  test('is false for native/reviewed languages and unknown codes', () => {
+    expect(isAiTranslated('en')).toBe(false);
+    expect(isAiTranslated('de')).toBe(false);
+    expect(isAiTranslated('xx')).toBe(false);
+  });
+});
+
+describe('getActiveLanguage()', () => {
+  test('returns the manual override when one is loaded', async () => {
+    fetch.mockResolvedValue({ json: () => Promise.resolve({ greeting: { message: 'Hallo' } }) });
+    await loadOverrideMessages('de');
+    expect(getActiveLanguage()).toBe('de');
+  });
+
+  test('falls back to the base subtag of the browser locale when no override is loaded', () => {
+    chrome.i18n.getUILanguage = jest.fn(() => 'fr-CA');
+    expect(getActiveLanguage()).toBe('fr');
+  });
+
+  test('falls back to "en" when the browser locale is empty', () => {
+    chrome.i18n.getUILanguage = jest.fn(() => '');
+    expect(getActiveLanguage()).toBe('en');
+  });
+});
+
+describe('isAiNoticeDismissed()', () => {
+  test('is false when nothing has been dismissed yet', async () => {
+    chrome.storage.local.get.mockResolvedValue({});
+    expect(await isAiNoticeDismissed('fr')).toBe(false);
+  });
+
+  test('is false when the stored value is not an array', async () => {
+    chrome.storage.local.get.mockResolvedValue({ dismissedAiNoticeLanguages: 'fr' });
+    expect(await isAiNoticeDismissed('fr')).toBe(false);
+  });
+
+  test('is true when the language is in the dismissed list', async () => {
+    chrome.storage.local.get.mockResolvedValue({ dismissedAiNoticeLanguages: ['de', 'fr'] });
+    expect(await isAiNoticeDismissed('fr')).toBe(true);
+    expect(await isAiNoticeDismissed('ja')).toBe(false);
+  });
+});
+
+describe('dismissAiNotice()', () => {
+  test('persists the language when nothing was previously dismissed', async () => {
+    chrome.storage.local.get.mockResolvedValue({});
+    await dismissAiNotice('fr');
+    expect(chrome.storage.local.set).toHaveBeenCalledWith({ dismissedAiNoticeLanguages: ['fr'] });
+  });
+
+  test('appends to the existing dismissed list without duplicating an already-dismissed language', async () => {
+    chrome.storage.local.get.mockResolvedValue({ dismissedAiNoticeLanguages: ['de'] });
+    await dismissAiNotice('fr');
+    expect(chrome.storage.local.set).toHaveBeenCalledWith({ dismissedAiNoticeLanguages: ['de', 'fr'] });
+
+    chrome.storage.local.set.mockClear();
+    chrome.storage.local.get.mockResolvedValue({ dismissedAiNoticeLanguages: ['de', 'fr'] });
+    await dismissAiNotice('fr');
+    expect(chrome.storage.local.set).not.toHaveBeenCalled();
   });
 });
