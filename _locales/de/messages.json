@@ -17,8 +17,17 @@
   "optionsPageLink": {
     "message": "Einstellungen"
   },
+  "importExportPageLink": {
+    "message": "Import | Export"
+  },
   "savedStatus": {
-    "message": "Einstellung gespeichert! Bitte den Tab neuladen."
+    "message": "Einstellung gespeichert! Bitte laden Sie den Tab neu."
+  },
+  "reloadTabButton": {
+    "message": "↻ Tab neu laden"
+  },
+  "noRelatedDomains": {
+    "message": "Noch keine verwandten Domains erkannt. Besuchen Sie die Seite oder laden Sie den Tab neu, um sie zu erkennen."
   },
   "currentDomainTitle": {
     "message": "Aktuelle Domain"
@@ -49,7 +58,7 @@
     "message": "Nur der Ursprung wird gesendet."
   },
   "legendFullUrl": {
-    "message": "Die vollständige URL wird gesendet."
+    "message": "Die vollständige URL wird gesendet. ⚠️ Kann sensible Daten enthalten (z. B. Tokens, Suchbegriffe)."
   },
   "legendUnlimited": {
     "message": "Der Referer wird ohne Einschränkung gesendet."
@@ -60,8 +69,47 @@
   "promptNewDomain": {
     "message": "Neue Domain hinzufügen:"
   },
+  "promptEditDomain": {
+    "message": "Domain bearbeiten:"
+  },
+  "editDomainButton": {
+    "message": "Domain bearbeiten"
+  },
+  "deleteDomainButton": {
+    "message": "Domain löschen"
+  },
   "domainAlreadyExists": {
     "message": "Diese Domain ist bereits vorhanden."
+  },
+  "importExportTab": {
+    "message": "📥 Import | Export"
+  },
+  "exportTitle": {
+    "message": "Export"
+  },
+  "exportDescription": {
+    "message": "Speichern Sie alle Domain-Regeln in einer JSON-Datei, z. B. um sie zu sichern oder in einen anderen Browser zu übertragen."
+  },
+  "exportButton": {
+    "message": "⬇️ Exportieren"
+  },
+  "importTitle": {
+    "message": "Import"
+  },
+  "importDescription": {
+    "message": "Laden Sie Domain-Regeln aus einer zuvor exportierten JSON-Datei. Importierte Regeln werden mit Ihren bestehenden zusammengeführt und überschreiben dabei Regeln für dieselbe Domain."
+  },
+  "importButton": {
+    "message": "⬆️ Importieren"
+  },
+  "importConfirm": {
+    "message": "$1 Domain-Regel(n) importieren? Bestehende Regeln für dieselben Domains werden überschrieben."
+  },
+  "importSuccess": {
+    "message": "Einstellungen erfolgreich importiert."
+  },
+  "importInvalidFile": {
+    "message": "Diese Datei konnte nicht importiert werden. Bitte wählen Sie eine gültige exportierte Einstellungsdatei."
   },
   "helpTitle": { "message": "Hilfe" },
   "helpTab": { "message": "❓ Hilfe" },
@@ -72,18 +120,87 @@
   "tabTech": { "message": "🧪 Technisches" },
   "tabTips": { "message": "🔧 Tipps" },
   "helpOverview": {
-    "message": "<h2>Was diese Erweiterung macht</h2><p>Diese Erweiterung ermöglicht es Ihnen, das Senden von <code>Referer</code>-Headern zu Webseiten pro Domain individuell zu steuern.</p><p>Dies kann den Datenschutz verbessern und Kompatibilitätsprobleme mit Diensten lösen, die spezielle Referer-Werte erwarten.</p><h2>🏠 Kontakt</h2><p>Dieses Projekt ist OpenSource und auf <a href=\"https://github.com/transfairs/referer-by-domain\" target=\"_blank\" rel=\"noopener noreferrer\">GitHub</a> erhältlich.</p><div class=\"contact-box\"><a class=\"contact-item github\" href=\"https://github.com/transfairs\" target=\"_blank\" rel=\"noopener noreferrer\"><img src=\"../assets/github.svg\" alt=\"GitHub\"> GitHub</a><a class=\"contact-item linkedin\" href=\"https://www.linkedin.com/in/robin-trauer/\" target=\"_blank\" rel=\"noopener noreferrer\"><img src=\"../assets/linkedin.png\" alt=\"LinkedIn\"> LinkedIn</a><a class=\"contact-item youtube\" href=\"https://www.youtube.com/@Transfairs\" target=\"_blank\" rel=\"noopener noreferrer\"><img src=\"../assets/youtube.svg\" alt=\"YouTube\"> YouTube</a></div><p style=\"text-align: center\"><a href=\"https://www.flaticon.com/free-icons/linkedin\" title=\"linkedin icons\" target=\"_blank\">Linkedin icons created by Freepik - Flaticon</a></p>"
+    "message": "<h2>Was diese Erweiterung macht</h2><p>Diese Erweiterung ermöglicht es Ihnen, das Senden von <code>Referer</code>-Headern zu Webseiten pro Domain individuell zu steuern.</p><p>Dies kann den Datenschutz verbessern und Kompatibilitätsprobleme mit Diensten lösen, die spezielle Referer-Werte erwarten.</p><p>Standardmäßig ist für jede Domain 🚫 Kein Referer eingestellt – diese Erweiterung unterdrückt den Referer-Header für alle besuchten Webseiten, nicht nur für die von Ihnen konfigurierten. Damit eine bestimmte Domain weiterhin einen Referer erhält, legen Sie eine Regel dafür an und wählen Sie 🌍, 🔗 oder ♾️.</p><h2>🏠 Kontakt</h2><p>Dieses Projekt ist Open Source und auf <a href=\"https://github.com/transfairs/referer-by-domain\" target=\"_blank\" rel=\"noopener noreferrer\">GitHub</a> erhältlich.</p><div class=\"contact-box\"><a class=\"contact-item github\" href=\"https://github.com/transfairs\" target=\"_blank\" rel=\"noopener noreferrer\"><img src=\"../assets/github.svg\" alt=\"GitHub\"> GitHub</a><a class=\"contact-item linkedin\" href=\"https://www.linkedin.com/in/robin-trauer/\" target=\"_blank\" rel=\"noopener noreferrer\"><img src=\"../assets/linkedin.svg\" alt=\"LinkedIn\"> LinkedIn</a><a class=\"contact-item youtube\" href=\"https://www.youtube.com/@Transfairs\" target=\"_blank\" rel=\"noopener noreferrer\"><img src=\"../assets/youtube.svg\" alt=\"YouTube\"> YouTube</a></div>"
   },
   "helpFunction": {
-    "message": "<h2>Funktionsweise</h2><p>Sie können jeder Domain einen von vier Referer-Modi zuweisen:</p><ul><li>🚫 Kein Referer senden</li><li>🌍 Nur den Ursprung senden (z. B. <code>https://beispiel.de</code>)</li><li>🔗 Die vollständige URL senden</li><li>♾️ Referer uneingeschränkt erlauben</li></ul><p>Mit Wildcard-Regeln wie <code>*.beispiel.de</code> lassen sich alle Subdomains abdecken. Wenn bereits eine Wildcard-Regel wie <code>*.beispiel.de</code> gesetzt ist, wird das ebenfalls angezeigt.</p><h2>Verwandte Domains</h2><p><strong>Verwandte Domains</strong> werden automatisch vom Hintergrundskript erkannt. Dabei handelt es sich um Domains, die von der aktuellen Seite aus kontaktiert wurden. Dazu zählen z. B.</p><ul><li>CDNs (z. B. <code>cdn.beispiel.de</code>)</li><li>APIs (<code>api.beispiel.de</code>)</li><li>Authentifizierungsdienste (<code>login.partner.com</code>)</li><li>Drittanbieter, über die Inhalte geladen werden</li></ul><p>Diese werden durch die Erweiterung automatisch erkannt, indem die tatsächlichen Netzwerkverbindungen beobachtet werden.</p><h3>🧩 Wofür sind Verwandte Domains nützlich?</h3><ul><li><b>Sichtbarkeit:</b> Sie zeigen Ihnen, mit welchen Domains eine Seite in Kontakt tritt.</li><li><b>Komfort:</b> Sie sehen sofort, welchen Domains sie potentiell einen Referer-Wert zuweisen müssen, um die Funktionalität einer Seite herzustellen.</li><li><b>Schneller Zugriff:</b> Im Popup erscheinen sie als klickbare Vorschläge.</li><li><b>Konsistenz:</b> Sie können denselben Referer-Modus für alle beteiligten Domains setzen.</li></ul><h3>🛠 So nutzen Sie Verwandte Domains</h3><ol><li>Öffnen Sie das Popup.</li><li>Prüfen Sie die Liste \"Verwandte Domains\".</li><li>Klicken Sie eine davon an, um sie in das Eingabefeld zu übernehmen.</li><li>Weisen Sie dieser Domain einen Referer-Modus zu.</li></ol>"
+    "message": "<h2>Funktionsweise</h2><p>Sie können jeder Domain einen von vier Referer-Modi zuweisen:</p><ul><li>🚫 Kein Referer senden</li><li>🌍 Nur den Ursprung senden (z. B. <code>https://beispiel.de</code>)</li><li>🔗 Die vollständige URL senden</li><li>♾️ Referer uneingeschränkt erlauben</li></ul><p>Mit Wildcard-Regeln wie <code>*.beispiel.de</code> lassen sich alle Subdomains abdecken. Falls für eine Domain bereits eine passende Wildcard-Regel besteht, wird dies angezeigt. Eine exakte Regel (z. B. <code>shop.beispiel.de</code>) hat dabei immer Vorrang vor einer passenden Wildcard-Regel.</p><h2>🗂️ Domains in den Einstellungen verwalten</h2><p>Öffnen Sie die Einstellungsseite (⚙️), um alle konfigurierten Domains an einem Ort zu sehen und zu verwalten:</p><ul><li><strong>Suche:</strong> Filtern Sie die Liste, indem Sie einen Teil des Domainnamens eingeben.</li><li><strong>➕ Hinzufügen:</strong> Klicken Sie auf \"+ Neue Domain\" und geben Sie eine Domain ein, um dafür eine Regel anzulegen (Standard: 🚫 Kein Referer).</li><li><strong>Modus-Buttons:</strong> Klicken Sie direkt auf einer Domain-Karte auf 🚫, 🌍, 🔗 oder ♾️, um den Modus zu ändern.</li><li><strong>✏️ Bearbeiten:</strong> Benennen Sie eine Domain um, ohne den zugewiesenen Modus zu verlieren.</li><li><strong>🗑️ Löschen:</strong> Entfernen Sie die Regel einer Domain (eine Bestätigung ist erforderlich).</li></ul><h2>Verwandte Domains</h2><p><strong>Verwandte Domains</strong> werden automatisch vom Hintergrundskript erkannt. Dabei handelt es sich um Domains, die von der aktuellen Seite aus kontaktiert werden. Dazu zählen z. B.</p><ul><li>CDNs (z. B. <code>cdn.beispiel.de</code>)</li><li>APIs (<code>api.beispiel.de</code>)</li><li>Authentifizierungsdienste (<code>login.partner.com</code>)</li><li>Drittanbieter, über die Inhalte geladen werden</li></ul><p>Diese werden durch die Erweiterung automatisch erkannt, indem die tatsächlichen Netzwerkverbindungen beobachtet werden.</p><h3>🧩 Wofür sind Verwandte Domains nützlich?</h3><ul><li><b>Sichtbarkeit:</b> Sie zeigen Ihnen, mit welchen Domains eine Seite in Kontakt tritt.</li><li><b>Komfort:</b> Sie sehen sofort, welchen Domains Sie potenziell einen Referer-Wert zuweisen müssen, um die Funktionalität einer Seite herzustellen.</li><li><b>Schneller Zugriff:</b> Im Popup erscheinen sie als klickbare Vorschläge.</li><li><b>Konsistenz:</b> Sie können denselben Referer-Modus für alle beteiligten Domains setzen.</li></ul><h3>🛠 So nutzen Sie Verwandte Domains</h3><ol><li>Öffnen Sie das Popup.</li><li>Prüfen Sie die Liste \"Verwandte Domains\".</li><li>Klicken Sie eine davon an, um sie in das Eingabefeld zu übernehmen.</li><li>Weisen Sie dieser Domain einen Referer-Modus zu.</li></ol>"
   },
   "helpUseCases": {
     "message": "<h2>Allgemein</h2><ul><li>🛡️ Verhindern, dass Webseiten sehen, von welcher Seite Sie kommen.</li><li>🔐 Login- oder Download-Funktionen ermöglichen, die auf bestimmten Referern basieren.</li><li>🌐 Einheitliche Regeln für alle Subdomains eines Dienstes festlegen.</li></ul><h2>Probleme beim Login</h2><p>Wenn Sie den Referer-Header global abgeschaltet haben (siehe 🔧 Tipps), lassen manche Webseiten keinen Login zu, auch wenn die Seite selbst korrekt angezeigt wird. Häufig betrifft das Anfragen an eine verwandte Domain.</p><p>Im folgenden Beispiel scheitert der Login bei <code>my.beispiel.de</code>, solange für <code>api.beispiel.de</code> kein passender Referer-Modus gesetzt wurde:</p><div class=\"image-pair\"><figure><img src=\"../assets/login-fails.png\" alt=\"Login schlägt fehl\" width=\"300\" /><figcaption>❌ Vorher - Login-Versuch scheitert</figcaption></figure><p>Im unteren Bild wurde der Referer für <code>api.beispiel.de</code> auf \"🌍 Nur Ursprung\" gesetzt. Die Anmeldefelder sind sichtbar:</p><figure><img src=\"../assets/login-works.png\" alt=\"Login funktioniert\" width=\"300\" /><figcaption>✅ Nachher - Referer für <code>api.beispiel.de</code> gesetzt</figcaption></figure></div><p><code>api.beispiel.de</code> wurde von der Erweiterung als \"Verwandte Domain\" identifiziert und aufgelistet.</p>"
   },
   "helpPrivacy": {
-    "message": "<h2>Datenschutz</h2><ul><li>✅ Alle Einstellungen werden <strong>lokal</strong> im Browser gespeichert.</li><li>✅ Es werden keine Daten übertragen oder synchronisiert.</li><li>✅ Kein Tracking, keine Analyse, keine externen Verbindungen.</li></ul>"
+    "message": "<h2>Datenschutz</h2><ul><li>✅ Alle Einstellungen werden <strong>lokal</strong> im Browser gespeichert.</li><li>✅ Es werden keine Daten übertragen oder synchronisiert.</li><li>✅ Kein Tracking, keine Analyse, keine externen Verbindungen.</li><li>✅ Die Berechtigungen <code>&lt;all_urls&gt;</code> und <code>webRequest</code> werden ausschließlich verwendet, um den Referer-Header bei Ihren Anfragen abzufangen und anzupassen — für nichts anderes.</li><li>✅ Es werden nur Domainnamen und der ihnen zugewiesene Referer-Modus gespeichert — niemals vollständige URLs, Seiteninhalte oder der Browserverlauf. Diese Daten verbleiben ausschließlich in diesem Browser, werden nicht geräteübergreifend synchronisiert und beim Deinstallieren der Erweiterung entfernt.</li><li>ℹ️ Die Funktion „Verwandte Domains“ funktioniert, indem die Hostnamen Ihrer Anfragen beobachtet und nur für die aktuelle Browser-Sitzung im Arbeitsspeicher behalten werden — nichts wird auf der Festplatte gespeichert oder irgendwohin gesendet (Details siehe 🧪 Technisches).</li><li>⚠️ Der Modus \"🔗 Vollständige URL senden\" sendet die komplette Seiten-URL – inklusive Pfad und Query-String – an die Zieldomain. Vermeiden Sie diesen Modus bei Domains, deren URL sensible Daten wie Authentifizierungs-Token, Sitzungs-IDs oder Suchbegriffe enthalten könnte; nutzen Sie stattdessen nach Möglichkeit \"🌍 Nur Ursprung senden\".</li></ul>"
+  },
+  "helpTech": {
+    "message": "<h2>🧪 Technische Hinweise</h2><h3>Regelabgleich</h3><ul><li>Eine exakte Domain-Übereinstimmung hat immer Vorrang vor einer Wildcard-Regel.</li><li>Wildcard-Regeln stimmen nur mit einem Suffix überein — <code>*.beispiel.de</code> passt auf <code>shop.beispiel.de</code>, aber nicht auf <code>beispiel.de</code> selbst.</li></ul><h3>Die Modi Ursprung und Vollständige URL benötigen eine verweisende Seite</h3><p>Die Modi 🌍 Ursprung und 🔗 Vollständige URL können nur dann einen Referer senden, wenn der Browser weiß, welche Seite die Anfrage ausgelöst hat. Bei direkter Navigation — Eingabe einer URL, Öffnen eines Lesezeichens oder eines neuen Tabs — gibt es keine verweisende Seite, weshalb unabhängig vom eingestellten Modus kein Referer gesendet wird.</p><h3>Die Erkennung Verwandter Domains ist nur vorübergehend</h3><ul><li>Die Liste der <em>erkannten Beziehungen</em> zwischen Domains wird nur im Arbeitsspeicher geführt (über den Sitzungsspeicher des Browsers) und ist <strong>nicht auf der Festplatte gespeichert</strong> – sie bleibt erhalten, wenn der Hintergrundprozess der Erweiterung beendet wird, wird aber bei jedem Neustart des Browsers zurückgesetzt.</li><li>Ihre Regeln sind davon nicht betroffen: Wenn Sie einer verwandten Domain einen Referer-Modus zuweisen, wird diese Regel ganz normal gespeichert wie bei jeder anderen Domain – nur die erkannte Beziehung selbst geht beim Neustart des Browsers verloren.</li><li>Nur Seitenaufrufe sowie XHR-/Fetch-Anfragen werden erfasst. Domains, die ausschließlich über Bilder, Schriftarten oder WebSocket-Verbindungen kontaktiert werden, erscheinen nicht in der Liste.</li><li>Pro Seite werden bis zu 100 verwandte Domains gespeichert, insgesamt werden bis zu 200 Seiten verfolgt; werden diese Grenzen erreicht, werden zuerst die ältesten Einträge entfernt.</li></ul>"
   },
   "helpTips": {
     "message": "<h2>Standard-Referer vollständig deaktivieren</h2><p>Wenn Sie möchten, dass Firefox standardmäßig keine Referer-Header mehr sendet, können Sie folgende erweiterte Einstellung ändern:</p><ol><li>Geben Sie in die Adressleiste <code>about:config</code> ein.</li><li>Suchen Sie nach dem Eintrag <code>network.http.sendRefererHeader</code>.</li><li>Setzen Sie den Wert auf <code>0</code>.</li></ol><p>Diese Erweiterung versucht, das Verhalten dieses Schlüssels zu imitieren, allerdings nicht global für alle, sondern für jede Domain individuell.</p><p>Mit standardmäßig deaktiviertem Referer wird diese Erweiterung besonders wertvoll.</p><h2>Sonstiges</h2><ul><li>Verwenden Sie <code>*.beispiel.de</code>, um alle Subdomains abzudecken.</li><li>Bestehende Regeln können in den Einstellungen angepasst werden.</li><li>Ein Klick auf eine verwandte Domain im Popup öffnet diese zur Bearbeitung.</li><li>Falls eine Wildcard-Regel zutrifft, wird dies angezeigt und kann bearbeitet werden.</li></ul>"
+  },
+  "themeToggleTitle": {
+    "message": "Design: $1 (zum Ändern klicken)"
+  },
+  "themeAuto": {
+    "message": "Automatisch"
+  },
+  "themeLight": {
+    "message": "Hell"
+  },
+  "themeDark": {
+    "message": "Dunkel"
+  },
+  "languageAuto": {
+    "message": "Systemsprache"
+  },
+  "languageSelectLabel": {
+    "message": "Sprache"
+  },
+  "modalCancel": {
+    "message": "Abbrechen"
+  },
+  "modalConfirm": {
+    "message": "OK"
+  },
+  "modalOk": {
+    "message": "OK"
+  },
+  "addDomainTitle": {
+    "message": "Domain hinzufügen"
+  },
+  "editDomainTitle": {
+    "message": "Domain bearbeiten"
+  },
+  "deleteDomainTitle": {
+    "message": "Domain löschen"
+  },
+  "confirmDeleteDomain": {
+    "message": "Möchten Sie die Domain \"$1\" wirklich löschen?"
+  },
+  "importConfirmTitle": {
+    "message": "Einstellungen importieren"
+  },
+  "noDomainsFound": {
+    "message": "Noch keine Domains konfiguriert."
+  },
+  "noDomainsHint": {
+    "message": "Fügen Sie eine Domain hinzu, um deren Referer-Header zu steuern."
+  },
+  "noDomainsSearchEmpty": {
+    "message": "Keine Domains entsprechen Ihrer Suche."
+  },
+  "footerGithub": {
+    "message": "GitHub"
+  },
+  "footerReportIssue": {
+    "message": "Problem melden"
+  },
+  "footerLicense": {
+    "message": "GPL-3.0-Lizenz"
+  },
+  "aiTranslatedNotice": {
+    "message": "Diese Übersetzung wurde von einer KI erstellt und kann Fehler enthalten."
+  },
+  "aiTranslatedDismiss": {
+    "message": "Schließen"
   }
 }

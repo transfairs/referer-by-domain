@@ -50,3 +50,21 @@ It does not transmit, track, or collect any data.
 ## 🇩🇪 German
 Alle Einstellungen werden ausschließlich lokal im Browser gespeichert.
 Es werden keine Daten übertragen, getrackt oder erfasst.
+---
+# Release Notes
+## Version 2.0.0
+### 🇬🇧 English
+- Added a light/dark/auto theme toggle, applied consistently across the popup and options pages
+- Added a language selector to override the browser's locale, with an "auto" option that follows the browser default
+- Replaced native browser dialogs with themed modals for adding, editing, deleting, and importing domains
+- Added settings import/export; detection of related domains now persists across background worker restarts
+- Added domain renaming, a popup reload button, and expanded in-extension help documentation
+- Fixed referer header handling and bounded memory usage of domain tracking
+
+### 🇩🇪 German
+- Hell-/Dunkel-/Automatikmodus hinzugefügt, einheitlich in Popup und Einstellungen
+- Sprachauswahl hinzugefügt, um die Browsersprache zu überschreiben, mit einer "automatisch"-Option, die der Standardsprache des Browsers folgt
+- Native Browser-Dialoge durch gestaltete Modals ersetzt (Hinzufügen, Bearbeiten, Löschen und Importieren von Domains)
+- Import/Export der Einstellungen hinzugefügt; die Erkennung verwandter Domains bleibt nun auch nach einem Neustart des Hintergrundprozesses erhalten
+- Umbenennen von Domains, ein Neuladen-Button im Popup und erweiterte Hilfe-Dokumentation hinzugefügt
+- Fehlerbehebung bei der Referer-Header-Verarbeitung und Begrenzung des Speicherverbrauchs der Domain-Verfolgung

@@ -4,34 +4,65 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title data-i18n="optionsTitle"></title>
+  <link rel="stylesheet" href="../assets/theme.css">
   <link rel="stylesheet" href="options.css">
   <link rel="stylesheet" href="help.css">
-  <link rel="shortcut icon" href="../../icons/gear.png" />
+  <link rel="shortcut icon" href="../../icons/logo.png" />
 </head>
 <body>
+  <div class="page-header">
+    <div class="page-title-group">
+      <img src="../../icons/logo-48x48.png" alt="" class="page-logo" width="28" height="28">
+      <div class="page-title" data-i18n="extensionName"></div>
+    </div>
+    <div class="settings-toolbar">
+      <select id="languageSelect" class="language-select" aria-label="Language"></select>
+      <button id="themeToggle" class="theme-toggle" type="button"></button>
+    </div>
+  </div>
+  <div id="aiTranslationNotice" class="ai-notice" hidden>
+    <span data-i18n="aiTranslatedNotice"></span>
+    <button id="aiNoticeDismiss" class="ai-notice-dismiss" type="button">×</button>
+  </div>
   <nav class="tabbar">
     <button data-tab="settings" class="active" data-i18n="settingsTab">⚙️ Settings</button>
+    <button data-tab="importexport" data-i18n="importExportTab">📥 Import | Export</button>
     <button data-tab="help" data-i18n="helpTab">❓ Help</button>
   </nav>
   <main>
     <section id="tab-settings" class="tab-content active">
       <div class="container">
-    
+
         <div class="controls">
           <input type="text" id="search" placeholder="" data-placeholder-i18n="searchPlaceholder" />
           <button id="addDomainButton"><span data-i18n="addDomainButton"></span></button>
         </div>
-    
+
         <div id="domainList" class="domain-list">
           <!-- Dynamically added domain cards -->
         </div>
-    
+
         <div class="legend">
           <strong><span data-i18n="legendTitle"></span></strong><br>
           🚫 <span data-i18n="legendNoReferer"></span><br>
           🌍 <span data-i18n="legendOriginOnly"></span><br>
           🔗 <span data-i18n="legendFullUrl"></span><br>
           ♾️ <span data-i18n="legendUnlimited"></span>
+        </div>
+      </div>
+    </section>
+
+    <section id="tab-importexport" class="tab-content">
+      <div class="container">
+        <div class="help-section">
+          <h2 data-i18n="exportTitle"></h2>
+          <p data-i18n="exportDescription"></p>
+          <button id="exportButton" class="secondary-button"><span data-i18n="exportButton"></span></button>
+
+          <h2 data-i18n="importTitle"></h2>
+          <p data-i18n="importDescription"></p>
+          <button id="importButton" class="secondary-button"><span data-i18n="importButton"></span></button>
+          <input type="file" id="importFileInput" accept="application/json,.json" hidden />
         </div>
       </div>
     </section>
@@ -43,19 +74,32 @@
           <button data-tab="help_function" data-i18n="tabFunction">⚙️ Functionality</button>
           <button data-tab="help_usecases" data-i18n="tabUseCases">💬 Use Cases</button>
           <button data-tab="help_priv" data-i18n="tabPrivacy">🛡️ Privacy</button>
+          <button data-tab="help_tech" data-i18n="tabTech">🧪 Technical</button>
           <button data-tab="help_tips" data-i18n="tabTips">🔧 Tips</button>
         </div>
-        
+
         <div class="help-section">
           <section id="help_overview" class="tab-content active" data-i18n-html="helpOverview"></section>
           <section id="help_function" class="tab-content" data-i18n-html="helpFunction"></section>
           <section id="help_usecases" class="tab-content" data-i18n-html="helpUseCases"></section>
           <section id="help_priv" class="tab-content" data-i18n-html="helpPrivacy"></section>
+          <section id="help_tech" class="tab-content" data-i18n-html="helpTech"></section>
           <section id="help_tips" class="tab-content" data-i18n-html="helpTips"></section>
         </div>
       </div>
     </section>
   </main>
+  <footer class="page-footer">
+    <img src="../../icons/logo-32x32.png" alt="" class="footer-logo" width="18" height="18">
+    <span data-i18n="extensionName"></span>
+    <span id="footerVersion" class="footer-version"></span>
+    <span class="footer-sep" aria-hidden="true">·</span>
+    <a href="https://github.com/transfairs/referer-by-domain" target="_blank" rel="noopener noreferrer" data-i18n="footerGithub"></a>
+    <span class="footer-sep" aria-hidden="true">·</span>
+    <a href="https://github.com/transfairs/referer-by-domain/issues" target="_blank" rel="noopener noreferrer" data-i18n="footerReportIssue"></a>
+    <span class="footer-sep" aria-hidden="true">·</span>
+    <a href="https://github.com/transfairs/referer-by-domain/blob/main/LICENSE" target="_blank" rel="noopener noreferrer" data-i18n="footerLicense"></a>
+  </footer>
   <script src="options.js" type="module"></script>
 </body>
 </html>

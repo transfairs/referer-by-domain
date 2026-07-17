@@ -1,0 +1,206 @@
+{
+  "extensionName": {
+    "message": "Referer podle domény"
+  },
+  "optionNoReferer": {
+    "message": "Žádný Referer"
+  },
+  "optionOriginOnly": {
+    "message": "Odesílat pouze původ"
+  },
+  "optionFullUrl": {
+    "message": "Odesílat úplnou adresu URL"
+  },
+  "optionUnlimited": {
+    "message": "Neomezený Referer"
+  },
+  "optionsPageLink": {
+    "message": "Nastavení"
+  },
+  "importExportPageLink": {
+    "message": "Import | Export"
+  },
+  "savedStatus": {
+    "message": "Nastavení uloženo! Obnovte prosím kartu."
+  },
+  "reloadTabButton": {
+    "message": "↻ Obnovit kartu"
+  },
+  "noRelatedDomains": {
+    "message": "Zatím nebyly zjištěny žádné související domény. Procházejte web nebo obnovte kartu, aby byly zjištěny."
+  },
+  "currentDomainTitle": {
+    "message": "Aktuální doména"
+  },
+  "refererSettingTitle": {
+    "message": "Nastavení Refereru"
+  },
+  "relatedDomainsTitle": {
+    "message": "Související domény"
+  },
+  "settingsTab": { "message": "⚙️ Nastavení" },
+  "optionsTitle": {
+    "message": "Nastavení Refereru"
+  },
+  "searchPlaceholder": {
+    "message": "Hledat domény..."
+  },
+  "addDomainButton": {
+    "message": "+ Nová doména"
+  },
+  "legendTitle": {
+    "message": "Legenda symbolů"
+  },
+  "legendNoReferer": {
+    "message": "Referer nebude odeslán."
+  },
+  "legendOriginOnly": {
+    "message": "Bude odeslán pouze původ."
+  },
+  "legendFullUrl": {
+    "message": "Bude odeslána úplná adresa URL. ⚠️ Může obsahovat citlivá data (např. tokeny, vyhledávané výrazy)."
+  },
+  "legendUnlimited": {
+    "message": "Odesílání Refereru je neomezené."
+  },
+  "matchedRuleText": {
+    "message": "⭐ Odpovídající zástupné pravidlo: $1"
+  },
+  "promptNewDomain": {
+    "message": "Zadejte novou doménu:"
+  },
+  "promptEditDomain": {
+    "message": "Upravit doménu:"
+  },
+  "editDomainButton": {
+    "message": "Upravit doménu"
+  },
+  "deleteDomainButton": {
+    "message": "Odstranit doménu"
+  },
+  "domainAlreadyExists": {
+    "message": "Tato doména je již nakonfigurována."
+  },
+  "importExportTab": {
+    "message": "📥 Import | Export"
+  },
+  "exportTitle": {
+    "message": "Export"
+  },
+  "exportDescription": {
+    "message": "Uložte všechna svá pravidla domén do souboru JSON, například pro jejich zálohování nebo přenesení do jiného prohlížeče."
+  },
+  "exportButton": {
+    "message": "⬇️ Exportovat"
+  },
+  "importTitle": {
+    "message": "Import"
+  },
+  "importDescription": {
+    "message": "Načtěte pravidla domén z dříve exportovaného souboru JSON. Importovaná pravidla se sloučí s existujícími a přepíší ta, která se týkají stejné domény."
+  },
+  "importButton": {
+    "message": "⬆️ Importovat"
+  },
+  "importConfirm": {
+    "message": "Importovat $1 pravidel domén? Existující pravidla pro stejné domény budou přepsána."
+  },
+  "importSuccess": {
+    "message": "Nastavení bylo úspěšně importováno."
+  },
+  "importInvalidFile": {
+    "message": "Tento soubor nelze importovat. Vyberte prosím platný export nastavení."
+  },
+  "helpTitle": { "message": "Nápověda" },
+  "helpTab": { "message": "❓ Nápověda" },
+  "tabOverview": { "message": "🧭 Přehled" },
+  "tabFunction": { "message": "⚙️ Funkce" },
+  "tabUseCases": { "message": "💬 Případy užití" },
+  "tabPrivacy": { "message": "🛡️ Soukromí" },
+  "tabTech": { "message": "🧪 Technické" },
+  "tabTips": { "message": "🔧 Tipy" },
+  "helpOverview": {
+    "message": "<h2>Co toto rozšíření dělá</h2><p>Toto rozšíření vám umožňuje řídit odesílání hlaviček <code>Referer</code> webům podle jednotlivých domén.</p><p>To může zlepšit soukromí a vyřešit problémy s kompatibilitou u služeb, které očekávají konkrétní hodnoty Refereru.</p><p>Ve výchozím nastavení je u každé domény nastaveno 🚫 Žádný Referer — toto rozšíření odstraňuje hlavičku Referer pro každý navštívený web, nejen pro ty, které jste nakonfigurovali. Pokud chcete konkrétní doméně nadále odesílat Referer, přidejte pro ni pravidlo a zvolte 🌍, 🔗 nebo ♾️.</p><h2>🏠 Kontakt</h2><p>Tento projekt je open source a je dostupný na <a href=\"https://github.com/transfairs/referer-by-domain\" target=\"_blank\" rel=\"noopener noreferrer\">GitHubu</a>.</p><div class=\"contact-box\"><a class=\"contact-item github\" href=\"https://github.com/transfairs\" target=\"_blank\" rel=\"noopener noreferrer\"><img src=\"../assets/github.svg\" alt=\"GitHub\"> GitHub</a><a class=\"contact-item linkedin\" href=\"https://www.linkedin.com/in/robin-trauer/\" target=\"_blank\" rel=\"noopener noreferrer\"><img src=\"../assets/linkedin.svg\" alt=\"LinkedIn\"> LinkedIn</a><a class=\"contact-item youtube\" href=\"https://www.youtube.com/@Transfairs\" target=\"_blank\" rel=\"noopener noreferrer\"><img src=\"../assets/youtube.svg\" alt=\"YouTube\"> YouTube</a></div>"
+  },
+  "helpFunction": {
+    "message": "<h2>Jak to funguje</h2><p>Každé doméně můžete přiřadit jeden ze čtyř režimů Refereru:</p><ul><li>🚫 Neodesílat žádný Referer</li><li>🌍 Odesílat pouze původ (např. <code>https://example.com</code>)</li><li>🔗 Odesílat úplnou adresu URL</li><li>♾️ Povolit Referer bez omezení</li></ul><p>Zástupná pravidla jako <code>*.example.com</code> mohou pokrýt všechny subdomény. Pokud takové pravidlo již existuje, bude to zobrazeno. Přesná shoda (např. <code>shop.example.com</code>) má vždy přednost před odpovídajícím zástupným pravidlem.</p><h2>🗂️ Správa domén v Nastavení</h2><p>Otevřete stránku Nastavení (⚙️) a zobrazte a spravujte všechny nakonfigurované domény na jednom místě:</p><ul><li><strong>Hledání:</strong> Filtrujte seznam zadáním části názvu domény.</li><li><strong>➕ Přidat:</strong> Klikněte na „+ Nová doména“ a zadejte doménu pro vytvoření pravidla (výchozí je 🚫 Žádný Referer).</li><li><strong>Tlačítka režimu:</strong> Klikněte přímo na 🚫, 🌍, 🔗 nebo ♾️ na kartě domény a změňte tak její režim.</li><li><strong>✏️ Upravit:</strong> Přejmenujte doménu při zachování přiřazeného režimu.</li><li><strong>🗑️ Odstranit:</strong> Odeberte pravidlo domény (vyžaduje potvrzení).</li></ul><h2>Související domény</h2><p><strong>Související domény</strong> jsou automaticky zjišťovány skriptem na pozadí. Jedná se o domény, s nimiž komunikuje aktuální stránka, například:</p><ul><li>CDN (např. <code>cdn.example.com</code>)</li><li>API (<code>api.example.com</code>)</li><li>Ověřovací služby (<code>login.partner.com</code>)</li><li>Poskytovatelé obsahu třetích stran</li></ul><p>Rozšíření je identifikuje sledováním skutečných síťových připojení.</p><h3>🧩 K čemu jsou související domény užitečné</h3><ul><li><b>Viditelnost:</b> Ukazuje, s jakými doménami stránka komunikuje.</li><li><b>Pohodlí:</b> Ihned vidíte, které domény mohou potřebovat nastavení Refereru pro plnou funkčnost.</li><li><b>Rychlý přístup:</b> V popupu se zobrazují jako klikatelné návrhy.</li><li><b>Konzistence:</b> Použijte stejný režim Refereru u všech souvisejících domén.</li></ul><h3>🛠 Jak používat související domény</h3><ol><li>Otevřete popup.</li><li>Prohlédněte si seznam „Související domény“.</li><li>Kliknutím na jednu z nich ji vložíte do vstupního pole.</li><li>Přiřaďte této doméně režim Refereru.</li></ol>"
+  },
+  "helpUseCases": {
+    "message": "<h2>Obecné</h2><ul><li>🛡️ Zabraňte webům zjistit, odkud přicházíte.</li><li>🔐 Umožněte přihlašovací nebo stahovací funkce závislé na konkrétních refererech.</li><li>🌐 Definujte konzistentní pravidla pro všechny subdomény služby.</li></ul><h2>Problémy s přihlášením</h2><p>Pokud jste hlavičku referer zakázali globálně (viz 🔧 Tipy), některé weby mohou blokovat přihlášení, i když se stránka správně načte. Často to postihuje požadavky na související doménu.</p><p>V následujícím příkladu přihlášení na <code>my.example.com</code> selže, pokud <code>api.example.com</code> nemá vhodný režim Refereru:</p><div class=\"image-pair\"><figure><img src=\"../assets/login-fails.png\" alt=\"Přihlášení selhává\" width=\"300\" /><figcaption>❌ Před - pokus o přihlášení selže</figcaption></figure><p>Na obrázku níže je Referer pro <code>api.example.com</code> nastaven na „🌍 Pouze původ“. Zobrazí se přihlašovací pole:</p><figure><img src=\"../assets/login-works.png\" alt=\"Přihlášení funguje\" width=\"300\" /><figcaption>✅ Po - Referer nastaven pro <code>api.example.com</code></figcaption></figure></div><p><code>api.example.com</code> bylo rozšířením zjištěno a uvedeno jako „Související doména“.</p>"
+  },
+  "helpPrivacy": {
+    "message": "<h2>Soukromí</h2><ul><li>✅ Veškerá nastavení jsou uložena <strong>lokálně</strong> ve vašem prohlížeči.</li><li>✅ Žádná data nejsou přenášena ani synchronizována.</li><li>✅ Žádné sledování, analýzy ani vzdálené požadavky.</li><li>✅ Oprávnění <code>&lt;all_urls&gt;</code> a <code>webRequest</code> se používají výhradně k zachycení a přepsání hlavičky Referer u vašich požadavků — k ničemu jinému.</li><li>✅ Ukládají se pouze názvy domén a jim přiřazený režim Refereru — nikdy úplné adresy URL, obsah stránek ani historie prohlížení. Tato data zůstávají pouze v tomto prohlížeči, nejsou synchronizována mezi zařízeními a jsou odstraněna při odinstalování rozšíření.</li><li>ℹ️ Funkce Související domény funguje sledováním názvů hostitelů zapojených do vašich požadavků, které jsou uchovávány v paměti pouze po dobu aktuální relace prohlížeče — nikdy nejsou ukládány na disk ani nikam odesílány (podrobnosti viz 🧪 Technické).</li><li>⚠️ Režim „🔗 Odesílat úplnou adresu URL“ odesílá úplnou adresu URL stránky — včetně cesty a řetězce dotazu — cílové doméně. Vyhněte se mu u domén, jejichž adresa URL by mohla obsahovat citlivá data, jako jsou ověřovací tokeny, ID relace nebo vyhledávané výrazy; pokud to není opravdu nutné, upřednostněte „🌍 Odesílat pouze původ“.</li></ul>"
+  },
+  "helpTech": {
+    "message": "<h2>🧪 Technické poznámky</h2><h3>Shoda pravidel</h3><ul><li>Přesná shoda domény má vždy přednost před zástupným pravidlem.</li><li>Zástupná pravidla se shodují pouze s příponou — <code>*.example.com</code> odpovídá doméně <code>shop.example.com</code>, ale ne samotné doméně <code>example.com</code>.</li></ul><h3>Režimy Původ a Úplná URL vyžadují odkazující stránku</h3><p>Režimy 🌍 Původ a 🔗 Úplná URL mohou odeslat Referer pouze tehdy, když prohlížeč ví, která stránka požadavek vyvolala. Při přímé navigaci — zadání adresy URL, otevření záložky nebo nové karty — neexistuje odkazující stránka, takže bez ohledu na nastavený režim se Referer neodesílá.</p><h3>Zjišťování souvisejících domén je dočasné</h3><ul><li>Seznam <em>zjištěných vztahů</em> mezi doménami se udržuje pouze v paměti (v relačním úložišti prohlížeče) a <strong>není ukládán na disk</strong> — přežije uvolnění procesu rozšíření na pozadí, ale při každém restartu prohlížeče se resetuje.</li><li>To se netýká vašich pravidel: pokud přiřadíte související doméně režim Refereru, toto pravidlo se uloží normálně, stejně jako u jakékoli jiné domény — při restartu prohlížeče zmizí pouze samotný zjištěný vztah.</li><li>Sledují se pouze načtení stránek a požadavky XHR/fetch. Domény kontaktované pouze prostřednictvím obrázků, písem nebo připojení WebSocket se v seznamu nezobrazí.</li><li>Na stránku se pamatuje až 100 souvisejících domén a současně se sleduje až 200 stránek; po dosažení těchto limitů se nejprve odstraní nejstarší záznamy.</li></ul>"
+  },
+  "helpTips": {
+    "message": "<h2>Úplné vypnutí výchozího Refereru</h2><p>Pokud chcete, aby Firefox ve výchozím nastavení přestal odesílat hlavičky referer, můžete změnit následující pokročilé nastavení:</p><ol><li>Do adresního řádku zadejte <code>about:config</code>.</li><li>Vyhledejte <code>network.http.sendRefererHeader</code>.</li><li>Nastavte hodnotu na <code>0</code>.</li></ol><p>Toto rozšíření se snaží napodobit chování tohoto nastavení, ale pro jednotlivé domény namísto globálně.</p><p>Při výchozím vypnutí refereru se toto rozšíření stává obzvláště hodnotným.</p><h2>Různé</h2><ul><li>Pomocí <code>*.example.com</code> pokryjete všechny subdomény.</li><li>Existující pravidla lze upravovat v nastavení.</li><li>Kliknutím na související doménu v popupu ji otevřete k úpravě.</li><li>Pokud se shoduje zástupné pravidlo, zobrazí se a lze jej upravit.</li></ul>"
+  },
+  "themeToggleTitle": {
+    "message": "Motiv: $1 (klikněte pro změnu)"
+  },
+  "themeAuto": {
+    "message": "Automaticky"
+  },
+  "themeLight": {
+    "message": "Světlý"
+  },
+  "themeDark": {
+    "message": "Tmavý"
+  },
+  "languageAuto": {
+    "message": "Výchozí prohlížeč"
+  },
+  "languageSelectLabel": {
+    "message": "Jazyk"
+  },
+  "modalCancel": {
+    "message": "Zrušit"
+  },
+  "modalConfirm": {
+    "message": "OK"
+  },
+  "modalOk": {
+    "message": "OK"
+  },
+  "addDomainTitle": {
+    "message": "Přidat doménu"
+  },
+  "editDomainTitle": {
+    "message": "Upravit doménu"
+  },
+  "deleteDomainTitle": {
+    "message": "Odstranit doménu"
+  },
+  "confirmDeleteDomain": {
+    "message": "Opravdu chcete odstranit doménu „$1“?"
+  },
+  "importConfirmTitle": {
+    "message": "Importovat nastavení"
+  },
+  "noDomainsFound": {
+    "message": "Zatím nejsou nakonfigurovány žádné domény."
+  },
+  "noDomainsHint": {
+    "message": "Přidejte doménu, chcete-li ovládat její hlavičku Referer."
+  },
+  "noDomainsSearchEmpty": {
+    "message": "Žádná doména neodpovídá vašemu hledání."
+  },
+  "footerGithub": {
+    "message": "GitHub"
+  },
+  "footerReportIssue": {
+    "message": "Nahlásit problém"
+  },
+  "footerLicense": {
+    "message": "Licence GPL-3.0"
+  },
+  "aiTranslatedNotice": {
+    "message": "Tento překlad byl vygenerován pomocí AI a může obsahovat chyby."
+  },
+  "aiTranslatedDismiss": {
+    "message": "Zavřít"
+  }
+}

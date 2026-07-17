@@ -17,8 +17,17 @@
   "optionsPageLink": {
     "message": "Settings"
   },
+  "importExportPageLink": {
+    "message": "Import | Export"
+  },
   "savedStatus": {
-    "message": "Setting saved! Please, reload the tab."
+    "message": "Setting saved! Please reload the tab."
+  },
+  "reloadTabButton": {
+    "message": "↻ Reload Tab"
+  },
+  "noRelatedDomains": {
+    "message": "No related domains detected yet. Browse the site, or reload the tab, to detect them."
   },
   "currentDomainTitle": {
     "message": "Current Domain"
@@ -51,7 +60,7 @@
     "message": "Only the origin will be sent."
   },
   "legendFullUrl": {
-    "message": "Full URL will be sent."
+    "message": "Full URL will be sent. ⚠️ May include sensitive data (e.g. tokens, search terms)."
   },
   "legendUnlimited": {
     "message": "Referer sending is unrestricted."
@@ -62,30 +71,138 @@
   "promptNewDomain": {
     "message": "Enter new domain:"
   },
+  "promptEditDomain": {
+    "message": "Edit domain:"
+  },
+  "editDomainButton": {
+    "message": "Edit domain"
+  },
+  "deleteDomainButton": {
+    "message": "Delete domain"
+  },
   "domainAlreadyExists": {
     "message": "This domain is already configured."
+  },
+  "importExportTab": {
+    "message": "📥 Import | Export"
+  },
+  "exportTitle": {
+    "message": "Export"
+  },
+  "exportDescription": {
+    "message": "Save all your domain rules to a JSON file, e.g. to back them up or move them to another browser."
+  },
+  "exportButton": {
+    "message": "⬇️ Export"
+  },
+  "importTitle": {
+    "message": "Import"
+  },
+  "importDescription": {
+    "message": "Load domain rules from a previously exported JSON file. Imported rules are merged into your existing ones, overwriting any that share the same domain."
+  },
+  "importButton": {
+    "message": "⬆️ Import"
+  },
+  "importConfirm": {
+    "message": "Import $1 domain rule(s)? Existing rules for the same domains will be overwritten."
+  },
+  "importSuccess": {
+    "message": "Settings imported successfully."
+  },
+  "importInvalidFile": {
+    "message": "This file could not be imported. Please select a valid settings export."
   },
   "helpTitle": { "message": "Help" },
   "helpTab": { "message": "❓ Help" },
   "tabOverview": { "message": "🧭 Overview" },
-  "tabFunction": { "message": "⚙️ Funktionality" },
+  "tabFunction": { "message": "⚙️ Functionality" },
   "tabUseCases": { "message": "💬 Use Cases" },
   "tabPrivacy": { "message": "🛡️ Privacy" },
   "tabTech": { "message": "🧪 Technical" },
   "tabTips": { "message": "🔧 Tips" },
   "helpOverview": {
-    "message": "<h2>What this extension does</h2><p>This extension allows you to control the sending of <code>Referer</code> headers to websites on a per-domain basis.</p><p>This can improve privacy and solve compatibility issues with services that expect specific Referer values.</p><h2>🏠 Contact</h2><p>This project is open source and available on <a href=\"https://github.com/transfairs/referer-by-domain\" target=\"_blank\" rel=\"noopener noreferrer\">GitHub</a>.</p><div class=\"contact-box\"><a class=\"contact-item github\" href=\"https://github.com/transfairs\" target=\"_blank\" rel=\"noopener noreferrer\"><img src=\"../assets/github.svg\" alt=\"GitHub\"> GitHub</a><a class=\"contact-item linkedin\" href=\"https://www.linkedin.com/in/robin-trauer/\" target=\"_blank\" rel=\"noopener noreferrer\"><img src=\"../assets/linkedin.png\" alt=\"LinkedIn\"> LinkedIn</a><a class=\"contact-item youtube\" href=\"https://www.youtube.com/@Transfairs\" target=\"_blank\" rel=\"noopener noreferrer\"><img src=\"../assets/youtube.svg\" alt=\"YouTube\"> YouTube</a></div><p style=\"text-align: center\"><a href=\"https://www.flaticon.com/free-icons/linkedin\" title=\"linkedin icons\" target=\"_blank\">Linkedin icons created by Freepik - Flaticon</a></p>"
+    "message": "<h2>What this extension does</h2><p>This extension allows you to control the sending of <code>Referer</code> headers to websites on a per-domain basis.</p><p>This can improve privacy and solve compatibility issues with services that expect specific Referer values.</p><p>By default, every domain is set to 🚫 No Referer — this extension strips the Referer header for every site you visit, not just the ones you've configured. To keep sending a Referer to a specific domain, add a rule for it and choose 🌍, 🔗, or ♾️.</p><h2>🏠 Contact</h2><p>This project is open source and available on <a href=\"https://github.com/transfairs/referer-by-domain\" target=\"_blank\" rel=\"noopener noreferrer\">GitHub</a>.</p><div class=\"contact-box\"><a class=\"contact-item github\" href=\"https://github.com/transfairs\" target=\"_blank\" rel=\"noopener noreferrer\"><img src=\"../assets/github.svg\" alt=\"GitHub\"> GitHub</a><a class=\"contact-item linkedin\" href=\"https://www.linkedin.com/in/robin-trauer/\" target=\"_blank\" rel=\"noopener noreferrer\"><img src=\"../assets/linkedin.svg\" alt=\"LinkedIn\"> LinkedIn</a><a class=\"contact-item youtube\" href=\"https://www.youtube.com/@Transfairs\" target=\"_blank\" rel=\"noopener noreferrer\"><img src=\"../assets/youtube.svg\" alt=\"YouTube\"> YouTube</a></div>"
   },
   "helpFunction": {
-    "message": "<h2>How it works</h2><p>You can assign one of four Referer modes to each domain:</p><ul><li>🚫 Send no Referer</li><li>🌍 Send only the origin (e.g. <code>https://example.com</code>)</li><li>🔗 Send the full URL</li><li>♾️ Allow Referer without restriction</li></ul><p>Wildcard rules like <code>*.example.com</code> can cover all subdomains. If such a rule is already in place, it will be indicated.</p><h2>Related Domains</h2><p><strong>Related domains</strong> are automatically detected by the background script. These are domains contacted from the current page, such as:</p><ul><li>CDNs (e.g. <code>cdn.example.com</code>)</li><li>APIs (<code>api.example.com</code>)</li><li>Authentication services (<code>login.partner.com</code>)</li><li>Third-party content providers</li></ul><p>The extension identifies these by observing actual network connections.</p><h3>🧩 Why related domains are useful</h3><ul><li><b>Visibility:</b> Shows which domains a page is interacting with.</li><li><b>Convenience:</b> Immediately see which domains may require Referer settings to enable full functionality.</li><li><b>Quick access:</b> They appear as clickable suggestions in the popup.</li><li><b>Consistency:</b> Use the same Referer mode across all involved domains.</li></ul><h3>🛠 How to use related domains</h3><ol><li>Open the popup.</li><li>Review the list of \"Related Domains\".</li><li>Click on one to insert it into the input field.</li><li>Assign a Referer mode to that domain.</li></ol>"
+    "message": "<h2>How it works</h2><p>You can assign one of four Referer modes to each domain:</p><ul><li>🚫 Send no Referer</li><li>🌍 Send only the origin (e.g. <code>https://example.com</code>)</li><li>🔗 Send the full URL</li><li>♾️ Allow Referer without restriction</li></ul><p>Wildcard rules like <code>*.example.com</code> can cover all subdomains. If such a rule is already in place, it will be indicated. An exact match (e.g. <code>shop.example.com</code>) always takes priority over a matching wildcard rule.</p><h2>🗂️ Managing domains in Settings</h2><p>Open the Settings page (⚙️) to see and manage every configured domain in one place:</p><ul><li><strong>Search:</strong> Filter the list by typing part of a domain name.</li><li><strong>➕ Add:</strong> Click \"+ New Domain\" and enter a domain to create a rule for it (defaults to 🚫 No Referer).</li><li><strong>Mode buttons:</strong> Click 🚫, 🌍, 🔗 or ♾️ directly on a domain card to change its mode.</li><li><strong>✏️ Edit:</strong> Rename a domain while keeping its assigned mode.</li><li><strong>🗑️ Delete:</strong> Remove a domain's rule (a confirmation is required).</li></ul><h2>Related Domains</h2><p><strong>Related domains</strong> are automatically detected by the background script. These are domains contacted from the current page, such as:</p><ul><li>CDNs (e.g. <code>cdn.example.com</code>)</li><li>APIs (<code>api.example.com</code>)</li><li>Authentication services (<code>login.partner.com</code>)</li><li>Third-party content providers</li></ul><p>The extension identifies these by observing actual network connections.</p><h3>🧩 Why related domains are useful</h3><ul><li><b>Visibility:</b> Shows which domains a page is interacting with.</li><li><b>Convenience:</b> Immediately see which domains may require Referer settings to enable full functionality.</li><li><b>Quick access:</b> They appear as clickable suggestions in the popup.</li><li><b>Consistency:</b> Use the same Referer mode across all involved domains.</li></ul><h3>🛠 How to use related domains</h3><ol><li>Open the popup.</li><li>Review the list of \"Related Domains\".</li><li>Click on one to insert it into the input field.</li><li>Assign a Referer mode to that domain.</li></ol>"
   },
   "helpUseCases": {
     "message": "<h2>General</h2><ul><li>🛡️ Prevent websites from seeing where you came from.</li><li>🔐 Enable login or download functions that depend on specific referers.</li><li>🌐 Define consistent rules for all subdomains of a service.</li></ul><h2>Login issues</h2><p>If you have disabled the referer header globally (see 🔧 Tips), some websites may block login even if the page loads fine. This often affects requests to a related domain.</p><p>In the following example, login at <code>my.example.com</code> fails unless <code>api.example.com</code> has a suitable referer mode:</p><div class=\"image-pair\"><figure><img src=\"../assets/login-fails.png\" alt=\"Login fails\" width=\"300\" /><figcaption>❌ Before - Login attempt fails</figcaption></figure><p>In the image below, the referer for <code>api.example.com</code> is set to \"🌍 Origin only\". The login fields appear:</p><figure><img src=\"../assets/login-works.png\" alt=\"Login works\" width=\"300\" /><figcaption>✅ After - Referer set for <code>api.example.com</code></figcaption></figure></div><p><code>api.example.com</code> was detected and listed as a \"Related Domain\" by the extension.</p>"
   },
   "helpPrivacy": {
-    "message": "<h2>Privacy</h2><ul><li>✅ All settings are stored <strong>locally</strong> in your browser.</li><li>✅ No data is transmitted or synchronised.</li><li>✅ No tracking, analytics, or remote requests involved.</li></ul>"
+    "message": "<h2>Privacy</h2><ul><li>✅ All settings are stored <strong>locally</strong> in your browser.</li><li>✅ No data is transmitted or synchronised.</li><li>✅ No tracking, analytics, or remote requests involved.</li><li>✅ The <code>&lt;all_urls&gt;</code> and <code>webRequest</code> permissions are only used to intercept and rewrite the Referer header on your requests — nothing else.</li><li>✅ Only domain names and the referer mode you've assigned to them are stored — never full URLs, page content, or browsing history. This data stays in this browser only, isn't synced across devices, and is removed if you uninstall the extension.</li><li>ℹ️ The Related Domains feature works by observing the hostnames involved in your requests, kept in memory for the current browser session only — never saved to disk or sent anywhere (see 🧪 Technical for details).</li><li>⚠️ The \"🔗 Send Full URL\" mode sends the complete page URL — including its path and query string — to the target domain. Avoid it for domains where the URL could contain sensitive data such as authentication tokens, session IDs, or search terms; prefer \"🌍 Send Origin Only\" unless the full URL is actually required.</li></ul>"
+  },
+  "helpTech": {
+    "message": "<h2>🧪 Technical notes</h2><h3>Rule matching</h3><ul><li>An exact domain match always takes priority over a wildcard rule.</li><li>Wildcard rules only match a suffix — <code>*.example.com</code> matches <code>shop.example.com</code> but not <code>example.com</code> itself.</li></ul><h3>Origin and Full URL modes need a referring page</h3><p>The 🌍 Origin and 🔗 Full URL modes can only send a Referer when the browser knows which page triggered the request. For direct navigation — typing a URL, opening a bookmark, or a new tab — there is no referring page, so no Referer is sent regardless of the mode you've set.</p><h3>Related Domain detection is temporary</h3><ul><li>The list of <em>detected relationships</em> between domains lives in memory only (via the browser's session storage) and is <strong>not saved to disk</strong> — it survives the extension's background process being unloaded, but resets whenever the browser restarts.</li><li>This doesn't affect your rules: if you assign a Referer mode to a related domain, that rule is saved normally, just like any other domain — only the detected relationship itself disappears on browser restart.</li><li>Only page loads and XHR/fetch requests are tracked. Domains contacted only via images, fonts, or WebSocket connections won't appear in the list.</li><li>Up to 100 related domains are remembered per page, and up to 200 pages are tracked at once; older entries are dropped first once these limits are reached.</li></ul>"
   },
   "helpTips": {
     "message": "<h2>Fully disable default Referer</h2><p>If you want Firefox to stop sending referer headers by default, you can change the following advanced setting:</p><ol><li>Enter <code>about:config</code> in the address bar.</li><li>Search for <code>network.http.sendRefererHeader</code>.</li><li>Set the value to <code>0</code>.</li></ol><p>This extension aims to mimic this setting’s behaviour, but on a per-domain basis instead of globally.</p><p>With the referer disabled by default, this extension becomes especially valuable.</p><h2>Miscellaneous</h2><ul><li>Use <code>*.example.com</code> to cover all subdomains.</li><li>Existing rules can be edited in the settings.</li><li>Clicking on a related domain in the popup opens it for editing.</li><li>If a wildcard rule matches, it is shown and can be modified.</li></ul>"
+  },
+  "themeToggleTitle": {
+    "message": "Theme: $1 (click to change)"
+  },
+  "themeAuto": {
+    "message": "Auto"
+  },
+  "themeLight": {
+    "message": "Light"
+  },
+  "themeDark": {
+    "message": "Dark"
+  },
+  "languageAuto": {
+    "message": "Browser default"
+  },
+  "languageSelectLabel": {
+    "message": "Language"
+  },
+  "modalCancel": {
+    "message": "Cancel"
+  },
+  "modalConfirm": {
+    "message": "OK"
+  },
+  "modalOk": {
+    "message": "OK"
+  },
+  "addDomainTitle": {
+    "message": "Add domain"
+  },
+  "editDomainTitle": {
+    "message": "Edit domain"
+  },
+  "deleteDomainTitle": {
+    "message": "Delete domain"
+  },
+  "confirmDeleteDomain": {
+    "message": "Do you really want to delete the domain \"$1\"?"
+  },
+  "importConfirmTitle": {
+    "message": "Import settings"
+  },
+  "noDomainsFound": {
+    "message": "No domains configured yet."
+  },
+  "noDomainsHint": {
+    "message": "Add a domain to control its Referer header."
+  },
+  "noDomainsSearchEmpty": {
+    "message": "No domains match your search."
+  },
+  "footerGithub": {
+    "message": "GitHub"
+  },
+  "footerReportIssue": {
+    "message": "Report an issue"
+  },
+  "footerLicense": {
+    "message": "GPL-3.0 License"
+  },
+  "aiTranslatedNotice": {
+    "message": "This translation was generated by AI and may contain errors."
+  },
+  "aiTranslatedDismiss": {
+    "message": "Dismiss"
   }
 }

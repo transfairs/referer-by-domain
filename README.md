@@ -9,10 +9,14 @@ It simulates the behaviour of `network.http.sendRefererHeader`, but with fine-gr
 
 - 🌐 Set different `Referer` policies depending on the visited domain
 - 🧩 Wildcard support (e.g. `*.example.com`)
-- 🔄 Automatically detects **related domains** used by each site (e.g. APIs, CDNs)
-- 🌍 Localised in 🇬🇧 English and 🇩🇪 German
+- 🔄 Automatically detects **related domains** used by each site (e.g. APIs, CDNs), persisted across background worker restarts
+- ✏️ Rename domains and reload detection from the popup
+- 🌍 Localised in 🇬🇧 English, 🇩🇪 German, 🇫🇷 French, 🇵🇱 Polish, 🇯🇵 Japanese, 🇪🇸 Spanish, 🇵🇹 Portuguese, 🇨🇿 Czech and 🇸🇰 Slovak, with a manual language override and an "auto" mode that follows the browser
+- 🌗 Light/dark/auto theme, applied consistently across the popup and options pages
+- 🗔 Themed modal dialogs for adding, editing, deleting, and importing domains
 - 📘 Built-in help section with tabbed overview
 - 🎯 Choose between no Referer, only origin, full URL, or unrestricted
+- 📤 Export/import settings as JSON, to back them up or move them to another browser
 - ⚡ Lightweight and privacy-focused
 
 ---
@@ -66,11 +70,9 @@ Open `http://localhost:3000/Test.html` and fire your requests.
 
 ---
 
-## 🚀 Future Improvements
+## 🌍 Translations
 
-- Support complex domain rules (wildcards inside domain name, regex).
-- Auto-reload of tabs on rule change
-- Dark Mode for all screens
+English and German are maintained directly; the remaining languages are AI-translated and may contain errors. A dismissible notice points this out in the UI when one of those languages is active.
 
 ---
 

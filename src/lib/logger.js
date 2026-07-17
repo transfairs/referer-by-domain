@@ -1,4 +1,4 @@
-import { isDebugMode } from './lib.js';
+import { isDebugMode } from './debugMode.js';
 
 /**
  * Outputs debug messages to the console if debug mode is enabled.

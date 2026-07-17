@@ -1,0 +1,206 @@
+{
+  "extensionName": {
+    "message": "Referer por dominio"
+  },
+  "optionNoReferer": {
+    "message": "Sin Referer"
+  },
+  "optionOriginOnly": {
+    "message": "Enviar solo el origen"
+  },
+  "optionFullUrl": {
+    "message": "Enviar URL completa"
+  },
+  "optionUnlimited": {
+    "message": "Referer sin restricciones"
+  },
+  "optionsPageLink": {
+    "message": "Configuración"
+  },
+  "importExportPageLink": {
+    "message": "Importar | Exportar"
+  },
+  "savedStatus": {
+    "message": "¡Configuración guardada! Recarga la pestaña."
+  },
+  "reloadTabButton": {
+    "message": "↻ Recargar pestaña"
+  },
+  "noRelatedDomains": {
+    "message": "Todavía no se han detectado dominios relacionados. Navega por el sitio o recarga la pestaña para detectarlos."
+  },
+  "currentDomainTitle": {
+    "message": "Dominio actual"
+  },
+  "refererSettingTitle": {
+    "message": "Configuración de Referer"
+  },
+  "relatedDomainsTitle": {
+    "message": "Dominios relacionados"
+  },
+  "settingsTab": { "message": "⚙️ Configuración" },
+  "optionsTitle": {
+    "message": "Configuración de Referer"
+  },
+  "searchPlaceholder": {
+    "message": "Buscar dominios..."
+  },
+  "addDomainButton": {
+    "message": "+ Nuevo dominio"
+  },
+  "legendTitle": {
+    "message": "Leyenda de símbolos"
+  },
+  "legendNoReferer": {
+    "message": "No se enviará ningún Referer."
+  },
+  "legendOriginOnly": {
+    "message": "Solo se enviará el origen."
+  },
+  "legendFullUrl": {
+    "message": "Se enviará la URL completa. ⚠️ Puede incluir datos sensibles (p. ej., tokens, términos de búsqueda)."
+  },
+  "legendUnlimited": {
+    "message": "El envío del Referer no tiene restricciones."
+  },
+  "matchedRuleText": {
+    "message": "⭐ Regla comodín coincidente: $1"
+  },
+  "promptNewDomain": {
+    "message": "Introduce un nuevo dominio:"
+  },
+  "promptEditDomain": {
+    "message": "Editar dominio:"
+  },
+  "editDomainButton": {
+    "message": "Editar dominio"
+  },
+  "deleteDomainButton": {
+    "message": "Eliminar dominio"
+  },
+  "domainAlreadyExists": {
+    "message": "Este dominio ya está configurado."
+  },
+  "importExportTab": {
+    "message": "📥 Importar | Exportar"
+  },
+  "exportTitle": {
+    "message": "Exportar"
+  },
+  "exportDescription": {
+    "message": "Guarda todas tus reglas de dominio en un archivo JSON, por ejemplo, para hacer una copia de seguridad o moverlas a otro navegador."
+  },
+  "exportButton": {
+    "message": "⬇️ Exportar"
+  },
+  "importTitle": {
+    "message": "Importar"
+  },
+  "importDescription": {
+    "message": "Carga reglas de dominio desde un archivo JSON exportado previamente. Las reglas importadas se combinan con las existentes, sobrescribiendo las que compartan el mismo dominio."
+  },
+  "importButton": {
+    "message": "⬆️ Importar"
+  },
+  "importConfirm": {
+    "message": "¿Importar $1 regla(s) de dominio? Las reglas existentes para los mismos dominios se sobrescribirán."
+  },
+  "importSuccess": {
+    "message": "Configuración importada correctamente."
+  },
+  "importInvalidFile": {
+    "message": "No se pudo importar este archivo. Selecciona una exportación de configuración válida."
+  },
+  "helpTitle": { "message": "Ayuda" },
+  "helpTab": { "message": "❓ Ayuda" },
+  "tabOverview": { "message": "🧭 Resumen" },
+  "tabFunction": { "message": "⚙️ Funcionalidad" },
+  "tabUseCases": { "message": "💬 Casos de uso" },
+  "tabPrivacy": { "message": "🛡️ Privacidad" },
+  "tabTech": { "message": "🧪 Técnico" },
+  "tabTips": { "message": "🔧 Consejos" },
+  "helpOverview": {
+    "message": "<h2>Qué hace esta extensión</h2><p>Esta extensión te permite controlar el envío de encabezados <code>Referer</code> a los sitios web por dominio.</p><p>Esto puede mejorar la privacidad y resolver problemas de compatibilidad con servicios que esperan valores de Referer específicos.</p><p>Por defecto, todos los dominios están configurados en 🚫 Sin Referer — esta extensión elimina el encabezado Referer en todos los sitios que visitas, no solo en los que has configurado. Para seguir enviando un Referer a un dominio específico, añade una regla para él y elige 🌍, 🔗 o ♾️.</p><h2>🏠 Contacto</h2><p>Este proyecto es de código abierto y está disponible en <a href=\"https://github.com/transfairs/referer-by-domain\" target=\"_blank\" rel=\"noopener noreferrer\">GitHub</a>.</p><div class=\"contact-box\"><a class=\"contact-item github\" href=\"https://github.com/transfairs\" target=\"_blank\" rel=\"noopener noreferrer\"><img src=\"../assets/github.svg\" alt=\"GitHub\"> GitHub</a><a class=\"contact-item linkedin\" href=\"https://www.linkedin.com/in/robin-trauer/\" target=\"_blank\" rel=\"noopener noreferrer\"><img src=\"../assets/linkedin.svg\" alt=\"LinkedIn\"> LinkedIn</a><a class=\"contact-item youtube\" href=\"https://www.youtube.com/@Transfairs\" target=\"_blank\" rel=\"noopener noreferrer\"><img src=\"../assets/youtube.svg\" alt=\"YouTube\"> YouTube</a></div>"
+  },
+  "helpFunction": {
+    "message": "<h2>Cómo funciona</h2><p>Puedes asignar a cada dominio uno de estos cuatro modos de Referer:</p><ul><li>🚫 No enviar ningún Referer</li><li>🌍 Enviar solo el origen (p. ej., <code>https://example.com</code>)</li><li>🔗 Enviar la URL completa</li><li>♾️ Permitir Referer sin restricciones</li></ul><p>Las reglas comodín como <code>*.example.com</code> pueden cubrir todos los subdominios. Si ya existe una regla de este tipo, se indicará. Una coincidencia exacta (p. ej., <code>shop.example.com</code>) siempre tiene prioridad sobre una regla comodín coincidente.</p><h2>🗂️ Gestionar dominios en Configuración</h2><p>Abre la página de Configuración (⚙️) para ver y gestionar todos los dominios configurados en un solo lugar:</p><ul><li><strong>Buscar:</strong> Filtra la lista escribiendo parte de un nombre de dominio.</li><li><strong>➕ Añadir:</strong> Haz clic en \"+ Nuevo dominio\" e introduce un dominio para crear una regla (por defecto 🚫 Sin Referer).</li><li><strong>Botones de modo:</strong> Haz clic en 🚫, 🌍, 🔗 o ♾️ directamente en la tarjeta de un dominio para cambiar su modo.</li><li><strong>✏️ Editar:</strong> Cambia el nombre de un dominio conservando el modo asignado.</li><li><strong>🗑️ Eliminar:</strong> Elimina la regla de un dominio (se requiere confirmación).</li></ul><h2>Dominios relacionados</h2><p>Los <strong>dominios relacionados</strong> se detectan automáticamente mediante el script en segundo plano. Se trata de dominios contactados desde la página actual, como:</p><ul><li>CDN (p. ej., <code>cdn.example.com</code>)</li><li>API (<code>api.example.com</code>)</li><li>Servicios de autenticación (<code>login.partner.com</code>)</li><li>Proveedores de contenido de terceros</li></ul><p>La extensión los identifica observando las conexiones de red reales.</p><h3>🧩 Por qué son útiles los dominios relacionados</h3><ul><li><b>Visibilidad:</b> Muestra con qué dominios interactúa una página.</li><li><b>Comodidad:</b> Descubre de inmediato qué dominios pueden necesitar una configuración de Referer para habilitar toda la funcionalidad.</li><li><b>Acceso rápido:</b> Aparecen como sugerencias en las que se puede hacer clic en el popup.</li><li><b>Coherencia:</b> Usa el mismo modo de Referer en todos los dominios implicados.</li></ul><h3>🛠 Cómo usar los dominios relacionados</h3><ol><li>Abre el popup.</li><li>Revisa la lista de \"Dominios relacionados\".</li><li>Haz clic en uno para insertarlo en el campo de entrada.</li><li>Asigna un modo de Referer a ese dominio.</li></ol>"
+  },
+  "helpUseCases": {
+    "message": "<h2>General</h2><ul><li>🛡️ Evita que los sitios web vean de dónde vienes.</li><li>🔐 Habilita funciones de inicio de sesión o descarga que dependen de referers específicos.</li><li>🌐 Define reglas coherentes para todos los subdominios de un servicio.</li></ul><h2>Problemas de inicio de sesión</h2><p>Si has desactivado el encabezado referer globalmente (consulta 🔧 Consejos), algunos sitios web pueden bloquear el inicio de sesión aunque la página se cargue correctamente. Esto suele afectar a las solicitudes a un dominio relacionado.</p><p>En el siguiente ejemplo, el inicio de sesión en <code>my.example.com</code> falla a menos que <code>api.example.com</code> tenga un modo de Referer adecuado:</p><div class=\"image-pair\"><figure><img src=\"../assets/login-fails.png\" alt=\"El inicio de sesión falla\" width=\"300\" /><figcaption>❌ Antes - El intento de inicio de sesión falla</figcaption></figure><p>En la imagen siguiente, el Referer para <code>api.example.com</code> se ha configurado como \"🌍 Solo origen\". Los campos de inicio de sesión aparecen:</p><figure><img src=\"../assets/login-works.png\" alt=\"El inicio de sesión funciona\" width=\"300\" /><figcaption>✅ Después - Referer configurado para <code>api.example.com</code></figcaption></figure></div><p><code>api.example.com</code> fue detectado y listado por la extensión como \"Dominio relacionado\".</p>"
+  },
+  "helpPrivacy": {
+    "message": "<h2>Privacidad</h2><ul><li>✅ Toda la configuración se almacena <strong>localmente</strong> en tu navegador.</li><li>✅ No se transmiten ni sincronizan datos.</li><li>✅ Sin seguimiento, análisis ni solicitudes remotas.</li><li>✅ Los permisos <code>&lt;all_urls&gt;</code> y <code>webRequest</code> se usan únicamente para interceptar y reescribir el encabezado Referer de tus solicitudes — nada más.</li><li>✅ Solo se almacenan los nombres de dominio y el modo de Referer que les hayas asignado — nunca URL completas, contenido de páginas ni historial de navegación. Estos datos permanecen solo en este navegador, no se sincronizan entre dispositivos y se eliminan al desinstalar la extensión.</li><li>ℹ️ La función de Dominios relacionados funciona observando los nombres de host implicados en tus solicitudes, mantenidos en memoria solo durante la sesión actual del navegador — nunca se guardan en disco ni se envían a ningún sitio (consulta 🧪 Técnico para más detalles).</li><li>⚠️ El modo \"🔗 Enviar URL completa\" envía la URL completa de la página — incluyendo su ruta y cadena de consulta — al dominio de destino. Evítalo en dominios cuya URL pueda contener datos sensibles como tokens de autenticación, ID de sesión o términos de búsqueda; prefiere \"🌍 Enviar solo el origen\" salvo que la URL completa sea realmente necesaria.</li></ul>"
+  },
+  "helpTech": {
+    "message": "<h2>🧪 Notas técnicas</h2><h3>Coincidencia de reglas</h3><ul><li>Una coincidencia exacta de dominio siempre tiene prioridad sobre una regla comodín.</li><li>Las reglas comodín solo coinciden con un sufijo — <code>*.example.com</code> coincide con <code>shop.example.com</code> pero no con <code>example.com</code> en sí.</li></ul><h3>Los modos Origen y URL completa necesitan una página de referencia</h3><p>Los modos 🌍 Origen y 🔗 URL completa solo pueden enviar un Referer cuando el navegador sabe qué página originó la solicitud. En la navegación directa — escribir una URL, abrir un marcador o una pestaña nueva — no hay página de referencia, por lo que no se envía ningún Referer independientemente del modo configurado.</p><h3>La detección de dominios relacionados es temporal</h3><ul><li>La lista de <em>relaciones detectadas</em> entre dominios se mantiene solo en memoria (mediante el almacenamiento de sesión del navegador) y <strong>no se guarda en disco</strong> — sobrevive a la descarga del proceso en segundo plano de la extensión, pero se reinicia cada vez que se reinicia el navegador.</li><li>Esto no afecta a tus reglas: si asignas un modo de Referer a un dominio relacionado, esa regla se guarda con normalidad, como cualquier otro dominio — solo la relación detectada en sí desaparece al reiniciar el navegador.</li><li>Solo se rastrean las cargas de página y las solicitudes XHR/fetch. Los dominios contactados solo mediante imágenes, fuentes o conexiones WebSocket no aparecerán en la lista.</li><li>Se recuerdan hasta 100 dominios relacionados por página y se rastrean hasta 200 páginas a la vez; al alcanzar estos límites, se eliminan primero las entradas más antiguas.</li></ul>"
+  },
+  "helpTips": {
+    "message": "<h2>Desactivar completamente el Referer predeterminado</h2><p>Si quieres que Firefox deje de enviar encabezados referer de forma predeterminada, puedes cambiar el siguiente ajuste avanzado:</p><ol><li>Escribe <code>about:config</code> en la barra de direcciones.</li><li>Busca <code>network.http.sendRefererHeader</code>.</li><li>Establece el valor en <code>0</code>.</li></ol><p>Esta extensión pretende imitar el comportamiento de este ajuste, pero por dominio en lugar de globalmente.</p><p>Con el referer desactivado por defecto, esta extensión resulta especialmente valiosa.</p><h2>Varios</h2><ul><li>Usa <code>*.example.com</code> para cubrir todos los subdominios.</li><li>Las reglas existentes se pueden editar en la configuración.</li><li>Al hacer clic en un dominio relacionado en el popup, se abre para editarlo.</li><li>Si coincide una regla comodín, se muestra y se puede modificar.</li></ul>"
+  },
+  "themeToggleTitle": {
+    "message": "Tema: $1 (haz clic para cambiar)"
+  },
+  "themeAuto": {
+    "message": "Auto"
+  },
+  "themeLight": {
+    "message": "Claro"
+  },
+  "themeDark": {
+    "message": "Oscuro"
+  },
+  "languageAuto": {
+    "message": "Predeterminado del navegador"
+  },
+  "languageSelectLabel": {
+    "message": "Idioma"
+  },
+  "modalCancel": {
+    "message": "Cancelar"
+  },
+  "modalConfirm": {
+    "message": "OK"
+  },
+  "modalOk": {
+    "message": "OK"
+  },
+  "addDomainTitle": {
+    "message": "Añadir dominio"
+  },
+  "editDomainTitle": {
+    "message": "Editar dominio"
+  },
+  "deleteDomainTitle": {
+    "message": "Eliminar dominio"
+  },
+  "confirmDeleteDomain": {
+    "message": "¿Realmente deseas eliminar el dominio \"$1\"?"
+  },
+  "importConfirmTitle": {
+    "message": "Importar configuración"
+  },
+  "noDomainsFound": {
+    "message": "Todavía no hay dominios configurados."
+  },
+  "noDomainsHint": {
+    "message": "Añade un dominio para controlar su encabezado Referer."
+  },
+  "noDomainsSearchEmpty": {
+    "message": "Ningún dominio coincide con tu búsqueda."
+  },
+  "footerGithub": {
+    "message": "GitHub"
+  },
+  "footerReportIssue": {
+    "message": "Informar de un problema"
+  },
+  "footerLicense": {
+    "message": "Licencia GPL-3.0"
+  },
+  "aiTranslatedNotice": {
+    "message": "Esta traducción fue generada por IA y puede contener errores."
+  },
+  "aiTranslatedDismiss": {
+    "message": "Descartar"
+  }
+}

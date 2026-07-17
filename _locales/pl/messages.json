@@ -1,0 +1,206 @@
+{
+  "extensionName": {
+    "message": "Referer według domeny"
+  },
+  "optionNoReferer": {
+    "message": "Brak Referera"
+  },
+  "optionOriginOnly": {
+    "message": "Wysyłaj tylko źródło"
+  },
+  "optionFullUrl": {
+    "message": "Wysyłaj pełny adres URL"
+  },
+  "optionUnlimited": {
+    "message": "Referer bez ograniczeń"
+  },
+  "optionsPageLink": {
+    "message": "Ustawienia"
+  },
+  "importExportPageLink": {
+    "message": "Import | Eksport"
+  },
+  "savedStatus": {
+    "message": "Ustawienie zapisane! Odśwież kartę."
+  },
+  "reloadTabButton": {
+    "message": "↻ Odśwież kartę"
+  },
+  "noRelatedDomains": {
+    "message": "Nie wykryto jeszcze powiązanych domen. Przeglądaj witrynę lub odśwież kartę, aby je wykryć."
+  },
+  "currentDomainTitle": {
+    "message": "Bieżąca domena"
+  },
+  "refererSettingTitle": {
+    "message": "Ustawienie Referera"
+  },
+  "relatedDomainsTitle": {
+    "message": "Powiązane domeny"
+  },
+  "settingsTab": { "message": "⚙️ Ustawienia" },
+  "optionsTitle": {
+    "message": "Ustawienia Referera"
+  },
+  "searchPlaceholder": {
+    "message": "Szukaj domen..."
+  },
+  "addDomainButton": {
+    "message": "+ Nowa domena"
+  },
+  "legendTitle": {
+    "message": "Legenda symboli"
+  },
+  "legendNoReferer": {
+    "message": "Referer nie zostanie wysłany."
+  },
+  "legendOriginOnly": {
+    "message": "Zostanie wysłane tylko źródło."
+  },
+  "legendFullUrl": {
+    "message": "Zostanie wysłany pełny adres URL. ⚠️ Może zawierać poufne dane (np. tokeny, wyszukiwane hasła)."
+  },
+  "legendUnlimited": {
+    "message": "Wysyłanie Referera jest nieograniczone."
+  },
+  "matchedRuleText": {
+    "message": "⭐ Dopasowana reguła wieloznaczna: $1"
+  },
+  "promptNewDomain": {
+    "message": "Wprowadź nową domenę:"
+  },
+  "promptEditDomain": {
+    "message": "Edytuj domenę:"
+  },
+  "editDomainButton": {
+    "message": "Edytuj domenę"
+  },
+  "deleteDomainButton": {
+    "message": "Usuń domenę"
+  },
+  "domainAlreadyExists": {
+    "message": "Ta domena jest już skonfigurowana."
+  },
+  "importExportTab": {
+    "message": "📥 Import | Eksport"
+  },
+  "exportTitle": {
+    "message": "Eksport"
+  },
+  "exportDescription": {
+    "message": "Zapisz wszystkie reguły domen w pliku JSON, np. w celu utworzenia kopii zapasowej lub przeniesienia ich do innej przeglądarki."
+  },
+  "exportButton": {
+    "message": "⬇️ Eksportuj"
+  },
+  "importTitle": {
+    "message": "Import"
+  },
+  "importDescription": {
+    "message": "Wczytaj reguły domen z wcześniej wyeksportowanego pliku JSON. Zaimportowane reguły są scalane z istniejącymi, nadpisując te dotyczące tej samej domeny."
+  },
+  "importButton": {
+    "message": "⬆️ Importuj"
+  },
+  "importConfirm": {
+    "message": "Zaimportować $1 reguł(y) domen? Istniejące reguły dla tych samych domen zostaną nadpisane."
+  },
+  "importSuccess": {
+    "message": "Ustawienia zaimportowano pomyślnie."
+  },
+  "importInvalidFile": {
+    "message": "Nie można zaimportować tego pliku. Wybierz prawidłowy eksport ustawień."
+  },
+  "helpTitle": { "message": "Pomoc" },
+  "helpTab": { "message": "❓ Pomoc" },
+  "tabOverview": { "message": "🧭 Przegląd" },
+  "tabFunction": { "message": "⚙️ Funkcjonalność" },
+  "tabUseCases": { "message": "💬 Przypadki użycia" },
+  "tabPrivacy": { "message": "🛡️ Prywatność" },
+  "tabTech": { "message": "🧪 Techniczne" },
+  "tabTips": { "message": "🔧 Wskazówki" },
+  "helpOverview": {
+    "message": "<h2>Co robi to rozszerzenie</h2><p>To rozszerzenie pozwala kontrolować wysyłanie nagłówków <code>Referer</code> do witryn internetowych indywidualnie dla każdej domeny.</p><p>Może to poprawić prywatność i rozwiązać problemy z kompatybilnością z usługami, które oczekują konkretnych wartości Referer.</p><p>Domyślnie każda domena ma ustawione 🚫 Brak Referera — to rozszerzenie usuwa nagłówek Referer dla każdej odwiedzanej witryny, nie tylko tych skonfigurowanych. Aby nadal wysyłać Referer do konkretnej domeny, dodaj dla niej regułę i wybierz 🌍, 🔗 lub ♾️.</p><h2>🏠 Kontakt</h2><p>Ten projekt jest open source i dostępny na <a href=\"https://github.com/transfairs/referer-by-domain\" target=\"_blank\" rel=\"noopener noreferrer\">GitHub</a>.</p><div class=\"contact-box\"><a class=\"contact-item github\" href=\"https://github.com/transfairs\" target=\"_blank\" rel=\"noopener noreferrer\"><img src=\"../assets/github.svg\" alt=\"GitHub\"> GitHub</a><a class=\"contact-item linkedin\" href=\"https://www.linkedin.com/in/robin-trauer/\" target=\"_blank\" rel=\"noopener noreferrer\"><img src=\"../assets/linkedin.svg\" alt=\"LinkedIn\"> LinkedIn</a><a class=\"contact-item youtube\" href=\"https://www.youtube.com/@Transfairs\" target=\"_blank\" rel=\"noopener noreferrer\"><img src=\"../assets/youtube.svg\" alt=\"YouTube\"> YouTube</a></div>"
+  },
+  "helpFunction": {
+    "message": "<h2>Jak to działa</h2><p>Każdej domenie możesz przypisać jeden z czterech trybów Referer:</p><ul><li>🚫 Nie wysyłaj Referera</li><li>🌍 Wysyłaj tylko źródło (np. <code>https://example.com</code>)</li><li>🔗 Wysyłaj pełny adres URL</li><li>♾️ Zezwól na Referer bez ograniczeń</li></ul><p>Reguły wieloznaczne, takie jak <code>*.example.com</code>, mogą obejmować wszystkie subdomeny. Jeśli taka reguła już istnieje, zostanie to zaznaczone. Dokładne dopasowanie (np. <code>shop.example.com</code>) zawsze ma pierwszeństwo przed pasującą regułą wieloznaczną.</p><h2>🗂️ Zarządzanie domenami w Ustawieniach</h2><p>Otwórz stronę Ustawień (⚙️), aby zobaczyć i zarządzać wszystkimi skonfigurowanymi domenami w jednym miejscu:</p><ul><li><strong>Wyszukiwanie:</strong> Filtruj listę, wpisując część nazwy domeny.</li><li><strong>➕ Dodaj:</strong> Kliknij „+ Nowa domena” i wpisz domenę, aby utworzyć dla niej regułę (domyślnie 🚫 Brak Referera).</li><li><strong>Przyciski trybu:</strong> Kliknij 🚫, 🌍, 🔗 lub ♾️ bezpośrednio na karcie domeny, aby zmienić jej tryb.</li><li><strong>✏️ Edytuj:</strong> Zmień nazwę domeny, zachowując przypisany tryb.</li><li><strong>🗑️ Usuń:</strong> Usuń regułę domeny (wymagane potwierdzenie).</li></ul><h2>Powiązane domeny</h2><p><strong>Powiązane domeny</strong> są automatycznie wykrywane przez skrypt działający w tle. Są to domeny, z którymi kontaktuje się bieżąca strona, takie jak:</p><ul><li>Sieci CDN (np. <code>cdn.example.com</code>)</li><li>API (<code>api.example.com</code>)</li><li>Usługi uwierzytelniania (<code>login.partner.com</code>)</li><li>Dostawcy treści zewnętrznych</li></ul><p>Rozszerzenie identyfikuje je, obserwując rzeczywiste połączenia sieciowe.</p><h3>🧩 Do czego przydają się powiązane domeny</h3><ul><li><b>Widoczność:</b> Pokazuje, z jakimi domenami kontaktuje się strona.</li><li><b>Wygoda:</b> Od razu widzisz, które domeny mogą wymagać ustawień Referera, aby zapewnić pełną funkcjonalność.</li><li><b>Szybki dostęp:</b> Pojawiają się jako klikalne sugestie w popupie.</li><li><b>Spójność:</b> Użyj tego samego trybu Referera dla wszystkich powiązanych domen.</li></ul><h3>🛠 Jak korzystać z powiązanych domen</h3><ol><li>Otwórz popup.</li><li>Sprawdź listę „Powiązane domeny”.</li><li>Kliknij jedną z nich, aby wstawić ją do pola wprowadzania.</li><li>Przypisz tryb Referera do tej domeny.</li></ol>"
+  },
+  "helpUseCases": {
+    "message": "<h2>Ogólne</h2><ul><li>🛡️ Uniemożliwia witrynom zobaczenie, skąd pochodzisz.</li><li>🔐 Umożliwia logowanie lub pobieranie zależne od konkretnych refererów.</li><li>🌐 Definiuje spójne reguły dla wszystkich subdomen danej usługi.</li></ul><h2>Problemy z logowaniem</h2><p>Jeśli globalnie wyłączyłeś nagłówek referer (patrz 🔧 Wskazówki), niektóre witryny mogą blokować logowanie, nawet jeśli strona wczytuje się poprawnie. Często dotyczy to żądań do powiązanej domeny.</p><p>W poniższym przykładzie logowanie w <code>my.example.com</code> nie powiedzie się, dopóki <code>api.example.com</code> nie będzie miał odpowiedniego trybu Referera:</p><div class=\"image-pair\"><figure><img src=\"../assets/login-fails.png\" alt=\"Logowanie nieudane\" width=\"300\" /><figcaption>❌ Przed - próba logowania kończy się niepowodzeniem</figcaption></figure><p>Na poniższym obrazie Referer dla <code>api.example.com</code> ustawiono na „🌍 Tylko źródło”. Pola logowania są widoczne:</p><figure><img src=\"../assets/login-works.png\" alt=\"Logowanie działa\" width=\"300\" /><figcaption>✅ Po - Referer ustawiony dla <code>api.example.com</code></figcaption></figure></div><p><code>api.example.com</code> został wykryty i wymieniony przez rozszerzenie jako „Powiązana domena”.</p>"
+  },
+  "helpPrivacy": {
+    "message": "<h2>Prywatność</h2><ul><li>✅ Wszystkie ustawienia są przechowywane <strong>lokalnie</strong> w przeglądarce.</li><li>✅ Żadne dane nie są przesyłane ani synchronizowane.</li><li>✅ Brak śledzenia, analityki czy żądań zdalnych.</li><li>✅ Uprawnienia <code>&lt;all_urls&gt;</code> i <code>webRequest</code> są używane wyłącznie do przechwytywania i modyfikowania nagłówka Referer w Twoich żądaniach — do niczego innego.</li><li>✅ Przechowywane są wyłącznie nazwy domen i przypisany im tryb Referera — nigdy pełne adresy URL, treść stron ani historia przeglądania. Te dane pozostają tylko w tej przeglądarce, nie są synchronizowane między urządzeniami i są usuwane po odinstalowaniu rozszerzenia.</li><li>ℹ️ Funkcja Powiązanych domen działa poprzez obserwację nazw hostów w Twoich żądaniach, przechowywanych w pamięci tylko na czas bieżącej sesji przeglądarki — nigdy nie są zapisywane na dysku ani nigdzie wysyłane (szczegóły w 🧪 Techniczne).</li><li>⚠️ Tryb „🔗 Wysyłaj pełny adres URL” wysyła pełny adres URL strony — łącznie ze ścieżką i parametrami zapytania — do domeny docelowej. Unikaj go w przypadku domen, których adres URL może zawierać poufne dane, takie jak tokeny uwierzytelniające, identyfikatory sesji lub wyszukiwane hasła; preferuj „🌍 Wysyłaj tylko źródło”, chyba że pełny adres URL jest naprawdę wymagany.</li></ul>"
+  },
+  "helpTech": {
+    "message": "<h2>🧪 Uwagi techniczne</h2><h3>Dopasowywanie reguł</h3><ul><li>Dokładne dopasowanie domeny zawsze ma pierwszeństwo przed regułą wieloznaczną.</li><li>Reguły wieloznaczne dopasowują tylko sufiks — <code>*.example.com</code> pasuje do <code>shop.example.com</code>, ale nie do samego <code>example.com</code>.</li></ul><h3>Tryby Źródło i Pełny URL wymagają strony odsyłającej</h3><p>Tryby 🌍 Źródło i 🔗 Pełny URL mogą wysłać Referer tylko wtedy, gdy przeglądarka wie, która strona zainicjowała żądanie. Przy bezpośredniej nawigacji — wpisaniu adresu URL, otwarciu zakładki lub nowej karty — nie ma strony odsyłającej, więc niezależnie od ustawionego trybu Referer nie zostanie wysłany.</p><h3>Wykrywanie powiązanych domen jest tymczasowe</h3><ul><li>Lista <em>wykrytych powiązań</em> między domenami jest przechowywana wyłącznie w pamięci (w pamięci sesji przeglądarki) i <strong>nie jest zapisywana na dysku</strong> — przetrwa wyładowanie procesu tła rozszerzenia, ale zostaje zresetowana przy każdym ponownym uruchomieniu przeglądarki.</li><li>Nie wpływa to na Twoje reguły: jeśli przypiszesz tryb Referera do powiązanej domeny, ta reguła jest zapisywana normalnie, tak jak dla każdej innej domeny — tylko samo wykryte powiązanie znika po ponownym uruchomieniu przeglądarki.</li><li>Śledzone są tylko wczytania stron oraz żądania XHR/fetch. Domeny kontaktowane wyłącznie przez obrazy, czcionki lub połączenia WebSocket nie pojawią się na liście.</li><li>Na każdą stronę zapamiętywanych jest do 100 powiązanych domen, a śledzonych jest jednocześnie do 200 stron; po osiągnięciu tych limitów najpierw usuwane są najstarsze wpisy.</li></ul>"
+  },
+  "helpTips": {
+    "message": "<h2>Całkowite wyłączenie domyślnego Referera</h2><p>Jeśli chcesz, aby Firefox domyślnie przestał wysyłać nagłówki referer, możesz zmienić następujące ustawienie zaawansowane:</p><ol><li>Wpisz <code>about:config</code> w pasku adresu.</li><li>Wyszukaj <code>network.http.sendRefererHeader</code>.</li><li>Ustaw wartość na <code>0</code>.</li></ol><p>To rozszerzenie ma na celu naśladowanie działania tego ustawienia, ale dla poszczególnych domen zamiast globalnie.</p><p>Przy domyślnie wyłączonym referze to rozszerzenie staje się szczególnie przydatne.</p><h2>Różne</h2><ul><li>Użyj <code>*.example.com</code>, aby objąć wszystkie subdomeny.</li><li>Istniejące reguły można edytować w ustawieniach.</li><li>Kliknięcie powiązanej domeny w popupie otwiera ją do edycji.</li><li>Jeśli pasuje reguła wieloznaczna, jest ona wyświetlana i można ją modyfikować.</li></ul>"
+  },
+  "themeToggleTitle": {
+    "message": "Motyw: $1 (kliknij, aby zmienić)"
+  },
+  "themeAuto": {
+    "message": "Automatyczny"
+  },
+  "themeLight": {
+    "message": "Jasny"
+  },
+  "themeDark": {
+    "message": "Ciemny"
+  },
+  "languageAuto": {
+    "message": "Domyślny przeglądarki"
+  },
+  "languageSelectLabel": {
+    "message": "Język"
+  },
+  "modalCancel": {
+    "message": "Anuluj"
+  },
+  "modalConfirm": {
+    "message": "OK"
+  },
+  "modalOk": {
+    "message": "OK"
+  },
+  "addDomainTitle": {
+    "message": "Dodaj domenę"
+  },
+  "editDomainTitle": {
+    "message": "Edytuj domenę"
+  },
+  "deleteDomainTitle": {
+    "message": "Usuń domenę"
+  },
+  "confirmDeleteDomain": {
+    "message": "Czy na pewno chcesz usunąć domenę „$1”?"
+  },
+  "importConfirmTitle": {
+    "message": "Importuj ustawienia"
+  },
+  "noDomainsFound": {
+    "message": "Nie skonfigurowano jeszcze żadnych domen."
+  },
+  "noDomainsHint": {
+    "message": "Dodaj domenę, aby kontrolować jej nagłówek Referer."
+  },
+  "noDomainsSearchEmpty": {
+    "message": "Żadna domena nie pasuje do wyszukiwania."
+  },
+  "footerGithub": {
+    "message": "GitHub"
+  },
+  "footerReportIssue": {
+    "message": "Zgłoś problem"
+  },
+  "footerLicense": {
+    "message": "Licencja GPL-3.0"
+  },
+  "aiTranslatedNotice": {
+    "message": "To tłumaczenie zostało wygenerowane przez sztuczną inteligencję i może zawierać błędy."
+  },
+  "aiTranslatedDismiss": {
+    "message": "Odrzuć"
+  }
+}

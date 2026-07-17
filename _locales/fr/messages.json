@@ -1,0 +1,206 @@
+{
+  "extensionName": {
+    "message": "Referer par domaine"
+  },
+  "optionNoReferer": {
+    "message": "Aucun Referer"
+  },
+  "optionOriginOnly": {
+    "message": "Envoyer uniquement l'origine"
+  },
+  "optionFullUrl": {
+    "message": "Envoyer l'URL complète"
+  },
+  "optionUnlimited": {
+    "message": "Referer sans restriction"
+  },
+  "optionsPageLink": {
+    "message": "Paramètres"
+  },
+  "importExportPageLink": {
+    "message": "Import | Export"
+  },
+  "savedStatus": {
+    "message": "Paramètre enregistré ! Veuillez recharger l'onglet."
+  },
+  "reloadTabButton": {
+    "message": "↻ Recharger l'onglet"
+  },
+  "noRelatedDomains": {
+    "message": "Aucun domaine associé détecté pour le moment. Naviguez sur le site ou rechargez l'onglet pour les détecter."
+  },
+  "currentDomainTitle": {
+    "message": "Domaine actuel"
+  },
+  "refererSettingTitle": {
+    "message": "Paramètre Referer"
+  },
+  "relatedDomainsTitle": {
+    "message": "Domaines associés"
+  },
+  "settingsTab": { "message": "⚙️ Paramètres" },
+  "optionsTitle": {
+    "message": "Paramètres Referer"
+  },
+  "searchPlaceholder": {
+    "message": "Rechercher des domaines..."
+  },
+  "addDomainButton": {
+    "message": "+ Nouveau domaine"
+  },
+  "legendTitle": {
+    "message": "Légende des symboles"
+  },
+  "legendNoReferer": {
+    "message": "Aucun Referer ne sera envoyé."
+  },
+  "legendOriginOnly": {
+    "message": "Seule l'origine sera envoyée."
+  },
+  "legendFullUrl": {
+    "message": "L'URL complète sera envoyée. ⚠️ Peut inclure des données sensibles (par ex. jetons, termes de recherche)."
+  },
+  "legendUnlimited": {
+    "message": "L'envoi du Referer n'est pas restreint."
+  },
+  "matchedRuleText": {
+    "message": "⭐ Règle générique correspondante : $1"
+  },
+  "promptNewDomain": {
+    "message": "Saisissez un nouveau domaine :"
+  },
+  "promptEditDomain": {
+    "message": "Modifier le domaine :"
+  },
+  "editDomainButton": {
+    "message": "Modifier le domaine"
+  },
+  "deleteDomainButton": {
+    "message": "Supprimer le domaine"
+  },
+  "domainAlreadyExists": {
+    "message": "Ce domaine est déjà configuré."
+  },
+  "importExportTab": {
+    "message": "📥 Import | Export"
+  },
+  "exportTitle": {
+    "message": "Export"
+  },
+  "exportDescription": {
+    "message": "Enregistrez toutes vos règles de domaine dans un fichier JSON, par exemple pour les sauvegarder ou les transférer vers un autre navigateur."
+  },
+  "exportButton": {
+    "message": "⬇️ Exporter"
+  },
+  "importTitle": {
+    "message": "Import"
+  },
+  "importDescription": {
+    "message": "Chargez des règles de domaine depuis un fichier JSON précédemment exporté. Les règles importées sont fusionnées avec vos règles existantes, en écrasant celles qui partagent le même domaine."
+  },
+  "importButton": {
+    "message": "⬆️ Importer"
+  },
+  "importConfirm": {
+    "message": "Importer $1 règle(s) de domaine ? Les règles existantes pour les mêmes domaines seront écrasées."
+  },
+  "importSuccess": {
+    "message": "Paramètres importés avec succès."
+  },
+  "importInvalidFile": {
+    "message": "Ce fichier n'a pas pu être importé. Veuillez sélectionner un export de paramètres valide."
+  },
+  "helpTitle": { "message": "Aide" },
+  "helpTab": { "message": "❓ Aide" },
+  "tabOverview": { "message": "🧭 Aperçu" },
+  "tabFunction": { "message": "⚙️ Fonctionnement" },
+  "tabUseCases": { "message": "💬 Cas d'usage" },
+  "tabPrivacy": { "message": "🛡️ Confidentialité" },
+  "tabTech": { "message": "🧪 Technique" },
+  "tabTips": { "message": "🔧 Astuces" },
+  "helpOverview": {
+    "message": "<h2>Ce que fait cette extension</h2><p>Cette extension vous permet de contrôler l'envoi des en-têtes <code>Referer</code> aux sites web, domaine par domaine.</p><p>Cela peut améliorer la confidentialité et résoudre des problèmes de compatibilité avec des services qui attendent des valeurs Referer spécifiques.</p><p>Par défaut, chaque domaine est réglé sur 🚫 Aucun Referer — cette extension supprime l'en-tête Referer pour tous les sites que vous visitez, pas seulement ceux que vous avez configurés. Pour continuer à envoyer un Referer à un domaine spécifique, ajoutez une règle pour celui-ci et choisissez 🌍, 🔗 ou ♾️.</p><h2>🏠 Contact</h2><p>Ce projet est open source et disponible sur <a href=\"https://github.com/transfairs/referer-by-domain\" target=\"_blank\" rel=\"noopener noreferrer\">GitHub</a>.</p><div class=\"contact-box\"><a class=\"contact-item github\" href=\"https://github.com/transfairs\" target=\"_blank\" rel=\"noopener noreferrer\"><img src=\"../assets/github.svg\" alt=\"GitHub\"> GitHub</a><a class=\"contact-item linkedin\" href=\"https://www.linkedin.com/in/robin-trauer/\" target=\"_blank\" rel=\"noopener noreferrer\"><img src=\"../assets/linkedin.svg\" alt=\"LinkedIn\"> LinkedIn</a><a class=\"contact-item youtube\" href=\"https://www.youtube.com/@Transfairs\" target=\"_blank\" rel=\"noopener noreferrer\"><img src=\"../assets/youtube.svg\" alt=\"YouTube\"> YouTube</a></div>"
+  },
+  "helpFunction": {
+    "message": "<h2>Fonctionnement</h2><p>Vous pouvez attribuer à chaque domaine l'un des quatre modes Referer suivants :</p><ul><li>🚫 N'envoyer aucun Referer</li><li>🌍 Envoyer uniquement l'origine (par ex. <code>https://example.com</code>)</li><li>🔗 Envoyer l'URL complète</li><li>♾️ Autoriser le Referer sans restriction</li></ul><p>Les règles génériques comme <code>*.example.com</code> peuvent couvrir tous les sous-domaines. Si une telle règle existe déjà, elle sera indiquée. Une correspondance exacte (par ex. <code>shop.example.com</code>) est toujours prioritaire sur une règle générique correspondante.</p><h2>🗂️ Gérer les domaines dans les Paramètres</h2><p>Ouvrez la page Paramètres (⚙️) pour voir et gérer tous les domaines configurés au même endroit :</p><ul><li><strong>Recherche :</strong> Filtrez la liste en saisissant une partie du nom de domaine.</li><li><strong>➕ Ajouter :</strong> Cliquez sur « + Nouveau domaine » et saisissez un domaine pour créer une règle (par défaut 🚫 Aucun Referer).</li><li><strong>Boutons de mode :</strong> Cliquez directement sur 🚫, 🌍, 🔗 ou ♾️ sur une carte de domaine pour changer son mode.</li><li><strong>✏️ Modifier :</strong> Renommez un domaine tout en conservant son mode attribué.</li><li><strong>🗑️ Supprimer :</strong> Supprimez la règle d'un domaine (une confirmation est requise).</li></ul><h2>Domaines associés</h2><p><strong>Les domaines associés</strong> sont automatiquement détectés par le script d'arrière-plan. Il s'agit de domaines contactés depuis la page actuelle, tels que :</p><ul><li>Des CDN (par ex. <code>cdn.example.com</code>)</li><li>Des API (<code>api.example.com</code>)</li><li>Des services d'authentification (<code>login.partner.com</code>)</li><li>Des fournisseurs de contenu tiers</li></ul><p>L'extension les identifie en observant les connexions réseau réelles.</p><h3>🧩 Pourquoi les domaines associés sont utiles</h3><ul><li><b>Visibilité :</b> Montre avec quels domaines une page interagit.</li><li><b>Praticité :</b> Voyez immédiatement quels domaines peuvent nécessiter des paramètres Referer pour activer toutes les fonctionnalités.</li><li><b>Accès rapide :</b> Ils apparaissent comme suggestions cliquables dans le popup.</li><li><b>Cohérence :</b> Utilisez le même mode Referer pour tous les domaines concernés.</li></ul><h3>🛠 Comment utiliser les domaines associés</h3><ol><li>Ouvrez le popup.</li><li>Consultez la liste des « Domaines associés ».</li><li>Cliquez sur l'un d'eux pour l'insérer dans le champ de saisie.</li><li>Attribuez un mode Referer à ce domaine.</li></ol>"
+  },
+  "helpUseCases": {
+    "message": "<h2>Général</h2><ul><li>🛡️ Empêcher les sites web de voir d'où vous venez.</li><li>🔐 Activer des fonctions de connexion ou de téléchargement qui dépendent de referers spécifiques.</li><li>🌐 Définir des règles cohérentes pour tous les sous-domaines d'un service.</li></ul><h2>Problèmes de connexion</h2><p>Si vous avez désactivé l'en-tête referer globalement (voir 🔧 Astuces), certains sites web peuvent bloquer la connexion même si la page se charge correctement. Cela concerne souvent des requêtes vers un domaine associé.</p><p>Dans l'exemple suivant, la connexion à <code>my.example.com</code> échoue tant que <code>api.example.com</code> n'a pas un mode Referer approprié :</p><div class=\"image-pair\"><figure><img src=\"../assets/login-fails.png\" alt=\"Échec de connexion\" width=\"300\" /><figcaption>❌ Avant - La tentative de connexion échoue</figcaption></figure><p>Dans l'image ci-dessous, le Referer pour <code>api.example.com</code> est réglé sur « 🌍 Origine uniquement ». Les champs de connexion apparaissent :</p><figure><img src=\"../assets/login-works.png\" alt=\"Connexion réussie\" width=\"300\" /><figcaption>✅ Après - Referer défini pour <code>api.example.com</code></figcaption></figure></div><p><code>api.example.com</code> a été détecté et listé comme « Domaine associé » par l'extension.</p>"
+  },
+  "helpPrivacy": {
+    "message": "<h2>Confidentialité</h2><ul><li>✅ Tous les paramètres sont stockés <strong>localement</strong> dans votre navigateur.</li><li>✅ Aucune donnée n'est transmise ou synchronisée.</li><li>✅ Aucun suivi, aucune analyse, aucune requête distante.</li><li>✅ Les permissions <code>&lt;all_urls&gt;</code> et <code>webRequest</code> sont uniquement utilisées pour intercepter et réécrire l'en-tête Referer de vos requêtes — rien d'autre.</li><li>✅ Seuls les noms de domaine et le mode Referer que vous leur avez attribué sont stockés — jamais les URL complètes, le contenu des pages ou l'historique de navigation. Ces données restent uniquement dans ce navigateur, ne sont pas synchronisées entre appareils et sont supprimées si vous désinstallez l'extension.</li><li>ℹ️ La fonction Domaines associés fonctionne en observant les noms d'hôte impliqués dans vos requêtes, conservés en mémoire uniquement pour la session de navigateur en cours — jamais enregistrés sur le disque ni envoyés où que ce soit (voir 🧪 Technique pour plus de détails).</li><li>⚠️ Le mode « 🔗 Envoyer l'URL complète » envoie l'URL complète de la page — y compris son chemin et sa chaîne de requête — au domaine cible. Évitez-le pour les domaines dont l'URL pourrait contenir des données sensibles telles que des jetons d'authentification, des identifiants de session ou des termes de recherche ; préférez « 🌍 Envoyer uniquement l'origine » sauf si l'URL complète est réellement nécessaire.</li></ul>"
+  },
+  "helpTech": {
+    "message": "<h2>🧪 Remarques techniques</h2><h3>Correspondance des règles</h3><ul><li>Une correspondance exacte de domaine est toujours prioritaire sur une règle générique.</li><li>Les règles génériques ne correspondent qu'à un suffixe — <code>*.example.com</code> correspond à <code>shop.example.com</code> mais pas à <code>example.com</code> lui-même.</li></ul><h3>Les modes Origine et URL complète nécessitent une page référente</h3><p>Les modes 🌍 Origine et 🔗 URL complète ne peuvent envoyer un Referer que si le navigateur sait quelle page a déclenché la requête. Pour une navigation directe — saisie d'une URL, ouverture d'un signet ou d'un nouvel onglet — il n'y a pas de page référente, donc aucun Referer n'est envoyé, quel que soit le mode défini.</p><h3>La détection des domaines associés est temporaire</h3><ul><li>La liste des <em>relations détectées</em> entre domaines n'est conservée qu'en mémoire (via le stockage de session du navigateur) et n'est <strong>pas enregistrée sur le disque</strong> — elle survit au déchargement du processus d'arrière-plan de l'extension, mais est réinitialisée à chaque redémarrage du navigateur.</li><li>Cela n'affecte pas vos règles : si vous attribuez un mode Referer à un domaine associé, cette règle est enregistrée normalement, comme n'importe quel autre domaine — seule la relation détectée elle-même disparaît au redémarrage du navigateur.</li><li>Seuls les chargements de page et les requêtes XHR/fetch sont suivis. Les domaines contactés uniquement via des images, des polices ou des connexions WebSocket n'apparaîtront pas dans la liste.</li><li>Jusqu'à 100 domaines associés sont mémorisés par page, et jusqu'à 200 pages sont suivies simultanément ; les entrées les plus anciennes sont supprimées en premier une fois ces limites atteintes.</li></ul>"
+  },
+  "helpTips": {
+    "message": "<h2>Désactiver complètement le Referer par défaut</h2><p>Si vous souhaitez que Firefox cesse d'envoyer des en-têtes referer par défaut, vous pouvez modifier le paramètre avancé suivant :</p><ol><li>Saisissez <code>about:config</code> dans la barre d'adresse.</li><li>Recherchez <code>network.http.sendRefererHeader</code>.</li><li>Réglez la valeur sur <code>0</code>.</li></ol><p>Cette extension vise à reproduire le comportement de ce paramètre, mais domaine par domaine plutôt que globalement.</p><p>Avec le referer désactivé par défaut, cette extension devient particulièrement utile.</p><h2>Divers</h2><ul><li>Utilisez <code>*.example.com</code> pour couvrir tous les sous-domaines.</li><li>Les règles existantes peuvent être modifiées dans les paramètres.</li><li>Cliquer sur un domaine associé dans le popup l'ouvre pour modification.</li><li>Si une règle générique correspond, elle est affichée et peut être modifiée.</li></ul>"
+  },
+  "themeToggleTitle": {
+    "message": "Thème : $1 (cliquer pour changer)"
+  },
+  "themeAuto": {
+    "message": "Auto"
+  },
+  "themeLight": {
+    "message": "Clair"
+  },
+  "themeDark": {
+    "message": "Sombre"
+  },
+  "languageAuto": {
+    "message": "Par défaut du navigateur"
+  },
+  "languageSelectLabel": {
+    "message": "Langue"
+  },
+  "modalCancel": {
+    "message": "Annuler"
+  },
+  "modalConfirm": {
+    "message": "OK"
+  },
+  "modalOk": {
+    "message": "OK"
+  },
+  "addDomainTitle": {
+    "message": "Ajouter un domaine"
+  },
+  "editDomainTitle": {
+    "message": "Modifier le domaine"
+  },
+  "deleteDomainTitle": {
+    "message": "Supprimer le domaine"
+  },
+  "confirmDeleteDomain": {
+    "message": "Voulez-vous vraiment supprimer le domaine « $1 » ?"
+  },
+  "importConfirmTitle": {
+    "message": "Importer les paramètres"
+  },
+  "noDomainsFound": {
+    "message": "Aucun domaine configuré pour le moment."
+  },
+  "noDomainsHint": {
+    "message": "Ajoutez un domaine pour contrôler son en-tête Referer."
+  },
+  "noDomainsSearchEmpty": {
+    "message": "Aucun domaine ne correspond à votre recherche."
+  },
+  "footerGithub": {
+    "message": "GitHub"
+  },
+  "footerReportIssue": {
+    "message": "Signaler un problème"
+  },
+  "footerLicense": {
+    "message": "Licence GPL-3.0"
+  },
+  "aiTranslatedNotice": {
+    "message": "Cette traduction a été générée par une IA et peut contenir des erreurs."
+  },
+  "aiTranslatedDismiss": {
+    "message": "Ignorer"
+  }
+}

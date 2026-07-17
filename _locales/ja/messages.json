@@ -1,0 +1,206 @@
+{
+  "extensionName": {
+    "message": "ドメイン別リファラー"
+  },
+  "optionNoReferer": {
+    "message": "リファラーなし"
+  },
+  "optionOriginOnly": {
+    "message": "オリジンのみ送信"
+  },
+  "optionFullUrl": {
+    "message": "完全なURLを送信"
+  },
+  "optionUnlimited": {
+    "message": "無制限のリファラー"
+  },
+  "optionsPageLink": {
+    "message": "設定"
+  },
+  "importExportPageLink": {
+    "message": "インポート | エクスポート"
+  },
+  "savedStatus": {
+    "message": "設定を保存しました。タブを再読み込みしてください。"
+  },
+  "reloadTabButton": {
+    "message": "↻ タブを再読み込み"
+  },
+  "noRelatedDomains": {
+    "message": "関連ドメインはまだ検出されていません。サイトを閲覧するか、タブを再読み込みして検出してください。"
+  },
+  "currentDomainTitle": {
+    "message": "現在のドメイン"
+  },
+  "refererSettingTitle": {
+    "message": "リファラー設定"
+  },
+  "relatedDomainsTitle": {
+    "message": "関連ドメイン"
+  },
+  "settingsTab": { "message": "⚙️ 設定" },
+  "optionsTitle": {
+    "message": "リファラー設定"
+  },
+  "searchPlaceholder": {
+    "message": "ドメインを検索..."
+  },
+  "addDomainButton": {
+    "message": "+ 新しいドメイン"
+  },
+  "legendTitle": {
+    "message": "記号の凡例"
+  },
+  "legendNoReferer": {
+    "message": "リファラーは送信されません。"
+  },
+  "legendOriginOnly": {
+    "message": "オリジンのみ送信されます。"
+  },
+  "legendFullUrl": {
+    "message": "完全なURLが送信されます。⚠️ トークンや検索語句などの機密データが含まれる場合があります。"
+  },
+  "legendUnlimited": {
+    "message": "リファラー送信は制限されません。"
+  },
+  "matchedRuleText": {
+    "message": "⭐ 一致したワイルドカードルール: $1"
+  },
+  "promptNewDomain": {
+    "message": "新しいドメインを入力してください:"
+  },
+  "promptEditDomain": {
+    "message": "ドメインを編集:"
+  },
+  "editDomainButton": {
+    "message": "ドメインを編集"
+  },
+  "deleteDomainButton": {
+    "message": "ドメインを削除"
+  },
+  "domainAlreadyExists": {
+    "message": "このドメインは既に設定されています。"
+  },
+  "importExportTab": {
+    "message": "📥 インポート | エクスポート"
+  },
+  "exportTitle": {
+    "message": "エクスポート"
+  },
+  "exportDescription": {
+    "message": "すべてのドメインルールをJSONファイルに保存します。バックアップや別のブラウザへの移行などに使用できます。"
+  },
+  "exportButton": {
+    "message": "⬇️ エクスポート"
+  },
+  "importTitle": {
+    "message": "インポート"
+  },
+  "importDescription": {
+    "message": "以前エクスポートしたJSONファイルからドメインルールを読み込みます。インポートされたルールは既存のルールと統合され、同じドメインのルールは上書きされます。"
+  },
+  "importButton": {
+    "message": "⬆️ インポート"
+  },
+  "importConfirm": {
+    "message": "$1 件のドメインルールをインポートしますか?同じドメインの既存のルールは上書きされます。"
+  },
+  "importSuccess": {
+    "message": "設定を正常にインポートしました。"
+  },
+  "importInvalidFile": {
+    "message": "このファイルはインポートできませんでした。有効な設定エクスポートファイルを選択してください。"
+  },
+  "helpTitle": { "message": "ヘルプ" },
+  "helpTab": { "message": "❓ ヘルプ" },
+  "tabOverview": { "message": "🧭 概要" },
+  "tabFunction": { "message": "⚙️ 機能" },
+  "tabUseCases": { "message": "💬 ユースケース" },
+  "tabPrivacy": { "message": "🛡️ プライバシー" },
+  "tabTech": { "message": "🧪 技術情報" },
+  "tabTips": { "message": "🔧 ヒント" },
+  "helpOverview": {
+    "message": "<h2>この拡張機能の機能</h2><p>この拡張機能を使うと、ウェブサイトへの<code>Referer</code>ヘッダーの送信をドメインごとに制御できます。</p><p>これによりプライバシーを向上させたり、特定のReferer値を必要とするサービスとの互換性の問題を解決したりできます。</p><p>デフォルトでは、すべてのドメインが🚫リファラーなしに設定されています — この拡張機能は、設定したサイトだけでなく、訪問するすべてのサイトでReferer ヘッダーを削除します。特定のドメインにReferer を送り続けたい場合は、そのドメインのルールを追加し、🌍、🔗、♾️ のいずれかを選択してください。</p><h2>🏠 お問い合わせ</h2><p>このプロジェクトはオープンソースであり、<a href=\"https://github.com/transfairs/referer-by-domain\" target=\"_blank\" rel=\"noopener noreferrer\">GitHub</a>で公開されています。</p><div class=\"contact-box\"><a class=\"contact-item github\" href=\"https://github.com/transfairs\" target=\"_blank\" rel=\"noopener noreferrer\"><img src=\"../assets/github.svg\" alt=\"GitHub\"> GitHub</a><a class=\"contact-item linkedin\" href=\"https://www.linkedin.com/in/robin-trauer/\" target=\"_blank\" rel=\"noopener noreferrer\"><img src=\"../assets/linkedin.svg\" alt=\"LinkedIn\"> LinkedIn</a><a class=\"contact-item youtube\" href=\"https://www.youtube.com/@Transfairs\" target=\"_blank\" rel=\"noopener noreferrer\"><img src=\"../assets/youtube.svg\" alt=\"YouTube\"> YouTube</a></div>"
+  },
+  "helpFunction": {
+    "message": "<h2>仕組み</h2><p>各ドメインには次の4つのRefererモードのいずれかを割り当てられます。</p><ul><li>🚫 リファラーを送信しない</li><li>🌍 オリジンのみ送信する(例: <code>https://example.com</code>)</li><li>🔗 完全なURLを送信する</li><li>♾️ リファラーを無制限に許可する</li></ul><p><code>*.example.com</code> のようなワイルドカードルールで、すべてのサブドメインをカバーできます。すでにそのようなルールがある場合は表示されます。完全一致(例: <code>shop.example.com</code>)は、一致するワイルドカードルールより常に優先されます。</p><h2>🗂️ 設定でドメインを管理する</h2><p>設定ページ(⚙️)を開くと、設定済みのすべてのドメインを一か所で確認・管理できます。</p><ul><li><strong>検索:</strong> ドメイン名の一部を入力してリストを絞り込みます。</li><li><strong>➕ 追加:</strong>「+ 新しいドメイン」をクリックし、ドメインを入力してルールを作成します(デフォルトは🚫リファラーなし)。</li><li><strong>モードボタン:</strong> ドメインカード上の🚫、🌍、🔗、♾️を直接クリックしてモードを変更します。</li><li><strong>✏️ 編集:</strong> 割り当てられたモードを保持したまま、ドメイン名を変更します。</li><li><strong>🗑️ 削除:</strong> ドメインのルールを削除します(確認が必要です)。</li></ul><h2>関連ドメイン</h2><p><strong>関連ドメイン</strong>はバックグラウンドスクリプトによって自動的に検出されます。これは現在のページから接続されるドメインで、例えば次のようなものです。</p><ul><li>CDN(例: <code>cdn.example.com</code>)</li><li>API(<code>api.example.com</code>)</li><li>認証サービス(<code>login.partner.com</code>)</li><li>サードパーティのコンテンツプロバイダー</li></ul><p>拡張機能は実際のネットワーク接続を監視することでこれらを識別します。</p><h3>🧩 関連ドメインが便利な理由</h3><ul><li><b>可視性:</b> ページがどのドメインとやり取りしているかを表示します。</li><li><b>利便性:</b> どのドメインに機能を有効化するためのReferer設定が必要かをすぐに確認できます。</li><li><b>すばやいアクセス:</b> ポップアップにクリック可能な候補として表示されます。</li><li><b>一貫性:</b> 関連するすべてのドメインに同じRefererモードを適用できます。</li></ul><h3>🛠 関連ドメインの使い方</h3><ol><li>ポップアップを開きます。</li><li>「関連ドメイン」のリストを確認します。</li><li>いずれかをクリックして入力フィールドに挿入します。</li><li>そのドメインにRefererモードを割り当てます。</li></ol>"
+  },
+  "helpUseCases": {
+    "message": "<h2>一般</h2><ul><li>🛡️ ウェブサイトにアクセス元を知られないようにします。</li><li>🔐 特定のリファラーに依存するログインやダウンロード機能を有効にします。</li><li>🌐 サービスのすべてのサブドメインに一貫したルールを定義します。</li></ul><h2>ログインの問題</h2><p>リファラーヘッダーをグローバルに無効化している場合(🔧ヒントを参照)、ページ自体は正常に読み込まれても、一部のウェブサイトでログインがブロックされることがあります。これはしばしば関連ドメインへのリクエストが原因です。</p><p>次の例では、<code>api.example.com</code>に適切なRefererモードが設定されていない限り、<code>my.example.com</code>でのログインは失敗します。</p><div class=\"image-pair\"><figure><img src=\"../assets/login-fails.png\" alt=\"ログイン失敗\" width=\"300\" /><figcaption>❌ 変更前 - ログイン試行が失敗する</figcaption></figure><p>下の画像では、<code>api.example.com</code>のリファラーが「🌍 オリジンのみ」に設定されています。ログインフィールドが表示されます。</p><figure><img src=\"../assets/login-works.png\" alt=\"ログイン成功\" width=\"300\" /><figcaption>✅ 変更後 - <code>api.example.com</code>にリファラーを設定</figcaption></figure></div><p><code>api.example.com</code>は拡張機能によって検出され、「関連ドメイン」として一覧表示されました。</p>"
+  },
+  "helpPrivacy": {
+    "message": "<h2>プライバシー</h2><ul><li>✅ すべての設定はブラウザに<strong>ローカル</strong>で保存されます。</li><li>✅ データは送信または同期されません。</li><li>✅ トラッキング、分析、外部へのリクエストは一切行いません。</li><li>✅ <code>&lt;all_urls&gt;</code>と<code>webRequest</code>権限は、リクエストのRefererヘッダーを傍受して書き換えるためだけに使用されます — それ以外の目的では使用しません。</li><li>✅ 保存されるのはドメイン名と割り当てたRefererモードのみです — 完全なURL、ページの内容、閲覧履歴は保存されません。このデータはこのブラウザ内にのみ保存され、デバイス間で同期されず、拡張機能をアンインストールすると削除されます。</li><li>ℹ️「関連ドメイン」機能は、リクエストに関わるホスト名を観察することで動作し、現在のブラウザセッションの間だけメモリに保持されます — ディスクに保存されたり、どこかに送信されたりすることはありません(詳細は🧪技術情報を参照)。</li><li>⚠️「🔗 完全なURLを送信」モードは、パスやクエリ文字列を含むページの完全なURLを対象ドメインに送信します。認証トークン、セッションID、検索語句などの機密データが含まれる可能性のあるドメインでは使用を避け、完全なURLが本当に必要な場合を除き「🌍 オリジンのみ送信」を優先してください。</li></ul>"
+  },
+  "helpTech": {
+    "message": "<h2>🧪 技術的な注記</h2><h3>ルールの一致</h3><ul><li>完全なドメイン一致は、常にワイルドカードルールより優先されます。</li><li>ワイルドカードルールはサフィックスのみに一致します — <code>*.example.com</code>は<code>shop.example.com</code>には一致しますが、<code>example.com</code>自体には一致しません。</li></ul><h3>オリジンモードと完全URLモードには参照元ページが必要です</h3><p>🌍オリジンモードと🔗完全URLモードは、ブラウザがどのページがリクエストを引き起こしたかを認識している場合にのみRefererを送信できます。直接ナビゲーション(URLの入力、ブックマークや新しいタブを開く場合など)では参照元ページが存在しないため、設定したモードにかかわらずRefererは送信されません。</p><h3>関連ドメインの検出は一時的なものです</h3><ul><li>ドメイン間の<em>検出された関係</em>のリストはメモリ内(ブラウザのセッションストレージ)にのみ保持され、<strong>ディスクには保存されません</strong> — 拡張機能のバックグラウンドプロセスがアンロードされても保持されますが、ブラウザを再起動するたびにリセットされます。</li><li>これはルールには影響しません。関連ドメインにRefererモードを割り当てると、そのルールは他のドメインと同様に通常どおり保存されます — 検出された関係自体だけが、ブラウザの再起動時に消えます。</li><li>追跡されるのはページの読み込みとXHR/フェッチリクエストのみです。画像、フォント、WebSocket接続のみで接続されるドメインはリストに表示されません。</li><li>ページごとに最大100件の関連ドメインが記憶され、最大200ページまで同時に追跡されます。これらの上限に達すると、古いエントリから順に削除されます。</li></ul>"
+  },
+  "helpTips": {
+    "message": "<h2>デフォルトのリファラーを完全に無効化する</h2><p>Firefoxがデフォルトでリファラーヘッダーを送信しないようにしたい場合は、次の詳細設定を変更できます。</p><ol><li>アドレスバーに<code>about:config</code>と入力します。</li><li><code>network.http.sendRefererHeader</code>を検索します。</li><li>値を<code>0</code>に設定します。</li></ol><p>この拡張機能は、この設定の動作をグローバルではなくドメインごとに再現することを目指しています。</p><p>デフォルトでリファラーが無効になっている場合、この拡張機能は特に価値を発揮します。</p><h2>その他</h2><ul><li><code>*.example.com</code>を使用してすべてのサブドメインをカバーできます。</li><li>既存のルールは設定で編集できます。</li><li>ポップアップ内の関連ドメインをクリックすると、編集のために開きます。</li><li>ワイルドカードルールが一致する場合は表示され、変更できます。</li></ul>"
+  },
+  "themeToggleTitle": {
+    "message": "テーマ: $1 (クリックして変更)"
+  },
+  "themeAuto": {
+    "message": "自動"
+  },
+  "themeLight": {
+    "message": "ライト"
+  },
+  "themeDark": {
+    "message": "ダーク"
+  },
+  "languageAuto": {
+    "message": "ブラウザの既定"
+  },
+  "languageSelectLabel": {
+    "message": "言語"
+  },
+  "modalCancel": {
+    "message": "キャンセル"
+  },
+  "modalConfirm": {
+    "message": "OK"
+  },
+  "modalOk": {
+    "message": "OK"
+  },
+  "addDomainTitle": {
+    "message": "ドメインを追加"
+  },
+  "editDomainTitle": {
+    "message": "ドメインを編集"
+  },
+  "deleteDomainTitle": {
+    "message": "ドメインを削除"
+  },
+  "confirmDeleteDomain": {
+    "message": "ドメイン「$1」を本当に削除しますか?"
+  },
+  "importConfirmTitle": {
+    "message": "設定をインポート"
+  },
+  "noDomainsFound": {
+    "message": "まだドメインが設定されていません。"
+  },
+  "noDomainsHint": {
+    "message": "ドメインを追加して、そのリファラーヘッダーを制御します。"
+  },
+  "noDomainsSearchEmpty": {
+    "message": "検索条件に一致するドメインがありません。"
+  },
+  "footerGithub": {
+    "message": "GitHub"
+  },
+  "footerReportIssue": {
+    "message": "問題を報告"
+  },
+  "footerLicense": {
+    "message": "GPL-3.0 ライセンス"
+  },
+  "aiTranslatedNotice": {
+    "message": "この翻訳はAIによって生成されたもので、誤りが含まれている場合があります。"
+  },
+  "aiTranslatedDismiss": {
+    "message": "閉じる"
+  }
+}

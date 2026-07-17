@@ -1,0 +1,206 @@
+{
+  "extensionName": {
+    "message": "Referer por domínio"
+  },
+  "optionNoReferer": {
+    "message": "Sem Referer"
+  },
+  "optionOriginOnly": {
+    "message": "Enviar apenas a origem"
+  },
+  "optionFullUrl": {
+    "message": "Enviar URL completa"
+  },
+  "optionUnlimited": {
+    "message": "Referer irrestrito"
+  },
+  "optionsPageLink": {
+    "message": "Definições"
+  },
+  "importExportPageLink": {
+    "message": "Importar | Exportar"
+  },
+  "savedStatus": {
+    "message": "Definição guardada! Recarregue o separador."
+  },
+  "reloadTabButton": {
+    "message": "↻ Recarregar separador"
+  },
+  "noRelatedDomains": {
+    "message": "Ainda não foram detetados domínios relacionados. Navegue no site ou recarregue o separador para os detetar."
+  },
+  "currentDomainTitle": {
+    "message": "Domínio atual"
+  },
+  "refererSettingTitle": {
+    "message": "Definição de Referer"
+  },
+  "relatedDomainsTitle": {
+    "message": "Domínios relacionados"
+  },
+  "settingsTab": { "message": "⚙️ Definições" },
+  "optionsTitle": {
+    "message": "Definições de Referer"
+  },
+  "searchPlaceholder": {
+    "message": "Pesquisar domínios..."
+  },
+  "addDomainButton": {
+    "message": "+ Novo domínio"
+  },
+  "legendTitle": {
+    "message": "Legenda de símbolos"
+  },
+  "legendNoReferer": {
+    "message": "Nenhum Referer será enviado."
+  },
+  "legendOriginOnly": {
+    "message": "Apenas a origem será enviada."
+  },
+  "legendFullUrl": {
+    "message": "Será enviada a URL completa. ⚠️ Pode incluir dados sensíveis (por exemplo, tokens, termos de pesquisa)."
+  },
+  "legendUnlimited": {
+    "message": "O envio do Referer é irrestrito."
+  },
+  "matchedRuleText": {
+    "message": "⭐ Regra com caráter universal correspondente: $1"
+  },
+  "promptNewDomain": {
+    "message": "Introduza um novo domínio:"
+  },
+  "promptEditDomain": {
+    "message": "Editar domínio:"
+  },
+  "editDomainButton": {
+    "message": "Editar domínio"
+  },
+  "deleteDomainButton": {
+    "message": "Eliminar domínio"
+  },
+  "domainAlreadyExists": {
+    "message": "Este domínio já está configurado."
+  },
+  "importExportTab": {
+    "message": "📥 Importar | Exportar"
+  },
+  "exportTitle": {
+    "message": "Exportar"
+  },
+  "exportDescription": {
+    "message": "Guarde todas as suas regras de domínio num ficheiro JSON, por exemplo, para as salvaguardar ou transferir para outro navegador."
+  },
+  "exportButton": {
+    "message": "⬇️ Exportar"
+  },
+  "importTitle": {
+    "message": "Importar"
+  },
+  "importDescription": {
+    "message": "Carregue regras de domínio a partir de um ficheiro JSON exportado anteriormente. As regras importadas são combinadas com as existentes, substituindo as que partilham o mesmo domínio."
+  },
+  "importButton": {
+    "message": "⬆️ Importar"
+  },
+  "importConfirm": {
+    "message": "Importar $1 regra(s) de domínio? As regras existentes para os mesmos domínios serão substituídas."
+  },
+  "importSuccess": {
+    "message": "Definições importadas com sucesso."
+  },
+  "importInvalidFile": {
+    "message": "Não foi possível importar este ficheiro. Selecione uma exportação de definições válida."
+  },
+  "helpTitle": { "message": "Ajuda" },
+  "helpTab": { "message": "❓ Ajuda" },
+  "tabOverview": { "message": "🧭 Visão geral" },
+  "tabFunction": { "message": "⚙️ Funcionalidade" },
+  "tabUseCases": { "message": "💬 Casos de uso" },
+  "tabPrivacy": { "message": "🛡️ Privacidade" },
+  "tabTech": { "message": "🧪 Técnico" },
+  "tabTips": { "message": "🔧 Dicas" },
+  "helpOverview": {
+    "message": "<h2>O que esta extensão faz</h2><p>Esta extensão permite-lhe controlar o envio de cabeçalhos <code>Referer</code> para sites, domínio a domínio.</p><p>Isto pode melhorar a privacidade e resolver problemas de compatibilidade com serviços que esperam valores de Referer específicos.</p><p>Por predefinição, todos os domínios estão definidos como 🚫 Sem Referer — esta extensão remove o cabeçalho Referer em todos os sites que visita, não apenas nos que configurou. Para continuar a enviar um Referer para um domínio específico, adicione uma regra para ele e escolha 🌍, 🔗 ou ♾️.</p><h2>🏠 Contacto</h2><p>Este projeto é open source e está disponível no <a href=\"https://github.com/transfairs/referer-by-domain\" target=\"_blank\" rel=\"noopener noreferrer\">GitHub</a>.</p><div class=\"contact-box\"><a class=\"contact-item github\" href=\"https://github.com/transfairs\" target=\"_blank\" rel=\"noopener noreferrer\"><img src=\"../assets/github.svg\" alt=\"GitHub\"> GitHub</a><a class=\"contact-item linkedin\" href=\"https://www.linkedin.com/in/robin-trauer/\" target=\"_blank\" rel=\"noopener noreferrer\"><img src=\"../assets/linkedin.svg\" alt=\"LinkedIn\"> LinkedIn</a><a class=\"contact-item youtube\" href=\"https://www.youtube.com/@Transfairs\" target=\"_blank\" rel=\"noopener noreferrer\"><img src=\"../assets/youtube.svg\" alt=\"YouTube\"> YouTube</a></div>"
+  },
+  "helpFunction": {
+    "message": "<h2>Como funciona</h2><p>Pode atribuir a cada domínio um de quatro modos de Referer:</p><ul><li>🚫 Não enviar Referer</li><li>🌍 Enviar apenas a origem (por exemplo, <code>https://example.com</code>)</li><li>🔗 Enviar a URL completa</li><li>♾️ Permitir Referer sem restrições</li></ul><p>Regras com caráter universal, como <code>*.example.com</code>, podem cobrir todos os subdomínios. Se já existir uma regra desse tipo, tal será indicado. Uma correspondência exata (por exemplo, <code>shop.example.com</code>) tem sempre prioridade sobre uma regra com caráter universal correspondente.</p><h2>🗂️ Gerir domínios nas Definições</h2><p>Abra a página de Definições (⚙️) para ver e gerir todos os domínios configurados num só lugar:</p><ul><li><strong>Pesquisar:</strong> Filtre a lista escrevendo parte de um nome de domínio.</li><li><strong>➕ Adicionar:</strong> Clique em \"+ Novo domínio\" e introduza um domínio para criar uma regra (predefinição 🚫 Sem Referer).</li><li><strong>Botões de modo:</strong> Clique em 🚫, 🌍, 🔗 ou ♾️ diretamente no cartão de um domínio para alterar o seu modo.</li><li><strong>✏️ Editar:</strong> Mude o nome de um domínio mantendo o modo atribuído.</li><li><strong>🗑️ Eliminar:</strong> Remova a regra de um domínio (é necessária confirmação).</li></ul><h2>Domínios relacionados</h2><p>Os <strong>domínios relacionados</strong> são detetados automaticamente pelo script em segundo plano. São domínios contactados a partir da página atual, tais como:</p><ul><li>CDN (por exemplo, <code>cdn.example.com</code>)</li><li>API (<code>api.example.com</code>)</li><li>Serviços de autenticação (<code>login.partner.com</code>)</li><li>Fornecedores de conteúdo de terceiros</li></ul><p>A extensão identifica-os observando as ligações de rede reais.</p><h3>🧩 Por que os domínios relacionados são úteis</h3><ul><li><b>Visibilidade:</b> Mostra com que domínios uma página está a interagir.</li><li><b>Conveniência:</b> Veja imediatamente que domínios podem precisar de definições de Referer para ativar toda a funcionalidade.</li><li><b>Acesso rápido:</b> Aparecem como sugestões clicáveis no popup.</li><li><b>Consistência:</b> Use o mesmo modo de Referer em todos os domínios envolvidos.</li></ul><h3>🛠 Como usar os domínios relacionados</h3><ol><li>Abra o popup.</li><li>Reveja a lista de \"Domínios relacionados\".</li><li>Clique num deles para o inserir no campo de entrada.</li><li>Atribua um modo de Referer a esse domínio.</li></ol>"
+  },
+  "helpUseCases": {
+    "message": "<h2>Geral</h2><ul><li>🛡️ Impede que os sites vejam de onde veio.</li><li>🔐 Ativa funções de início de sessão ou transferência que dependem de referers específicos.</li><li>🌐 Define regras consistentes para todos os subdomínios de um serviço.</li></ul><h2>Problemas de início de sessão</h2><p>Se desativou o cabeçalho referer globalmente (ver 🔧 Dicas), alguns sites podem bloquear o início de sessão mesmo que a página carregue corretamente. Isto afeta frequentemente pedidos a um domínio relacionado.</p><p>No exemplo seguinte, o início de sessão em <code>my.example.com</code> falha a menos que <code>api.example.com</code> tenha um modo de Referer adequado:</p><div class=\"image-pair\"><figure><img src=\"../assets/login-fails.png\" alt=\"O início de sessão falha\" width=\"300\" /><figcaption>❌ Antes - A tentativa de início de sessão falha</figcaption></figure><p>Na imagem abaixo, o Referer para <code>api.example.com</code> foi definido como \"🌍 Apenas origem\". Os campos de início de sessão aparecem:</p><figure><img src=\"../assets/login-works.png\" alt=\"O início de sessão funciona\" width=\"300\" /><figcaption>✅ Depois - Referer definido para <code>api.example.com</code></figcaption></figure></div><p><code>api.example.com</code> foi detetado e listado pela extensão como \"Domínio relacionado\".</p>"
+  },
+  "helpPrivacy": {
+    "message": "<h2>Privacidade</h2><ul><li>✅ Todas as definições são guardadas <strong>localmente</strong> no seu navegador.</li><li>✅ Nenhum dado é transmitido ou sincronizado.</li><li>✅ Sem monitorização, análise ou pedidos remotos.</li><li>✅ As permissões <code>&lt;all_urls&gt;</code> e <code>webRequest</code> são usadas exclusivamente para intercetar e reescrever o cabeçalho Referer dos seus pedidos — nada mais.</li><li>✅ Apenas os nomes de domínio e o modo de Referer que lhes atribuiu são guardados — nunca URLs completos, conteúdo de páginas ou histórico de navegação. Estes dados permanecem apenas neste navegador, não são sincronizados entre dispositivos e são removidos ao desinstalar a extensão.</li><li>ℹ️ A funcionalidade Domínios relacionados funciona observando os nomes de anfitrião envolvidos nos seus pedidos, mantidos apenas em memória durante a sessão atual do navegador — nunca são guardados em disco nem enviados para qualquer lugar (ver 🧪 Técnico para mais detalhes).</li><li>⚠️ O modo \"🔗 Enviar URL completa\" envia a URL completa da página — incluindo o seu caminho e cadeia de consulta — para o domínio de destino. Evite-o em domínios cuja URL possa conter dados sensíveis, como tokens de autenticação, IDs de sessão ou termos de pesquisa; prefira \"🌍 Enviar apenas a origem\", a menos que a URL completa seja realmente necessária.</li></ul>"
+  },
+  "helpTech": {
+    "message": "<h2>🧪 Notas técnicas</h2><h3>Correspondência de regras</h3><ul><li>Uma correspondência exata de domínio tem sempre prioridade sobre uma regra com caráter universal.</li><li>As regras com caráter universal correspondem apenas a um sufixo — <code>*.example.com</code> corresponde a <code>shop.example.com</code>, mas não ao próprio <code>example.com</code>.</li></ul><h3>Os modos Origem e URL completa precisam de uma página de referência</h3><p>Os modos 🌍 Origem e 🔗 URL completa só podem enviar um Referer quando o navegador sabe qual a página que originou o pedido. Na navegação direta — escrever uma URL, abrir um marcador ou um novo separador — não existe página de referência, pelo que não é enviado nenhum Referer, independentemente do modo definido.</p><h3>A deteção de domínios relacionados é temporária</h3><ul><li>A lista de <em>relações detetadas</em> entre domínios é mantida apenas em memória (através do armazenamento de sessão do navegador) e <strong>não é guardada em disco</strong> — sobrevive ao descarregamento do processo em segundo plano da extensão, mas é reposta sempre que o navegador é reiniciado.</li><li>Isto não afeta as suas regras: se atribuir um modo de Referer a um domínio relacionado, essa regra é guardada normalmente, tal como qualquer outro domínio — apenas a relação detetada desaparece ao reiniciar o navegador.</li><li>Apenas os carregamentos de página e os pedidos XHR/fetch são monitorizados. Domínios contactados apenas através de imagens, tipos de letra ou ligações WebSocket não aparecerão na lista.</li><li>São memorizados até 100 domínios relacionados por página, e até 200 páginas são monitorizadas em simultâneo; ao atingir estes limites, as entradas mais antigas são removidas primeiro.</li></ul>"
+  },
+  "helpTips": {
+    "message": "<h2>Desativar completamente o Referer predefinido</h2><p>Se quiser que o Firefox deixe de enviar cabeçalhos referer por predefinição, pode alterar a seguinte definição avançada:</p><ol><li>Introduza <code>about:config</code> na barra de endereço.</li><li>Procure <code>network.http.sendRefererHeader</code>.</li><li>Defina o valor para <code>0</code>.</li></ol><p>Esta extensão pretende reproduzir o comportamento desta definição, mas por domínio, em vez de globalmente.</p><p>Com o referer desativado por predefinição, esta extensão torna-se especialmente valiosa.</p><h2>Diversos</h2><ul><li>Use <code>*.example.com</code> para cobrir todos os subdomínios.</li><li>As regras existentes podem ser editadas nas definições.</li><li>Clicar num domínio relacionado no popup abre-o para edição.</li><li>Se corresponder a uma regra com caráter universal, esta é apresentada e pode ser modificada.</li></ul>"
+  },
+  "themeToggleTitle": {
+    "message": "Tema: $1 (clique para alterar)"
+  },
+  "themeAuto": {
+    "message": "Automático"
+  },
+  "themeLight": {
+    "message": "Claro"
+  },
+  "themeDark": {
+    "message": "Escuro"
+  },
+  "languageAuto": {
+    "message": "Predefinição do navegador"
+  },
+  "languageSelectLabel": {
+    "message": "Idioma"
+  },
+  "modalCancel": {
+    "message": "Cancelar"
+  },
+  "modalConfirm": {
+    "message": "OK"
+  },
+  "modalOk": {
+    "message": "OK"
+  },
+  "addDomainTitle": {
+    "message": "Adicionar domínio"
+  },
+  "editDomainTitle": {
+    "message": "Editar domínio"
+  },
+  "deleteDomainTitle": {
+    "message": "Eliminar domínio"
+  },
+  "confirmDeleteDomain": {
+    "message": "Deseja realmente eliminar o domínio \"$1\"?"
+  },
+  "importConfirmTitle": {
+    "message": "Importar definições"
+  },
+  "noDomainsFound": {
+    "message": "Ainda não há domínios configurados."
+  },
+  "noDomainsHint": {
+    "message": "Adicione um domínio para controlar o seu cabeçalho Referer."
+  },
+  "noDomainsSearchEmpty": {
+    "message": "Nenhum domínio corresponde à sua pesquisa."
+  },
+  "footerGithub": {
+    "message": "GitHub"
+  },
+  "footerReportIssue": {
+    "message": "Reportar um problema"
+  },
+  "footerLicense": {
+    "message": "Licença GPL-3.0"
+  },
+  "aiTranslatedNotice": {
+    "message": "Esta tradução foi gerada por IA e pode conter erros."
+  },
+  "aiTranslatedDismiss": {
+    "message": "Dispensar"
+  }
+}
