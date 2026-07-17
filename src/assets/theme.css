@@ -38,13 +38,6 @@
 
   --shadow-color: rgba(0, 0, 0, 0.06);
   --shadow-color-strong: rgba(0, 0, 0, 0.1);
-
-  --tab-gradient-start: #f9f9f9;
-  --tab-gradient-end: #e3e3e3;
-  --tab-gradient-start-hover: #f1f1f1;
-  --tab-gradient-end-hover: #dcdcdc;
-  --tab-active-bg: #ffffff;
-  --tab-active-text: #000000;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -78,13 +71,6 @@
 
     --shadow-color: rgba(0, 0, 0, 0.4);
     --shadow-color-strong: rgba(0, 0, 0, 0.55);
-
-    --tab-gradient-start: #262c34;
-    --tab-gradient-end: #1a1f25;
-    --tab-gradient-start-hover: #2c333c;
-    --tab-gradient-end-hover: #20262d;
-    --tab-active-bg: #1f242b;
-    --tab-active-text: #f0f2f5;
   }
 }
 
@@ -118,13 +104,6 @@
 
   --shadow-color: rgba(0, 0, 0, 0.4);
   --shadow-color-strong: rgba(0, 0, 0, 0.55);
-
-  --tab-gradient-start: #262c34;
-  --tab-gradient-end: #1a1f25;
-  --tab-gradient-start-hover: #2c333c;
-  --tab-gradient-end-hover: #20262d;
-  --tab-active-bg: #1f242b;
-  --tab-active-text: #f0f2f5;
 }
 
 :root[data-theme="dark"] {
