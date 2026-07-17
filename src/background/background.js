@@ -4,6 +4,7 @@ import { getRefererHeaderForDomain, isDebugMode } from '../lib/lib.js';
 const domainRelations = {};
 const MAX_INITIATOR_DOMAINS = 200;
 const MAX_TARGETS_PER_DOMAIN = 100;
+const RELATIONS_STORAGE_KEY = 'domainRelations';
 
 /**
  * Fired when the extension is installed or updated.
@@ -11,6 +12,31 @@ const MAX_TARGETS_PER_DOMAIN = 100;
 chrome.runtime.onInstalled.addListener(() => {
     logger.info("Referer By Domain extension installed.");
 });
+
+// The background script is a non-persistent MV3 service worker: it gets
+// terminated after ~30s idle and loses all module-level state. Restore
+// whatever was last observed from chrome.storage.session, which survives
+// worker restarts for the lifetime of the browser session (unlike
+// storage.local, it isn't written to disk, so it still clears on browser
+// restart - the right behaviour for this kind of transient traffic data).
+if (chrome.storage.session) {
+    chrome.storage.session.get(RELATIONS_STORAGE_KEY, (result) => {
+        const stored = (result && result[RELATIONS_STORAGE_KEY]) || {};
+        for (const [initiator, targets] of Object.entries(stored)) {
+            domainRelations[initiator] = new Set(targets);
+        }
+        logger.debug("[background] Restored domainRelations from session storage:", stored);
+    });
+}
+
+/**
+ * Persists the current domainRelations to session storage so they survive
+ * service-worker restarts.
+ */
+function persistDomainRelations() {
+    if (!chrome.storage.session) return;
+    chrome.storage.session.set({ [RELATIONS_STORAGE_KEY]: simplifyRelations() });
+}
 
 /**
  * Intercepts outgoing HTTP requests to modify the Referer header based on domain-specific settings.
@@ -112,6 +138,7 @@ chrome.webRequest.onBeforeRequest.addListener(
       }
 
       logger.debug(`[background] Updated domainRelations:`, JSON.parse(JSON.stringify(simplifyRelations())));
+      persistDomainRelations();
 
     } catch (error) {
       logger.error('[background] Error processing webRequest', error);

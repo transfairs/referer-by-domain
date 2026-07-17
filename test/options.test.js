@@ -396,6 +396,9 @@ describe('module bootstrap', () => {
       <input id="search" />
       <div id="domainList"></div>
       <button id="addDomainButton"></button>
+      <button id="exportButton"></button>
+      <button id="importButton"></button>
+      <input type="file" id="importFileInput" />
     `;
     chrome.storage.local.get.mockResolvedValue({ refererHeaders: {} });
 
@@ -406,6 +409,9 @@ describe('module bootstrap', () => {
     expect(DomainManager.domainList).toBe(document.getElementById('domainList'));
     expect(DomainManager.searchInput).toBe(document.getElementById('search'));
     expect(DomainManager.addDomainButton).toBe(document.getElementById('addDomainButton'));
+    expect(DomainManager.exportButton).toBe(document.getElementById('exportButton'));
+    expect(DomainManager.importButton).toBe(document.getElementById('importButton'));
+    expect(DomainManager.importFileInput).toBe(document.getElementById('importFileInput'));
     expect(chrome.storage.local.get).toHaveBeenCalled();
 
     const addDomainSpy = jest.spyOn(DomainManager, 'addDomain').mockImplementation(() => {});
@@ -416,5 +422,165 @@ describe('module bootstrap', () => {
     const loadDomainsSpy = jest.spyOn(DomainManager, 'loadDomains').mockImplementation(() => {});
     DomainManager.searchInput.dispatchEvent(new Event('input'));
     expect(loadDomainsSpy).toHaveBeenCalled();
+
+    const exportSpy = jest.spyOn(DomainManager, 'exportSettings').mockImplementation(() => {});
+    DomainManager.exportButton.click();
+    expect(exportSpy).toHaveBeenCalled();
+
+    const clickSpy = jest.spyOn(DomainManager.importFileInput, 'click').mockImplementation(() => {});
+    DomainManager.importButton.click();
+    expect(clickSpy).toHaveBeenCalled();
+
+    const importSpy = jest.spyOn(DomainManager, 'importSettings').mockImplementation(() => {});
+    DomainManager.importFileInput.dispatchEvent(new Event('change'));
+    expect(importSpy).toHaveBeenCalled();
+  });
+});
+
+describe('exportSettings()', () => {
+  let createObjectURL;
+  let revokeObjectURL;
+
+  beforeEach(() => {
+    createObjectURL = jest.fn(() => 'blob:mock-url');
+    revokeObjectURL = jest.fn();
+    global.URL.createObjectURL = createObjectURL;
+    global.URL.revokeObjectURL = revokeObjectURL;
+  });
+
+  test('downloads the stored rules as a JSON file', async () => {
+    chrome.storage.local.get.mockResolvedValue({
+      refererHeaders: { 'example.com': 1 }
+    });
+
+    const clickSpy = jest.spyOn(HTMLAnchorElement.prototype, 'click').mockImplementation(() => {});
+
+    await DomainManager.exportSettings();
+
+    expect(createObjectURL).toHaveBeenCalledWith(expect.any(Blob));
+    expect(clickSpy).toHaveBeenCalled();
+    expect(revokeObjectURL).toHaveBeenCalledWith('blob:mock-url');
+  });
+
+  test('defaults to an empty map when nothing is stored', async () => {
+    chrome.storage.local.get.mockResolvedValue({});
+    jest.spyOn(HTMLAnchorElement.prototype, 'click').mockImplementation(() => {});
+
+    await expect(DomainManager.exportSettings()).resolves.toBeUndefined();
+    expect(createObjectURL).toHaveBeenCalled();
+  });
+
+  test('logs an error when storage access fails', async () => {
+    const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    chrome.storage.local.get.mockRejectedValue(new Error('fail'));
+
+    await DomainManager.exportSettings();
+
+    expect(spy).toHaveBeenCalledWith('Failed to export settings:', expect.any(Error));
+  });
+});
+
+describe('isValidRuleSet()', () => {
+  test('accepts a plain domain-to-mode map', () => {
+    expect(DomainManager.isValidRuleSet({ 'example.com': 0, 'other.com': 3 })).toBe(true);
+  });
+
+  test('rejects arrays, null, and non-objects', () => {
+    expect(DomainManager.isValidRuleSet([])).toBe(false);
+    expect(DomainManager.isValidRuleSet(null)).toBe(false);
+    expect(DomainManager.isValidRuleSet('not-an-object')).toBe(false);
+  });
+
+  test('rejects out-of-range or non-numeric modes', () => {
+    expect(DomainManager.isValidRuleSet({ 'example.com': 4 })).toBe(false);
+    expect(DomainManager.isValidRuleSet({ 'example.com': '1' })).toBe(false);
+  });
+});
+
+describe('importSettings()', () => {
+  const fileWith = (content) => ({ text: () => Promise.resolve(content) });
+
+  test('does nothing when no file is selected', async () => {
+    const mockSet = jest.fn();
+    chrome.storage.local.set = mockSet;
+
+    await DomainManager.importSettings({ target: { files: [], value: '' } });
+
+    expect(mockSet).not.toHaveBeenCalled();
+    expect(chrome.storage.local.get).not.toHaveBeenCalled();
+  });
+
+  test('merges imported rules into existing storage after confirmation', async () => {
+    chrome.storage.local.get.mockResolvedValue({
+      refererHeaders: { 'existing.com': 1 }
+    });
+    const mockSet = jest.fn();
+    chrome.storage.local.set = mockSet;
+    global.confirm = jest.fn(() => true);
+    global.alert = jest.fn();
+    jest.spyOn(DomainManager, 'loadDomains').mockImplementation(() => {});
+
+    const target = { files: [fileWith(JSON.stringify({ refererHeaders: { 'imported.com': 2 } }))], value: 'x' };
+    await DomainManager.importSettings({ target });
+
+    expect(mockSet).toHaveBeenCalledWith({
+      refererHeaders: { 'existing.com': 1, 'imported.com': 2 }
+    });
+    expect(target.value).toBe('');
+    expect(global.alert).toHaveBeenCalledWith('importSuccess');
+    expect(DomainManager.loadDomains).toHaveBeenCalled();
+  });
+
+  test('accepts a bare domain-to-mode map without a refererHeaders wrapper', async () => {
+    chrome.storage.local.get.mockResolvedValue({ refererHeaders: {} });
+    const mockSet = jest.fn();
+    chrome.storage.local.set = mockSet;
+    global.confirm = jest.fn(() => true);
+    global.alert = jest.fn();
+    jest.spyOn(DomainManager, 'loadDomains').mockImplementation(() => {});
+
+    const target = { files: [fileWith(JSON.stringify({ 'imported.com': 0 }))], value: 'x' };
+    await DomainManager.importSettings({ target });
+
+    expect(mockSet).toHaveBeenCalledWith({ refererHeaders: { 'imported.com': 0 } });
+  });
+
+  test('does nothing when the user cancels the confirmation', async () => {
+    chrome.storage.local.get.mockResolvedValue({ refererHeaders: {} });
+    const mockSet = jest.fn();
+    chrome.storage.local.set = mockSet;
+    global.confirm = jest.fn(() => false);
+
+    const target = { files: [fileWith(JSON.stringify({ 'imported.com': 0 }))], value: 'x' };
+    await DomainManager.importSettings({ target });
+
+    expect(mockSet).not.toHaveBeenCalled();
+  });
+
+  test('alerts and does not save when the file contains invalid JSON', async () => {
+    const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    global.alert = jest.fn();
+    const mockSet = jest.fn();
+    chrome.storage.local.set = mockSet;
+
+    const target = { files: [fileWith('not-json')], value: 'x' };
+    await DomainManager.importSettings({ target });
+
+    expect(global.alert).toHaveBeenCalledWith('importInvalidFile');
+    expect(mockSet).not.toHaveBeenCalled();
+    expect(spy).toHaveBeenCalledWith('Failed to import settings:', expect.any(Error));
+  });
+
+  test('alerts and does not save when the parsed content is not a valid rule set', async () => {
+    global.alert = jest.fn();
+    const mockSet = jest.fn();
+    chrome.storage.local.set = mockSet;
+
+    const target = { files: [fileWith(JSON.stringify({ 'example.com': 99 }))], value: 'x' };
+    await DomainManager.importSettings({ target });
+
+    expect(global.alert).toHaveBeenCalledWith('importInvalidFile');
+    expect(mockSet).not.toHaveBeenCalled();
+    expect(chrome.storage.local.get).not.toHaveBeenCalled();
   });
 });

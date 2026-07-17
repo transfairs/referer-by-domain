@@ -80,6 +80,36 @@
   "domainAlreadyExists": {
     "message": "This domain is already configured."
   },
+  "importExportTab": {
+    "message": "📥 Import | Export"
+  },
+  "exportTitle": {
+    "message": "Export"
+  },
+  "exportDescription": {
+    "message": "Save all your domain rules to a JSON file, e.g. to back them up or move them to another browser."
+  },
+  "exportButton": {
+    "message": "⬇️ Export"
+  },
+  "importTitle": {
+    "message": "Import"
+  },
+  "importDescription": {
+    "message": "Load domain rules from a previously exported JSON file. Imported rules are merged into your existing ones, overwriting any that share the same domain."
+  },
+  "importButton": {
+    "message": "⬆️ Import"
+  },
+  "importConfirm": {
+    "message": "Import $1 domain rule(s)? Existing rules for the same domains will be overwritten."
+  },
+  "importSuccess": {
+    "message": "Settings imported successfully."
+  },
+  "importInvalidFile": {
+    "message": "This file could not be imported. Please select a valid settings export."
+  },
   "helpTitle": { "message": "Help" },
   "helpTab": { "message": "❓ Help" },
   "tabOverview": { "message": "🧭 Overview" },
@@ -98,10 +128,10 @@
     "message": "<h2>General</h2><ul><li>🛡️ Prevent websites from seeing where you came from.</li><li>🔐 Enable login or download functions that depend on specific referers.</li><li>🌐 Define consistent rules for all subdomains of a service.</li></ul><h2>Login issues</h2><p>If you have disabled the referer header globally (see 🔧 Tips), some websites may block login even if the page loads fine. This often affects requests to a related domain.</p><p>In the following example, login at <code>my.example.com</code> fails unless <code>api.example.com</code> has a suitable referer mode:</p><div class=\"image-pair\"><figure><img src=\"../assets/login-fails.png\" alt=\"Login fails\" width=\"300\" /><figcaption>❌ Before - Login attempt fails</figcaption></figure><p>In the image below, the referer for <code>api.example.com</code> is set to \"🌍 Origin only\". The login fields appear:</p><figure><img src=\"../assets/login-works.png\" alt=\"Login works\" width=\"300\" /><figcaption>✅ After - Referer set for <code>api.example.com</code></figcaption></figure></div><p><code>api.example.com</code> was detected and listed as a \"Related Domain\" by the extension.</p>"
   },
   "helpPrivacy": {
-    "message": "<h2>Privacy</h2><ul><li>✅ All settings are stored <strong>locally</strong> in your browser.</li><li>✅ No data is transmitted or synchronised.</li><li>✅ No tracking, analytics, or remote requests involved.</li><li>✅ The <code>&lt;all_urls&gt;</code> and <code>webRequest</code> permissions are only used to intercept and rewrite the Referer header on your requests — nothing else.</li><li>✅ Only domain names and the referer mode you've assigned to them are stored — never full URLs, page content, or browsing history. This data stays in this browser only, isn't synced across devices, and is removed if you uninstall the extension.</li><li>ℹ️ The Related Domains feature works by observing the hostnames involved in your requests, in memory only — never saved to disk or sent anywhere (see 🧪 Technical for details).</li><li>⚠️ The \"🔗 Send Full URL\" mode sends the complete page URL — including its path and query string — to the target domain. Avoid it for domains where the URL could contain sensitive data such as authentication tokens, session IDs, or search terms; prefer \"🌍 Send Origin Only\" unless the full URL is actually required.</li></ul>"
+    "message": "<h2>Privacy</h2><ul><li>✅ All settings are stored <strong>locally</strong> in your browser.</li><li>✅ No data is transmitted or synchronised.</li><li>✅ No tracking, analytics, or remote requests involved.</li><li>✅ The <code>&lt;all_urls&gt;</code> and <code>webRequest</code> permissions are only used to intercept and rewrite the Referer header on your requests — nothing else.</li><li>✅ Only domain names and the referer mode you've assigned to them are stored — never full URLs, page content, or browsing history. This data stays in this browser only, isn't synced across devices, and is removed if you uninstall the extension.</li><li>ℹ️ The Related Domains feature works by observing the hostnames involved in your requests, kept in memory for the current browser session only — never saved to disk or sent anywhere (see 🧪 Technical for details).</li><li>⚠️ The \"🔗 Send Full URL\" mode sends the complete page URL — including its path and query string — to the target domain. Avoid it for domains where the URL could contain sensitive data such as authentication tokens, session IDs, or search terms; prefer \"🌍 Send Origin Only\" unless the full URL is actually required.</li></ul>"
   },
   "helpTech": {
-    "message": "<h2>🧪 Technical notes</h2><h3>Rule matching</h3><ul><li>An exact domain match always takes priority over a wildcard rule.</li><li>Wildcard rules only match a suffix — <code>*.example.com</code> matches <code>shop.example.com</code> but not <code>example.com</code> itself.</li></ul><h3>Origin and Full URL modes need a referring page</h3><p>The 🌍 Origin and 🔗 Full URL modes can only send a Referer when the browser knows which page triggered the request. For direct navigation — typing a URL, opening a bookmark, or a new tab — there is no referring page, so no Referer is sent regardless of the mode you've set.</p><h3>Related Domain detection is temporary</h3><ul><li>The list of <em>detected relationships</em> between domains lives in memory only and is <strong>not saved</strong> — it resets whenever the browser restarts or the extension's background process is unloaded.</li><li>This doesn't affect your rules: if you assign a Referer mode to a related domain, that rule is saved normally, just like any other domain — only the detected relationship itself disappears on restart.</li><li>Only page loads and XHR/fetch requests are tracked. Domains contacted only via images, fonts, or WebSocket connections won't appear in the list.</li><li>Up to 100 related domains are remembered per page, and up to 200 pages are tracked at once; older entries are dropped first once these limits are reached.</li></ul>"
+    "message": "<h2>🧪 Technical notes</h2><h3>Rule matching</h3><ul><li>An exact domain match always takes priority over a wildcard rule.</li><li>Wildcard rules only match a suffix — <code>*.example.com</code> matches <code>shop.example.com</code> but not <code>example.com</code> itself.</li></ul><h3>Origin and Full URL modes need a referring page</h3><p>The 🌍 Origin and 🔗 Full URL modes can only send a Referer when the browser knows which page triggered the request. For direct navigation — typing a URL, opening a bookmark, or a new tab — there is no referring page, so no Referer is sent regardless of the mode you've set.</p><h3>Related Domain detection is temporary</h3><ul><li>The list of <em>detected relationships</em> between domains lives in memory only (via the browser's session storage) and is <strong>not saved to disk</strong> — it survives the extension's background process being unloaded, but resets whenever the browser restarts.</li><li>This doesn't affect your rules: if you assign a Referer mode to a related domain, that rule is saved normally, just like any other domain — only the detected relationship itself disappears on browser restart.</li><li>Only page loads and XHR/fetch requests are tracked. Domains contacted only via images, fonts, or WebSocket connections won't appear in the list.</li><li>Up to 100 related domains are remembered per page, and up to 200 pages are tracked at once; older entries are dropped first once these limits are reached.</li></ul>"
   },
   "helpTips": {
     "message": "<h2>Fully disable default Referer</h2><p>If you want Firefox to stop sending referer headers by default, you can change the following advanced setting:</p><ol><li>Enter <code>about:config</code> in the address bar.</li><li>Search for <code>network.http.sendRefererHeader</code>.</li><li>Set the value to <code>0</code>.</li></ol><p>This extension aims to mimic this setting’s behaviour, but on a per-domain basis instead of globally.</p><p>With the referer disabled by default, this extension becomes especially valuable.</p><h2>Miscellaneous</h2><ul><li>Use <code>*.example.com</code> to cover all subdomains.</li><li>Existing rules can be edited in the settings.</li><li>Clicking on a related domain in the popup opens it for editing.</li><li>If a wildcard rule matches, it is shown and can be modified.</li></ul>"

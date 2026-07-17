@@ -34,10 +34,16 @@ export default class DomainManager {
     this.domainList = document.getElementById('domainList');
     this.searchInput = document.getElementById('search');
     this.addDomainButton = document.getElementById('addDomainButton');
+    this.exportButton = document.getElementById('exportButton');
+    this.importButton = document.getElementById('importButton');
+    this.importFileInput = document.getElementById('importFileInput');
 
     this.applyI18n();
     this.addDomainButton.addEventListener('click', () => this.addDomain(this.searchInput.value));
     this.searchInput.addEventListener('input', () => this.loadDomains());
+    this.exportButton.addEventListener('click', () => this.exportSettings());
+    this.importButton.addEventListener('click', () => this.importFileInput.click());
+    this.importFileInput.addEventListener('change', (event) => this.importSettings(event));
 
     this.loadDomains();
   }
@@ -253,5 +259,75 @@ export default class DomainManager {
         logger.error('Failed to add domain:', error);
       }
     }
+  }
+
+  /**
+   * Export the current domain rules as a downloadable JSON file.
+   */
+  static async exportSettings() {
+    try {
+      const result = await chrome.storage.local.get('refererHeaders');
+      const domains = result.refererHeaders || {};
+
+      const blob = new Blob([JSON.stringify({ refererHeaders: domains }, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `referer-by-domain-settings-${new Date().toISOString().slice(0, 10)}.json`;
+      link.click();
+
+      URL.revokeObjectURL(url);
+    } catch (error) {
+      logger.error('Failed to export settings:', error);
+    }
+  }
+
+  /**
+   * Import domain rules from a previously exported JSON file, merging them
+   * into the existing rules (imported values win on conflict).
+   * @param {Event} event
+   */
+  static async importSettings(event) {
+    const [file] = event.target.files;
+    event.target.value = ''; // Allow re-importing the same file later.
+    if (!file) return;
+
+    try {
+      const parsed = JSON.parse(await file.text());
+      const imported = parsed && typeof parsed.refererHeaders === 'object' ? parsed.refererHeaders : parsed;
+
+      if (!this.isValidRuleSet(imported)) {
+        alert(chrome.i18n.getMessage('importInvalidFile'));
+        return;
+      }
+
+      const importedCount = Object.keys(imported).length;
+      const confirmed = confirm(chrome.i18n.getMessage('importConfirm', String(importedCount)));
+      if (!confirmed) return;
+
+      const result = await chrome.storage.local.get('refererHeaders');
+      const domains = { ...(result.refererHeaders || {}), ...imported };
+
+      await chrome.storage.local.set({ refererHeaders: domains });
+      this.loadDomains();
+      alert(chrome.i18n.getMessage('importSuccess'));
+    } catch (error) {
+      logger.error('Failed to import settings:', error);
+      alert(chrome.i18n.getMessage('importInvalidFile'));
+    }
+  }
+
+  /**
+   * Validate that a parsed import payload is a plain domain-to-mode map.
+   * @param {*} rules
+   * @returns {boolean}
+   */
+  static isValidRuleSet(rules) {
+    if (typeof rules !== 'object' || rules === null || Array.isArray(rules)) return false;
+    const validModes = this.refererModes.map(({ mode }) => mode);
+    return Object.entries(rules).every(
+      ([domain, mode]) => typeof domain === 'string' && domain.length > 0 && validModes.includes(mode)
+    );
   }
 }

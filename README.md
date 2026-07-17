@@ -13,6 +13,7 @@ It simulates the behaviour of `network.http.sendRefererHeader`, but with fine-gr
 - 🌍 Localised in 🇬🇧 English and 🇩🇪 German
 - 📘 Built-in help section with tabbed overview
 - 🎯 Choose between no Referer, only origin, full URL, or unrestricted
+- 📤 Export/import settings as JSON, to back them up or move them to another browser
 - ⚡ Lightweight and privacy-focused
 
 ---
@@ -68,7 +69,6 @@ Open `http://localhost:3000/Test.html` and fire your requests.
 
 ## 🚀 Future Improvements
 
-- Support complex domain rules (wildcards inside domain name, regex).
 - Dark Mode for all screens
 
 ---

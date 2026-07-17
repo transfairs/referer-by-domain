@@ -55,6 +55,20 @@ h1 {
   background-color: #005ea2;
 }
 
+.secondary-button {
+  padding: 8px 12px;
+  background-color: #e8f1fb;
+  color: #0078d7;
+  border: 1px solid #0078d7;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.secondary-button:hover {
+  background-color: #d0e7ff;
+}
+
 .domain-list {
   display: flex;
   flex-direction: column;

@@ -172,9 +172,6 @@ export default class PopupManager {
   static showStatus(message) {
     const statusEl = document.getElementById('status');
     statusEl.textContent = message;
-    setTimeout(() => {
-      statusEl.textContent = '';
-    }, 3000);
   }
 
   /**

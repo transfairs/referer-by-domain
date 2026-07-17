@@ -1,5 +1,6 @@
-function createChromeMock({ refererHeaders = {} } = {}) {
+function createChromeMock({ refererHeaders = {}, sessionRelations = {} } = {}) {
   const listeners = {};
+  const sessionStore = { domainRelations: sessionRelations };
   return {
     runtime: {
       onInstalled: { addListener: jest.fn((cb) => { listeners.onInstalled = cb; }) },
@@ -12,8 +13,16 @@ function createChromeMock({ refererHeaders = {} } = {}) {
     storage: {
       local: {
         get: jest.fn((key, callback) => callback({ refererHeaders }))
+      },
+      session: {
+        get: jest.fn((key, callback) => callback({ [key]: sessionStore[key] })),
+        set: jest.fn((items, callback) => {
+          Object.assign(sessionStore, items);
+          if (callback) callback();
+        })
       }
     },
+    sessionStore,
     listeners
   };
 }
@@ -217,6 +226,29 @@ describe('background.js', () => {
         seen = response.related;
       });
       expect(seen).toEqual(['shared-target.com']);
+    });
+
+    test('persists domainRelations to session storage after tracking a relation', () => {
+      const chromeMock = createChromeMock();
+      const listeners = loadBackground(chromeMock);
+      listeners.onBeforeRequest({ documentUrl: 'https://a.com/page', url: 'https://b.com/img.png' });
+
+      expect(chromeMock.storage.session.set).toHaveBeenCalledWith({
+        domainRelations: { 'a.com': ['b.com'] }
+      });
+    });
+
+    test('restores domainRelations from session storage on startup, surviving a service-worker restart', () => {
+      const chromeMock = createChromeMock({
+        sessionRelations: { 'a.com': ['b.com'] }
+      });
+      const listeners = loadBackground(chromeMock);
+
+      let seen;
+      listeners.onMessage({ type: 'getRelatedDomains', domain: 'a.com' }, {}, (response) => {
+        seen = response.related;
+      });
+      expect(seen).toEqual(['b.com']);
     });
 
     test('catches and logs errors from malformed URLs', () => {

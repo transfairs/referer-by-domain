@@ -69,12 +69,12 @@ test('clearButtonHighlights removes active class from all buttons', () => {
   });
 });
 
-test('showStatus sets and clears status message', () => {
+test('showStatus sets the status message and leaves it visible', () => {
   jest.useFakeTimers();
   PopupManager.showStatus('Saved!');
   expect(document.getElementById('status').textContent).toBe('Saved!');
   jest.advanceTimersByTime(3000);
-  expect(document.getElementById('status').textContent).toBe('');
+  expect(document.getElementById('status').textContent).toBe('Saved!');
   jest.useRealTimers();
 });
 
@@ -246,14 +246,14 @@ describe('initialisePopup()', () => {
 });
 
 describe('showStatus()', () => {
-  test('leaves the reload button visible once the status message clears', () => {
-    // The reload button is a deliberate action the user may need a moment to
-    // reach; it shouldn't vanish on the same short timer as the status text.
+  test('leaves both the status message and reload button visible', () => {
+    // Neither should vanish on a timer; the user needs time to notice and
+    // act on the prompt to reload the tab.
     jest.useFakeTimers();
     PopupManager.toggleReloadButton(true);
     PopupManager.showStatus('Saved!');
     jest.advanceTimersByTime(3000);
-    expect(document.getElementById('status').textContent).toBe('');
+    expect(document.getElementById('status').textContent).toBe('Saved!');
     expect(document.getElementById('reloadTabButton').style.display).toBe('inline-block');
     jest.useRealTimers();
   });

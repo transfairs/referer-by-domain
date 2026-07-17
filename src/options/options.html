@@ -11,27 +11,43 @@
 <body>
   <nav class="tabbar">
     <button data-tab="settings" class="active" data-i18n="settingsTab">⚙️ Settings</button>
+    <button data-tab="importexport" data-i18n="importExportTab">📥 Import | Export</button>
     <button data-tab="help" data-i18n="helpTab">❓ Help</button>
   </nav>
   <main>
     <section id="tab-settings" class="tab-content active">
       <div class="container">
-    
+
         <div class="controls">
           <input type="text" id="search" placeholder="" data-placeholder-i18n="searchPlaceholder" />
           <button id="addDomainButton"><span data-i18n="addDomainButton"></span></button>
         </div>
-    
+
         <div id="domainList" class="domain-list">
           <!-- Dynamically added domain cards -->
         </div>
-    
+
         <div class="legend">
           <strong><span data-i18n="legendTitle"></span></strong><br>
           🚫 <span data-i18n="legendNoReferer"></span><br>
           🌍 <span data-i18n="legendOriginOnly"></span><br>
           🔗 <span data-i18n="legendFullUrl"></span><br>
           ♾️ <span data-i18n="legendUnlimited"></span>
+        </div>
+      </div>
+    </section>
+
+    <section id="tab-importexport" class="tab-content">
+      <div class="container">
+        <div class="help-section">
+          <h2 data-i18n="exportTitle"></h2>
+          <p data-i18n="exportDescription"></p>
+          <button id="exportButton" class="secondary-button"><span data-i18n="exportButton"></span></button>
+
+          <h2 data-i18n="importTitle"></h2>
+          <p data-i18n="importDescription"></p>
+          <button id="importButton" class="secondary-button"><span data-i18n="importButton"></span></button>
+          <input type="file" id="importFileInput" accept="application/json,.json" hidden />
         </div>
       </div>
     </section>
