@@ -4,11 +4,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title data-i18n="optionsTitle"></title>
+  <link rel="stylesheet" href="../assets/theme.css">
   <link rel="stylesheet" href="options.css">
   <link rel="stylesheet" href="help.css">
   <link rel="shortcut icon" href="../../icons/gear.png" />
 </head>
 <body>
+  <div class="page-header">
+    <div class="page-title" data-i18n="extensionName"></div>
+    <div class="settings-toolbar">
+      <select id="languageSelect" class="language-select" aria-label="Language"></select>
+      <button id="themeToggle" class="theme-toggle" type="button"></button>
+    </div>
+  </div>
   <nav class="tabbar">
     <button data-tab="settings" class="active" data-i18n="settingsTab">⚙️ Settings</button>
     <button data-tab="importexport" data-i18n="importExportTab">📥 Import | Export</button>

@@ -38,7 +38,10 @@ function extractKeysFromHtml(content) {
 
 function extractKeysFromJs(content) {
   const keys = [];
-  const callPattern = /chrome\.i18n\.getMessage\(\s*['"]([^'"]+)['"]/g;
+  // Matches both chrome.i18n.getMessage('key') directly, and getMessage('key')
+  // calls against src/lib/i18n.js's wrapper (which falls back to chrome.i18n
+  // internally, so the same key contract applies).
+  const callPattern = /(?:chrome\.i18n\.getMessage|(?<![\w.])getMessage)\(\s*['"]([^'"]+)['"]/g;
   let match;
   while ((match = callPattern.exec(content)) !== null) {
     keys.push(match[1]);

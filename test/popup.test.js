@@ -4,6 +4,7 @@
 
 import PopupManager from '../src/popup/popup.js';
 import * as logger from '../src/lib/logger.js';
+import { loadOverrideMessages } from '../src/lib/i18n.js';
 
 function setupDom() {
   document.body.innerHTML = `
@@ -24,6 +25,8 @@ function setupDom() {
       <a class="popup-link" href="../options/options.html#help" target="_blank">Help</a>
       <a class="popup-link" href="../options/options.html" target="_blank">Settings</a>
     </div>
+    <select id="languageSelect"></select>
+    <button id="themeToggle"></button>
   `;
 }
 
@@ -33,7 +36,17 @@ beforeEach(() => {
   global.chrome = {
     storage: {
       local: {
-        get: jest.fn()
+        // Supports both the callback style used by the popup's own domain/
+        // relation lookups, and the promise style used by lib/theme.js and
+        // lib/i18n.js, matching the real chrome.storage.local.get() API.
+        get: jest.fn((keys, callback) => {
+          if (typeof callback === 'function') {
+            callback({});
+            return undefined;
+          }
+          return Promise.resolve({});
+        }),
+        set: jest.fn()
       }
     },
     tabs: {
@@ -42,7 +55,8 @@ beforeEach(() => {
       reload: jest.fn()
     },
     runtime: {
-      sendMessage: jest.fn()
+      sendMessage: jest.fn(),
+      getURL: jest.fn((path) => `chrome-extension://test/${path}`)
     },
     i18n: {
       getMessage: jest.fn((key) => key)
@@ -50,7 +64,8 @@ beforeEach(() => {
   };
 });
 
-afterEach(() => {
+afterEach(async () => {
+  await loadOverrideMessages('auto');
   jest.restoreAllMocks();
 });
 
@@ -420,5 +435,64 @@ describe('module bootstrap', () => {
     document.dispatchEvent(new Event('DOMContentLoaded'));
 
     expect(chrome.tabs.query).toHaveBeenCalled();
+  });
+});
+
+describe('initThemeToggle()', () => {
+  test('applies the stored theme and renders the button', async () => {
+    chrome.storage.local.get.mockImplementation((keys) =>
+      Promise.resolve(keys === 'uiTheme' ? { uiTheme: 'dark' } : {})
+    );
+
+    await PopupManager.initThemeToggle();
+
+    const button = document.getElementById('themeToggle');
+    expect(document.documentElement.dataset.theme).toBe('dark');
+    expect(button.textContent).toBe('🌙');
+  });
+
+  test('cycles the theme on click and persists the new value', async () => {
+    await PopupManager.initThemeToggle();
+    const button = document.getElementById('themeToggle');
+
+    button.click();
+    await Promise.resolve();
+    await Promise.resolve();
+
+    expect(document.documentElement.dataset.theme).toBe('light');
+    expect(chrome.storage.local.set).toHaveBeenCalledWith({ uiTheme: 'light' });
+    expect(button.textContent).toBe('☀️');
+  });
+});
+
+describe('initLanguageSelect()', () => {
+  test('populates options and selects the stored preference', async () => {
+    chrome.storage.local.get.mockImplementation((keys) =>
+      Promise.resolve(keys === 'uiLanguage' ? { uiLanguage: 'auto' } : {})
+    );
+
+    await PopupManager.initLanguageSelect();
+
+    const select = document.getElementById('languageSelect');
+    const values = Array.from(select.options).map((o) => o.value);
+    expect(values).toEqual(['auto', 'en', 'de']);
+    expect(select.value).toBe('auto');
+  });
+
+  test('changing the language persists it, loads its messages, and re-applies translations', async () => {
+    global.fetch = jest.fn().mockResolvedValue({
+      json: () => Promise.resolve({ extensionName: { message: 'Referer nach Domain' } })
+    });
+
+    await PopupManager.initLanguageSelect();
+    const select = document.getElementById('languageSelect');
+    select.value = 'de';
+    select.dispatchEvent(new Event('change'));
+    await Promise.resolve();
+    await Promise.resolve();
+    await Promise.resolve();
+
+    expect(chrome.storage.local.set).toHaveBeenCalledWith({ uiLanguage: 'de' });
+    expect(fetch).toHaveBeenCalledWith('chrome-extension://test/_locales/de/messages.json');
   });
 });

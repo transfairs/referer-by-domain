@@ -6,8 +6,16 @@
  */
 import HelpView from './HelpView.js';
 import TabView from './TabView.js';
-import { parseHTML } from '../lib/lib.js';
+import Modal from './Modal.js';
 import * as logger from '../lib/logger.js';
+import { applyI18n, getMessage, initLanguage, setLanguagePreference, getSupportedLanguages } from '../lib/i18n.js';
+import { initTheme, applyTheme, setThemePreference, nextTheme } from '../lib/theme.js';
+
+const THEME_ICONS = { auto: '🌓', light: '☀️', dark: '🌙' };
+const LANGUAGE_NAMES = { en: 'English', de: 'Deutsch' };
+// A distinct globe icon for "auto" keeps it from visually doubling up with
+// whichever language flag it happens to resolve to.
+const LANGUAGE_FLAGS = { auto: '🌐', en: '🇬🇧', de: '🇩🇪' };
 
 document.addEventListener('DOMContentLoaded', () => {
   DomainManager.init();
@@ -46,37 +54,86 @@ export default class DomainManager {
     this.importFileInput.addEventListener('change', (event) => this.importSettings(event));
 
     this.loadDomains();
+    this.initSettingsToolbar();
+  }
+
+  /**
+   * Load the stored theme/language preferences, wire up the toggle/select
+   * controls, and re-render translated content once a manual language
+   * override (if any) has finished loading.
+   */
+  static async initSettingsToolbar() {
+    await this.initThemeToggle();
+    await this.initLanguageSelect();
+    this.applyI18n();
+    this.loadDomains();
+  }
+
+  /**
+   * Apply the stored theme and wire up the theme-cycling button.
+   */
+  static async initThemeToggle() {
+    const button = document.getElementById('themeToggle');
+    let theme = await initTheme();
+    this.renderThemeToggle(button, theme);
+
+    button.addEventListener('click', async () => {
+      theme = nextTheme(theme);
+      applyTheme(theme);
+      await setThemePreference(theme);
+      this.renderThemeToggle(button, theme);
+    });
+  }
+
+  /**
+   * @param {HTMLButtonElement} button
+   * @param {'auto'|'light'|'dark'} theme
+   */
+  static renderThemeToggle(button, theme) {
+    const labelKey = theme === 'light' ? 'themeLight' : theme === 'dark' ? 'themeDark' : 'themeAuto';
+    button.textContent = THEME_ICONS[theme];
+    const title = getMessage('themeToggleTitle', getMessage(labelKey));
+    button.title = title;
+    button.setAttribute('aria-label', title);
+  }
+
+  /**
+   * Populate the language select with the stored preference and wire up
+   * language switching.
+   */
+  static async initLanguageSelect() {
+    const select = document.getElementById('languageSelect');
+    select.innerHTML = '';
+    select.setAttribute('aria-label', getMessage('languageSelectLabel'));
+
+    const autoOption = document.createElement('option');
+    autoOption.value = 'auto';
+    autoOption.textContent = LANGUAGE_FLAGS.auto;
+    autoOption.title = getMessage('languageAuto');
+    select.appendChild(autoOption);
+
+    getSupportedLanguages().forEach((lang) => {
+      const option = document.createElement('option');
+      option.value = lang;
+      option.textContent = LANGUAGE_FLAGS[lang];
+      option.title = LANGUAGE_NAMES[lang];
+      select.appendChild(option);
+    });
+
+    select.value = await initLanguage();
+
+    select.addEventListener('change', async () => {
+      await setLanguagePreference(select.value);
+      this.applyI18n();
+      this.loadDomains();
+    });
   }
 
   /**
    * Apply internationalisation texts to elements.
    */
   static applyI18n() {
-    document.querySelectorAll('[data-i18n]').forEach(elem => {
-      const key = elem.getAttribute('data-i18n');
-      const message = chrome.i18n.getMessage(key);
-      if (message) elem.innerText = message;
-    });
-
-    document.querySelectorAll('[data-i18n-html]').forEach(el => {
-       const key = el.dataset.i18nHtml;
-       const msg = chrome.i18n.getMessage(key);
-       if (msg) {
-         el.innerHTML = '';
-   
-         const parsedNodes = parseHTML(msg);
-   
-         parsedNodes.forEach(node => {
-           el.appendChild(node);
-         });
-       }
-     });
-
-    document.querySelectorAll('[data-placeholder-i18n]').forEach(elem => {
-      const key = elem.getAttribute('data-placeholder-i18n');
-      const message = chrome.i18n.getMessage(key);
-      if (message) elem.setAttribute('placeholder', message);
-    });
+    applyI18n(document);
   }
 
   /**
@@ -100,10 +157,7 @@ export default class DomainManager {
       this.domainList.innerHTML = '';
 
       if (matchingDomains.length === 0) {
-        const placeholder = document.createElement('div');
-        placeholder.className = 'placeholder';
-        placeholder.textContent = 'No domains found.';
-        this.domainList.appendChild(placeholder);
+        this.renderEmptyState(Object.keys(domains).length === 0);
         return;
       }
 
@@ -114,9 +168,42 @@ export default class DomainManager {
   }
 
   /**
+   * Render the placeholder shown when the domain list is empty, offering a
+   * shortcut to add the first domain when there are no rules at all (as
+   * opposed to a search simply matching nothing).
+   * @param {boolean} isTrulyEmpty
+   */
+  static renderEmptyState(isTrulyEmpty) {
+    const placeholder = document.createElement('div');
+    placeholder.className = 'placeholder';
+
+    if (!isTrulyEmpty) {
+      placeholder.textContent = getMessage('noDomainsSearchEmpty');
+      this.domainList.appendChild(placeholder);
+      return;
+    }
+
+    placeholder.textContent = getMessage('noDomainsFound');
+
+    const hint = document.createElement('div');
+    hint.className = 'placeholder-hint';
+    hint.appendChild(document.createTextNode(`${getMessage('noDomainsHint')} `));
+
+    const addLink = document.createElement('button');
+    addLink.type = 'button';
+    addLink.className = 'placeholder-hint-link';
+    addLink.textContent = getMessage('addDomainButton');
+    addLink.addEventListener('click', () => this.addDomain(this.searchInput.value));
+    hint.appendChild(addLink);
+
+    placeholder.appendChild(hint);
+    this.domainList.appendChild(placeholder);
+  }
+
+  /**
    * Render a single domain card.
-   * @param {string} domain 
-   * @param {number} mode 
+   * @param {string} domain
+   * @param {number} mode
    */
   static renderDomainCard(domain, mode) {
     const card = document.createElement('div');
@@ -134,7 +221,9 @@ export default class DomainManager {
       const button = document.createElement('button');
       button.textContent = label;
       button.className = 'mode-button';
-      button.title = chrome.i18n.getMessage(titleKey);
+      const title = getMessage(titleKey);
+      button.title = title;
+      button.setAttribute('aria-label', title);
       if (modeValue === mode) button.classList.add('selected');
 
       button.addEventListener('click', () => this.updateDomainMode(domain, modeValue));
@@ -144,13 +233,17 @@ export default class DomainManager {
     const editButton = document.createElement('button');
     editButton.textContent = '✏️';
     editButton.className = 'edit-button';
-    editButton.title = chrome.i18n.getMessage('editDomainButton');
+    const editTitle = getMessage('editDomainButton');
+    editButton.title = editTitle;
+    editButton.setAttribute('aria-label', editTitle);
     editButton.addEventListener('click', () => this.editDomain(domain));
 
     const deleteButton = document.createElement('button');
     deleteButton.textContent = '🗑️';
     deleteButton.className = 'delete-button';
-    deleteButton.title = chrome.i18n.getMessage('deleteDomainButton');
+    const deleteTitle = getMessage('deleteDomainButton');
+    deleteButton.title = deleteTitle;
+    deleteButton.setAttribute('aria-label', deleteTitle);
     deleteButton.addEventListener('click', () => this.deleteDomain(domain));
 
     card.appendChild(domainName);
@@ -170,8 +263,8 @@ export default class DomainManager {
 
   /**
    * Update the referer mode for a domain.
-   * @param {string} domain 
-   * @param {number} newMode 
+   * @param {string} domain
+   * @param {number} newMode
    */
   static async updateDomainMode(domain, newMode) {
     try {
@@ -187,11 +280,16 @@ export default class DomainManager {
 
   /**
    * Delete a domain after user confirmation.
-   * @param {string} domain 
+   * @param {string} domain
    */
   static async deleteDomain(domain) {
-    const confirmation = confirm(`Do you really want to delete the domain "${domain}"?`);
-    if (!confirmation) return;
+    const confirmed = await Modal.confirm({
+      title: getMessage('deleteDomainTitle'),
+      message: getMessage('confirmDeleteDomain', domain),
+      confirmText: getMessage('deleteDomainButton'),
+      danger: true
+    });
+    if (!confirmed) return;
 
     try {
       const result = await chrome.storage.local.get('refererHeaders');
@@ -209,7 +307,11 @@ export default class DomainManager {
    * @param {string} domain
    */
   static async editDomain(domain) {
-    const newDomain = prompt(chrome.i18n.getMessage("promptEditDomain"), domain);
+    const newDomain = await Modal.prompt({
+      title: getMessage('editDomainTitle'),
+      message: getMessage('promptEditDomain'),
+      defaultValue: domain
+    });
     if (newDomain === null) return;
 
     const trimmed = newDomain.trim().toLowerCase();
@@ -220,7 +322,7 @@ export default class DomainManager {
       const domains = result.refererHeaders || {};
 
       if (domains.hasOwnProperty(trimmed)) {
-        alert(chrome.i18n.getMessage("domainAlreadyExists"));
+        await Modal.alert({ title: getMessage('editDomainTitle'), message: getMessage('domainAlreadyExists') });
         this.editDomain(domain);
         return;
       }
@@ -236,18 +338,23 @@ export default class DomainManager {
 
   /**
    * Prompt user to add a new domain.
+   * @param {string} [domain] Pre-filled value, e.g. the current search text.
    */
   static async addDomain(domain) {
-    const newDomain = prompt(chrome.i18n.getMessage("promptNewDomain"), domain);
+    const newDomain = await Modal.prompt({
+      title: getMessage('addDomainTitle'),
+      message: getMessage('promptNewDomain'),
+      defaultValue: domain
+    });
     if (newDomain) {
       const trimmed = newDomain.trim().toLowerCase();
       if (trimmed.length === 0) return;
       try {
         const result = await chrome.storage.local.get('refererHeaders');
         const domains = result.refererHeaders || {};
-        
+
         if (domains.hasOwnProperty(trimmed)) {
-          alert(chrome.i18n.getMessage("domainAlreadyExists"));
+          await Modal.alert({ title: getMessage('addDomainTitle'), message: getMessage('domainAlreadyExists') });
           this.addDomain(trimmed);
           return;
         }
@@ -298,12 +405,15 @@ export default class DomainManager {
       const imported = parsed && typeof parsed.refererHeaders === 'object' ? parsed.refererHeaders : parsed;
 
       if (!this.isValidRuleSet(imported)) {
-        alert(chrome.i18n.getMessage('importInvalidFile'));
+        await Modal.alert({ title: getMessage('importConfirmTitle'), message: getMessage('importInvalidFile') });
         return;
       }
 
       const importedCount = Object.keys(imported).length;
-      const confirmed = confirm(chrome.i18n.getMessage('importConfirm', String(importedCount)));
+      const confirmed = await Modal.confirm({
+        title: getMessage('importConfirmTitle'),
+        message: getMessage('importConfirm', String(importedCount))
+      });
       if (!confirmed) return;
 
       const result = await chrome.storage.local.get('refererHeaders');
@@ -311,10 +421,10 @@ export default class DomainManager {
 
       await chrome.storage.local.set({ refererHeaders: domains });
       this.loadDomains();
-      alert(chrome.i18n.getMessage('importSuccess'));
+      await Modal.alert({ title: getMessage('importConfirmTitle'), message: getMessage('importSuccess') });
     } catch (error) {
       logger.error('Failed to import settings:', error);
-      alert(chrome.i18n.getMessage('importInvalidFile'));
+      await Modal.alert({ title: getMessage('importConfirmTitle'), message: getMessage('importInvalidFile') });
     }
   }
 

@@ -4,6 +4,8 @@
 
 // Import the functions and classes to be tested
 import DomainManager from '../src/options/options.js';
+import Modal from '../src/options/Modal.js';
+import { loadOverrideMessages } from '../src/lib/i18n.js';
 
 // jsdom does not implement innerText (it has no layout engine), but options.js
 // relies on it for i18n text replacement. Polyfill it as a textContent alias
@@ -22,6 +24,8 @@ beforeEach(() => {
   document.body.innerHTML = `
     <input id="search" />
     <div id="domainList"></div>
+    <select id="languageSelect"></select>
+    <button id="themeToggle"></button>
   `;
   DomainManager.domainList = document.getElementById('domainList');
   DomainManager.searchInput = document.getElementById('search');
@@ -33,13 +37,17 @@ beforeEach(() => {
         set: jest.fn()
       }
     },
+    runtime: {
+      getURL: jest.fn((path) => `chrome-extension://test/${path}`)
+    },
     i18n: {
       getMessage: jest.fn((key) => (key.startsWith('empty') ? '' : key))
     }
   };
 });
 
-afterEach(() => {
+afterEach(async () => {
+  await loadOverrideMessages('auto');
   jest.restoreAllMocks();
 });
 
@@ -70,7 +78,7 @@ test('loadDomains renders multiple matches sorted alphabetically', async () => {
   expect(names).toEqual(['apple.com', 'mango.com', 'zebra.com']);
 });
 
-test('loadDomains shows a placeholder when nothing matches', async () => {
+test('loadDomains shows a "no matches" placeholder when domains exist but none match the search', async () => {
   chrome.storage.local.get.mockResolvedValue({
     refererHeaders: { "example.com": 0 }
   });
@@ -78,14 +86,26 @@ test('loadDomains shows a placeholder when nothing matches', async () => {
   await DomainManager.loadDomains();
   const placeholder = DomainManager.domainList.querySelector('.placeholder');
   expect(placeholder).not.toBeNull();
-  expect(placeholder.textContent).toBe('No domains found.');
+  expect(placeholder.textContent).toBe('noDomainsSearchEmpty');
+  expect(placeholder.querySelector('.placeholder-hint-link')).toBeNull();
 });
 
-test('loadDomains defaults to an empty map when nothing is stored', async () => {
+test('loadDomains shows an empty-state placeholder with an "add domain" shortcut when there are no domains at all', async () => {
   chrome.storage.local.get.mockResolvedValue({});
   DomainManager.searchInput.value = "";
   await DomainManager.loadDomains();
-  expect(DomainManager.domainList.querySelector('.placeholder')).not.toBeNull();
+
+  const placeholder = DomainManager.domainList.querySelector('.placeholder');
+  expect(placeholder).not.toBeNull();
+  expect(placeholder.textContent).toContain('noDomainsFound');
+
+  const addLink = placeholder.querySelector('.placeholder-hint-link');
+  expect(addLink).not.toBeNull();
+
+  const promptSpy = jest.spyOn(Modal, 'prompt').mockResolvedValue(null);
+  DomainManager.searchInput.value = 'typed.com';
+  addLink.click();
+  expect(promptSpy).toHaveBeenCalledWith(expect.objectContaining({ defaultValue: 'typed.com' }));
 });
 
 test('loadDomains logs an error when refererHeaders is not an object', async () => {
@@ -107,7 +127,7 @@ test('loadDomains logs an error when storage access fails', async () => {
   expect(spy).toHaveBeenCalledWith('Failed to load domains:', expect.any(Error));
 });
 
-test('renderDomainCard applies the fade-in animation and wires up mode/delete buttons', async () => {
+test('renderDomainCard applies the fade-in animation and wires up mode/edit/delete buttons with accessible labels', async () => {
   window.requestAnimationFrame = (cb) => cb();
   chrome.storage.local.get.mockResolvedValue({ refererHeaders: { 'example.com': 1 } });
   DomainManager.searchInput.value = '';
@@ -119,18 +139,23 @@ test('renderDomainCard applies the fade-in animation and wires up mode/delete bu
 
   const modeButtons = card.querySelectorAll('.mode-button');
   expect(modeButtons[1].classList.contains('selected')).toBe(true);
+  expect(modeButtons[0].getAttribute('aria-label')).toBe('legendNoReferer');
 
   const updateSpy = jest.spyOn(DomainManager, 'updateDomainMode').mockImplementation(() => {});
   modeButtons[2].click();
   expect(updateSpy).toHaveBeenCalledWith('example.com', 2);
 
-  const deleteSpy = jest.spyOn(DomainManager, 'deleteDomain').mockImplementation(() => {});
-  card.querySelector('.delete-button').click();
-  expect(deleteSpy).toHaveBeenCalledWith('example.com');
-
+  const editButton = card.querySelector('.edit-button');
+  expect(editButton.getAttribute('aria-label')).toBe('editDomainButton');
   const editSpy = jest.spyOn(DomainManager, 'editDomain').mockImplementation(() => {});
-  card.querySelector('.edit-button').click();
+  editButton.click();
   expect(editSpy).toHaveBeenCalledWith('example.com');
+
+  const deleteButton = card.querySelector('.delete-button');
+  expect(deleteButton.getAttribute('aria-label')).toBe('deleteDomainButton');
+  const deleteSpy = jest.spyOn(DomainManager, 'deleteDomain').mockImplementation(() => {});
+  deleteButton.click();
+  expect(deleteSpy).toHaveBeenCalledWith('example.com');
 });
 
 test('updateDomainMode updates storage and reloads list', async () => {
@@ -165,116 +190,128 @@ test('updateDomainMode logs an error when storage fails', async () => {
   expect(spy).toHaveBeenCalledWith('Failed to update domain example.com:', expect.any(Error));
 });
 
-test('deleteDomain removes domain from storage', async () => {
-  chrome.storage.local.get.mockResolvedValue({
-    refererHeaders: { "a.com": 0, "b.com": 1 }
+describe('deleteDomain()', () => {
+  test('removes domain from storage after confirming via the modal', async () => {
+    chrome.storage.local.get.mockResolvedValue({
+      refererHeaders: { "a.com": 0, "b.com": 1 }
+    });
+    const mockSet = jest.fn();
+    chrome.storage.local.set = mockSet;
+    const confirmSpy = jest.spyOn(Modal, 'confirm').mockResolvedValue(true);
+    jest.spyOn(DomainManager, "loadDomains").mockImplementation(() => {});
+
+    await DomainManager.deleteDomain("b.com");
+
+    expect(confirmSpy).toHaveBeenCalledWith(expect.objectContaining({
+      title: 'deleteDomainTitle',
+      message: 'confirmDeleteDomain',
+      danger: true
+    }));
+    expect(mockSet).toHaveBeenCalledWith({
+      refererHeaders: { "a.com": 0 }
+    });
   });
-  const mockSet = jest.fn();
-  chrome.storage.local.set = mockSet;
-  global.confirm = jest.fn(() => true);
-  jest.spyOn(DomainManager, "loadDomains").mockImplementation(() => {});
-  await DomainManager.deleteDomain("b.com");
-  expect(mockSet).toHaveBeenCalledWith({
-    refererHeaders: { "a.com": 0 }
+
+  test('defaults to an empty map when nothing is stored', async () => {
+    const mockSet = jest.fn();
+    chrome.storage.local.get.mockResolvedValue({});
+    chrome.storage.local.set = mockSet;
+    jest.spyOn(Modal, 'confirm').mockResolvedValue(true);
+    jest.spyOn(DomainManager, "loadDomains").mockImplementation(() => {});
+    await DomainManager.deleteDomain("b.com");
+    expect(mockSet).toHaveBeenCalledWith({ refererHeaders: {} });
   });
-});
 
-test('deleteDomain defaults to an empty map when nothing is stored', async () => {
-  const mockSet = jest.fn();
-  chrome.storage.local.get.mockResolvedValue({});
-  chrome.storage.local.set = mockSet;
-  global.confirm = jest.fn(() => true);
-  jest.spyOn(DomainManager, "loadDomains").mockImplementation(() => {});
-  await DomainManager.deleteDomain("b.com");
-  expect(mockSet).toHaveBeenCalledWith({ refererHeaders: {} });
-});
-
-test('deleteDomain does nothing when the user cancels the confirmation', async () => {
-  global.confirm = jest.fn(() => false);
-  const mockSet = jest.fn();
-  chrome.storage.local.set = mockSet;
-  await DomainManager.deleteDomain("b.com");
-  expect(mockSet).not.toHaveBeenCalled();
-  expect(chrome.storage.local.get).not.toHaveBeenCalled();
-});
-
-test('deleteDomain logs an error when storage fails', async () => {
-  const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
-  global.confirm = jest.fn(() => true);
-  chrome.storage.local.get.mockRejectedValue(new Error('fail'));
-  await DomainManager.deleteDomain('a.com');
-  expect(spy).toHaveBeenCalledWith('Failed to delete domain a.com:', expect.any(Error));
-});
-
-test('addDomain saves new domain with default mode', async () => {
-  chrome.storage.local.get.mockResolvedValue({
-    refererHeaders: {}
+  test('does nothing when the user cancels the confirmation', async () => {
+    jest.spyOn(Modal, 'confirm').mockResolvedValue(false);
+    const mockSet = jest.fn();
+    chrome.storage.local.set = mockSet;
+    await DomainManager.deleteDomain("b.com");
+    expect(mockSet).not.toHaveBeenCalled();
+    expect(chrome.storage.local.get).not.toHaveBeenCalled();
   });
-  const mockSet = jest.fn();
-  chrome.storage.local.set = mockSet;
-  global.prompt = jest.fn(() => "newdomain.com");
-  jest.spyOn(DomainManager, "loadDomains").mockImplementation(() => {});
-  await DomainManager.addDomain();
-  expect(mockSet).toHaveBeenCalledWith({
-    refererHeaders: { "newdomain.com": 0 }
+
+  test('logs an error when storage fails', async () => {
+    const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    jest.spyOn(Modal, 'confirm').mockResolvedValue(true);
+    chrome.storage.local.get.mockRejectedValue(new Error('fail'));
+    await DomainManager.deleteDomain('a.com');
+    expect(spy).toHaveBeenCalledWith('Failed to delete domain a.com:', expect.any(Error));
   });
 });
 
-test('addDomain defaults to an empty map when nothing is stored', async () => {
-  chrome.storage.local.get.mockResolvedValue({});
-  const mockSet = jest.fn();
-  chrome.storage.local.set = mockSet;
-  global.prompt = jest.fn(() => "newdomain.com");
-  jest.spyOn(DomainManager, "loadDomains").mockImplementation(() => {});
-  await DomainManager.addDomain();
-  expect(mockSet).toHaveBeenCalledWith({
-    refererHeaders: { "newdomain.com": 0 }
+describe('addDomain()', () => {
+  test('saves new domain with default mode', async () => {
+    chrome.storage.local.get.mockResolvedValue({
+      refererHeaders: {}
+    });
+    const mockSet = jest.fn();
+    chrome.storage.local.set = mockSet;
+    const promptSpy = jest.spyOn(Modal, 'prompt').mockResolvedValue("newdomain.com");
+    jest.spyOn(DomainManager, "loadDomains").mockImplementation(() => {});
+    await DomainManager.addDomain();
+    expect(promptSpy).toHaveBeenCalledWith(expect.objectContaining({ title: 'addDomainTitle', message: 'promptNewDomain' }));
+    expect(mockSet).toHaveBeenCalledWith({
+      refererHeaders: { "newdomain.com": 0 }
+    });
   });
-});
 
-test('addDomain does nothing when the prompt is cancelled', async () => {
-  global.prompt = jest.fn(() => null);
-  const mockSet = jest.fn();
-  chrome.storage.local.set = mockSet;
-  await DomainManager.addDomain('');
-  expect(mockSet).not.toHaveBeenCalled();
-  expect(chrome.storage.local.get).not.toHaveBeenCalled();
-});
+  test('defaults to an empty map when nothing is stored', async () => {
+    chrome.storage.local.get.mockResolvedValue({});
+    const mockSet = jest.fn();
+    chrome.storage.local.set = mockSet;
+    jest.spyOn(Modal, 'prompt').mockResolvedValue("newdomain.com");
+    jest.spyOn(DomainManager, "loadDomains").mockImplementation(() => {});
+    await DomainManager.addDomain();
+    expect(mockSet).toHaveBeenCalledWith({
+      refererHeaders: { "newdomain.com": 0 }
+    });
+  });
 
-test('addDomain does nothing when the trimmed input is empty', async () => {
-  global.prompt = jest.fn(() => '   ');
-  const mockSet = jest.fn();
-  chrome.storage.local.set = mockSet;
-  await DomainManager.addDomain('');
-  expect(mockSet).not.toHaveBeenCalled();
-  expect(chrome.storage.local.get).not.toHaveBeenCalled();
-});
+  test('does nothing when the prompt is cancelled', async () => {
+    jest.spyOn(Modal, 'prompt').mockResolvedValue(null);
+    const mockSet = jest.fn();
+    chrome.storage.local.set = mockSet;
+    await DomainManager.addDomain('');
+    expect(mockSet).not.toHaveBeenCalled();
+    expect(chrome.storage.local.get).not.toHaveBeenCalled();
+  });
 
-test('addDomain alerts and re-prompts when the domain already exists', async () => {
-  chrome.storage.local.get.mockResolvedValue({ refererHeaders: { 'existing.com': 0 } });
-  global.alert = jest.fn();
-  global.prompt = jest.fn()
-    .mockReturnValueOnce('existing.com')
-    .mockReturnValueOnce(null);
-  jest.spyOn(DomainManager, "loadDomains").mockImplementation(() => {});
+  test('does nothing when the trimmed input is empty', async () => {
+    jest.spyOn(Modal, 'prompt').mockResolvedValue('   ');
+    const mockSet = jest.fn();
+    chrome.storage.local.set = mockSet;
+    await DomainManager.addDomain('');
+    expect(mockSet).not.toHaveBeenCalled();
+    expect(chrome.storage.local.get).not.toHaveBeenCalled();
+  });
 
-  await DomainManager.addDomain('existing.com');
+  test('alerts and re-prompts when the domain already exists', async () => {
+    chrome.storage.local.get.mockResolvedValue({ refererHeaders: { 'existing.com': 0 } });
+    const alertSpy = jest.spyOn(Modal, 'alert').mockResolvedValue(undefined);
+    const promptSpy = jest.spyOn(Modal, 'prompt')
+      .mockResolvedValueOnce('existing.com')
+      .mockResolvedValueOnce(null);
+    jest.spyOn(DomainManager, "loadDomains").mockImplementation(() => {});
 
-  expect(global.alert).toHaveBeenCalledWith('domainAlreadyExists');
-  expect(global.prompt).toHaveBeenCalledTimes(2);
-});
+    await DomainManager.addDomain('existing.com');
 
-test('addDomain logs an error when storage fails', async () => {
-  const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
-  global.prompt = jest.fn(() => 'new.com');
-  chrome.storage.local.get.mockRejectedValue(new Error('fail'));
-  await DomainManager.addDomain('');
-  expect(spy).toHaveBeenCalledWith('Failed to add domain:', expect.any(Error));
+    expect(alertSpy).toHaveBeenCalledWith(expect.objectContaining({ message: 'domainAlreadyExists' }));
+    expect(promptSpy).toHaveBeenCalledTimes(2);
+  });
+
+  test('logs an error when storage fails', async () => {
+    const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    jest.spyOn(Modal, 'prompt').mockResolvedValue('new.com');
+    chrome.storage.local.get.mockRejectedValue(new Error('fail'));
+    await DomainManager.addDomain('');
+    expect(spy).toHaveBeenCalledWith('Failed to add domain:', expect.any(Error));
+  });
 });
 
 describe('editDomain()', () => {
   test('does nothing when the prompt is cancelled', async () => {
-    global.prompt = jest.fn(() => null);
+    jest.spyOn(Modal, 'prompt').mockResolvedValue(null);
     const mockSet = jest.fn();
     chrome.storage.local.set = mockSet;
     await DomainManager.editDomain('example.com');
@@ -283,7 +320,7 @@ describe('editDomain()', () => {
   });
 
   test('does nothing when the trimmed input is empty', async () => {
-    global.prompt = jest.fn(() => '   ');
+    jest.spyOn(Modal, 'prompt').mockResolvedValue('   ');
     const mockSet = jest.fn();
     chrome.storage.local.set = mockSet;
     await DomainManager.editDomain('example.com');
@@ -292,7 +329,7 @@ describe('editDomain()', () => {
   });
 
   test('does nothing when the new name is unchanged after trimming/lowercasing', async () => {
-    global.prompt = jest.fn(() => '  Example.com  ');
+    jest.spyOn(Modal, 'prompt').mockResolvedValue('  Example.com  ');
     const mockSet = jest.fn();
     chrome.storage.local.set = mockSet;
     await DomainManager.editDomain('example.com');
@@ -306,11 +343,16 @@ describe('editDomain()', () => {
     });
     const mockSet = jest.fn();
     chrome.storage.local.set = mockSet;
-    global.prompt = jest.fn(() => 'new.com');
+    const promptSpy = jest.spyOn(Modal, 'prompt').mockResolvedValue('new.com');
     jest.spyOn(DomainManager, "loadDomains").mockImplementation(() => {});
 
     await DomainManager.editDomain('old.com');
 
+    expect(promptSpy).toHaveBeenCalledWith(expect.objectContaining({
+      title: 'editDomainTitle',
+      message: 'promptEditDomain',
+      defaultValue: 'old.com'
+    }));
     expect(mockSet).toHaveBeenCalledWith({
       refererHeaders: { 'other.com': 0, 'new.com': 2 }
     });
@@ -321,7 +363,7 @@ describe('editDomain()', () => {
     chrome.storage.local.get.mockResolvedValue({});
     const mockSet = jest.fn();
     chrome.storage.local.set = mockSet;
-    global.prompt = jest.fn(() => 'new.com');
+    jest.spyOn(Modal, 'prompt').mockResolvedValue('new.com');
     jest.spyOn(DomainManager, "loadDomains").mockImplementation(() => {});
 
     await DomainManager.editDomain('old.com');
@@ -335,23 +377,23 @@ describe('editDomain()', () => {
     chrome.storage.local.get.mockResolvedValue({
       refererHeaders: { 'old.com': 1, 'existing.com': 0 }
     });
-    global.alert = jest.fn();
-    global.prompt = jest.fn()
-      .mockReturnValueOnce('existing.com')
-      .mockReturnValueOnce(null);
+    const alertSpy = jest.spyOn(Modal, 'alert').mockResolvedValue(undefined);
+    const promptSpy = jest.spyOn(Modal, 'prompt')
+      .mockResolvedValueOnce('existing.com')
+      .mockResolvedValueOnce(null);
     const mockSet = jest.fn();
     chrome.storage.local.set = mockSet;
 
     await DomainManager.editDomain('old.com');
 
-    expect(global.alert).toHaveBeenCalledWith('domainAlreadyExists');
-    expect(global.prompt).toHaveBeenCalledTimes(2);
+    expect(alertSpy).toHaveBeenCalledWith(expect.objectContaining({ message: 'domainAlreadyExists' }));
+    expect(promptSpy).toHaveBeenCalledTimes(2);
     expect(mockSet).not.toHaveBeenCalled();
   });
 
   test('logs an error when storage fails', async () => {
     const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
-    global.prompt = jest.fn(() => 'new.com');
+    jest.spyOn(Modal, 'prompt').mockResolvedValue('new.com');
     chrome.storage.local.get.mockRejectedValue(new Error('fail'));
     await DomainManager.editDomain('old.com');
     expect(spy).toHaveBeenCalledWith('Failed to rename domain old.com:', expect.any(Error));
@@ -390,6 +432,62 @@ describe('applyI18n()', () => {
   });
 });
 
+describe('initThemeToggle()', () => {
+  test('applies the stored theme and renders the button', async () => {
+    chrome.storage.local.get.mockImplementation((keys) =>
+      Promise.resolve(keys === 'uiTheme' ? { uiTheme: 'dark' } : {})
+    );
+
+    await DomainManager.initThemeToggle();
+
+    expect(document.documentElement.dataset.theme).toBe('dark');
+    expect(document.getElementById('themeToggle').textContent).toBe('🌙');
+  });
+
+  test('cycles the theme on click and persists the new value', async () => {
+    chrome.storage.local.get.mockResolvedValue({});
+    await DomainManager.initThemeToggle();
+    const button = document.getElementById('themeToggle');
+
+    button.click();
+    await Promise.resolve();
+    await Promise.resolve();
+
+    expect(document.documentElement.dataset.theme).toBe('light');
+    expect(chrome.storage.local.set).toHaveBeenCalledWith({ uiTheme: 'light' });
+  });
+});
+
+describe('initLanguageSelect()', () => {
+  test('populates options with the stored preference selected', async () => {
+    chrome.storage.local.get.mockResolvedValue({});
+    await DomainManager.initLanguageSelect();
+
+    const select = document.getElementById('languageSelect');
+    const values = Array.from(select.options).map((o) => o.value);
+    expect(values).toEqual(['auto', 'en', 'de']);
+    expect(select.value).toBe('auto');
+  });
+
+  test('changing the language persists it and reloads the domain list', async () => {
+    chrome.storage.local.get.mockResolvedValue({ refererHeaders: {} });
+    global.fetch = jest.fn().mockResolvedValue({
+      json: () => Promise.resolve({ extensionName: { message: 'Referer nach Domain' } })
+    });
+
+    await DomainManager.initLanguageSelect();
+    const select = document.getElementById('languageSelect');
+    select.value = 'de';
+    select.dispatchEvent(new Event('change'));
+    await Promise.resolve();
+    await Promise.resolve();
+    await Promise.resolve();
+
+    expect(chrome.storage.local.set).toHaveBeenCalledWith({ uiLanguage: 'de' });
+    expect(fetch).toHaveBeenCalledWith('chrome-extension://test/_locales/de/messages.json');
+  });
+});
+
 describe('module bootstrap', () => {
   test('DOMContentLoaded wires up DomainManager (and TabView/HelpView) without error', async () => {
     document.body.innerHTML = `
@@ -399,6 +497,8 @@ describe('module bootstrap', () => {
       <button id="exportButton"></button>
       <button id="importButton"></button>
       <input type="file" id="importFileInput" />
+      <select id="languageSelect"></select>
+      <button id="themeToggle"></button>
     `;
     chrome.storage.local.get.mockResolvedValue({ refererHeaders: {} });
 
@@ -516,27 +616,42 @@ describe('importSettings()', () => {
     });
     const mockSet = jest.fn();
     chrome.storage.local.set = mockSet;
-    global.confirm = jest.fn(() => true);
-    global.alert = jest.fn();
+    const confirmSpy = jest.spyOn(Modal, 'confirm').mockResolvedValue(true);
+    const alertSpy = jest.spyOn(Modal, 'alert').mockResolvedValue(undefined);
     jest.spyOn(DomainManager, 'loadDomains').mockImplementation(() => {});
 
     const target = { files: [fileWith(JSON.stringify({ refererHeaders: { 'imported.com': 2 } }))], value: 'x' };
     await DomainManager.importSettings({ target });
 
+    expect(confirmSpy).toHaveBeenCalledWith(expect.objectContaining({ title: 'importConfirmTitle', message: 'importConfirm' }));
     expect(mockSet).toHaveBeenCalledWith({
       refererHeaders: { 'existing.com': 1, 'imported.com': 2 }
     });
     expect(target.value).toBe('');
-    expect(global.alert).toHaveBeenCalledWith('importSuccess');
+    expect(alertSpy).toHaveBeenCalledWith(expect.objectContaining({ message: 'importSuccess' }));
     expect(DomainManager.loadDomains).toHaveBeenCalled();
+  });
+
+  test('defaults to an empty map when nothing is stored yet', async () => {
+    chrome.storage.local.get.mockResolvedValue({});
+    const mockSet = jest.fn();
+    chrome.storage.local.set = mockSet;
+    jest.spyOn(Modal, 'confirm').mockResolvedValue(true);
+    jest.spyOn(Modal, 'alert').mockResolvedValue(undefined);
+    jest.spyOn(DomainManager, 'loadDomains').mockImplementation(() => {});
+
+    const target = { files: [fileWith(JSON.stringify({ 'imported.com': 0 }))], value: 'x' };
+    await DomainManager.importSettings({ target });
+
+    expect(mockSet).toHaveBeenCalledWith({ refererHeaders: { 'imported.com': 0 } });
   });
 
   test('accepts a bare domain-to-mode map without a refererHeaders wrapper', async () => {
     chrome.storage.local.get.mockResolvedValue({ refererHeaders: {} });
     const mockSet = jest.fn();
     chrome.storage.local.set = mockSet;
-    global.confirm = jest.fn(() => true);
-    global.alert = jest.fn();
+    jest.spyOn(Modal, 'confirm').mockResolvedValue(true);
+    jest.spyOn(Modal, 'alert').mockResolvedValue(undefined);
     jest.spyOn(DomainManager, 'loadDomains').mockImplementation(() => {});
 
     const target = { files: [fileWith(JSON.stringify({ 'imported.com': 0 }))], value: 'x' };
@@ -549,7 +664,7 @@ describe('importSettings()', () => {
     chrome.storage.local.get.mockResolvedValue({ refererHeaders: {} });
     const mockSet = jest.fn();
     chrome.storage.local.set = mockSet;
-    global.confirm = jest.fn(() => false);
+    jest.spyOn(Modal, 'confirm').mockResolvedValue(false);
 
     const target = { files: [fileWith(JSON.stringify({ 'imported.com': 0 }))], value: 'x' };
     await DomainManager.importSettings({ target });
@@ -559,27 +674,27 @@ describe('importSettings()', () => {
 
   test('alerts and does not save when the file contains invalid JSON', async () => {
     const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
-    global.alert = jest.fn();
+    const alertSpy = jest.spyOn(Modal, 'alert').mockResolvedValue(undefined);
     const mockSet = jest.fn();
     chrome.storage.local.set = mockSet;
 
     const target = { files: [fileWith('not-json')], value: 'x' };
     await DomainManager.importSettings({ target });
 
-    expect(global.alert).toHaveBeenCalledWith('importInvalidFile');
+    expect(alertSpy).toHaveBeenCalledWith(expect.objectContaining({ message: 'importInvalidFile' }));
     expect(mockSet).not.toHaveBeenCalled();
     expect(spy).toHaveBeenCalledWith('Failed to import settings:', expect.any(Error));
   });
 
   test('alerts and does not save when the parsed content is not a valid rule set', async () => {
-    global.alert = jest.fn();
+    const alertSpy = jest.spyOn(Modal, 'alert').mockResolvedValue(undefined);
     const mockSet = jest.fn();
     chrome.storage.local.set = mockSet;
 
     const target = { files: [fileWith(JSON.stringify({ 'example.com': 99 }))], value: 'x' };
     await DomainManager.importSettings({ target });
 
-    expect(global.alert).toHaveBeenCalledWith('importInvalidFile');
+    expect(alertSpy).toHaveBeenCalledWith(expect.objectContaining({ message: 'importInvalidFile' }));
     expect(mockSet).not.toHaveBeenCalled();
     expect(chrome.storage.local.get).not.toHaveBeenCalled();
   });

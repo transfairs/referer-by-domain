@@ -17,6 +17,9 @@
   "optionsPageLink": {
     "message": "Einstellungen"
   },
+  "importExportPageLink": {
+    "message": "Import | Export"
+  },
   "savedStatus": {
     "message": "Einstellung gespeichert! Bitte laden Sie den Tab neu."
   },
@@ -133,5 +136,56 @@
   },
   "helpTips": {
     "message": "<h2>Standard-Referer vollständig deaktivieren</h2><p>Wenn Sie möchten, dass Firefox standardmäßig keine Referer-Header mehr sendet, können Sie folgende erweiterte Einstellung ändern:</p><ol><li>Geben Sie in die Adressleiste <code>about:config</code> ein.</li><li>Suchen Sie nach dem Eintrag <code>network.http.sendRefererHeader</code>.</li><li>Setzen Sie den Wert auf <code>0</code>.</li></ol><p>Diese Erweiterung versucht, das Verhalten dieses Schlüssels zu imitieren, allerdings nicht global für alle, sondern für jede Domain individuell.</p><p>Mit standardmäßig deaktiviertem Referer wird diese Erweiterung besonders wertvoll.</p><h2>Sonstiges</h2><ul><li>Verwenden Sie <code>*.beispiel.de</code>, um alle Subdomains abzudecken.</li><li>Bestehende Regeln können in den Einstellungen angepasst werden.</li><li>Ein Klick auf eine verwandte Domain im Popup öffnet diese zur Bearbeitung.</li><li>Falls eine Wildcard-Regel zutrifft, wird dies angezeigt und kann bearbeitet werden.</li></ul>"
+  },
+  "themeToggleTitle": {
+    "message": "Design: $1 (zum Ändern klicken)"
+  },
+  "themeAuto": {
+    "message": "Automatisch"
+  },
+  "themeLight": {
+    "message": "Hell"
+  },
+  "themeDark": {
+    "message": "Dunkel"
+  },
+  "languageAuto": {
+    "message": "Systemsprache"
+  },
+  "languageSelectLabel": {
+    "message": "Sprache"
+  },
+  "modalCancel": {
+    "message": "Abbrechen"
+  },
+  "modalConfirm": {
+    "message": "OK"
+  },
+  "modalOk": {
+    "message": "OK"
+  },
+  "addDomainTitle": {
+    "message": "Domain hinzufügen"
+  },
+  "editDomainTitle": {
+    "message": "Domain bearbeiten"
+  },
+  "deleteDomainTitle": {
+    "message": "Domain löschen"
+  },
+  "confirmDeleteDomain": {
+    "message": "Möchten Sie die Domain \"$1\" wirklich löschen?"
+  },
+  "importConfirmTitle": {
+    "message": "Einstellungen importieren"
+  },
+  "noDomainsFound": {
+    "message": "Noch keine Domains konfiguriert."
+  },
+  "noDomainsHint": {
+    "message": "Fügen Sie eine Domain hinzu, um deren Referer-Header zu steuern."
+  },
+  "noDomainsSearchEmpty": {
+    "message": "Keine Domains entsprechen Ihrer Suche."
   }
 }

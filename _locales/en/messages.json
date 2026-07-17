@@ -17,6 +17,9 @@
   "optionsPageLink": {
     "message": "Settings"
   },
+  "importExportPageLink": {
+    "message": "Import | Export"
+  },
   "savedStatus": {
     "message": "Setting saved! Please reload the tab."
   },
@@ -135,5 +138,56 @@
   },
   "helpTips": {
     "message": "<h2>Fully disable default Referer</h2><p>If you want Firefox to stop sending referer headers by default, you can change the following advanced setting:</p><ol><li>Enter <code>about:config</code> in the address bar.</li><li>Search for <code>network.http.sendRefererHeader</code>.</li><li>Set the value to <code>0</code>.</li></ol><p>This extension aims to mimic this setting’s behaviour, but on a per-domain basis instead of globally.</p><p>With the referer disabled by default, this extension becomes especially valuable.</p><h2>Miscellaneous</h2><ul><li>Use <code>*.example.com</code> to cover all subdomains.</li><li>Existing rules can be edited in the settings.</li><li>Clicking on a related domain in the popup opens it for editing.</li><li>If a wildcard rule matches, it is shown and can be modified.</li></ul>"
+  },
+  "themeToggleTitle": {
+    "message": "Theme: $1 (click to change)"
+  },
+  "themeAuto": {
+    "message": "Auto"
+  },
+  "themeLight": {
+    "message": "Light"
+  },
+  "themeDark": {
+    "message": "Dark"
+  },
+  "languageAuto": {
+    "message": "Browser default"
+  },
+  "languageSelectLabel": {
+    "message": "Language"
+  },
+  "modalCancel": {
+    "message": "Cancel"
+  },
+  "modalConfirm": {
+    "message": "OK"
+  },
+  "modalOk": {
+    "message": "OK"
+  },
+  "addDomainTitle": {
+    "message": "Add domain"
+  },
+  "editDomainTitle": {
+    "message": "Edit domain"
+  },
+  "deleteDomainTitle": {
+    "message": "Delete domain"
+  },
+  "confirmDeleteDomain": {
+    "message": "Do you really want to delete the domain \"$1\"?"
+  },
+  "importConfirmTitle": {
+    "message": "Import settings"
+  },
+  "noDomainsFound": {
+    "message": "No domains configured yet."
+  },
+  "noDomainsHint": {
+    "message": "Add a domain to control its Referer header."
+  },
+  "noDomainsSearchEmpty": {
+    "message": "No domains match your search."
   }
 }

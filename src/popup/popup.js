@@ -5,6 +5,14 @@
 
 import * as logger from '../lib/logger.js';
 import { saveRefererHeaderForDomain, domainMatchesWildcard } from '../lib/lib.js';
+import { applyI18n, getMessage, initLanguage, setLanguagePreference, getSupportedLanguages } from '../lib/i18n.js';
+import { initTheme, applyTheme, setThemePreference, nextTheme } from '../lib/theme.js';
+
+const THEME_ICONS = { auto: '🌓', light: '☀️', dark: '🌙' };
+const LANGUAGE_NAMES = { en: 'English', de: 'Deutsch' };
+// A distinct globe icon for "auto" keeps it from visually doubling up with
+// whichever language flag it happens to resolve to.
+const LANGUAGE_FLAGS = { auto: '🌐', en: '🇬🇧', de: '🇩🇪' };
 
 document.addEventListener('DOMContentLoaded', () => {
   PopupManager.init();
@@ -22,6 +30,77 @@ export default class PopupManager {
     this.initialisePopup();
     this.bindPopupLinks();
     this.bindReloadButton();
+    this.initSettingsToolbar();
+  }
+
+  /**
+   * Load the stored theme/language preferences, wire up the toggle/select
+   * controls, and re-apply translations once a manual language override
+   * (if any) has finished loading.
+   */
+  static async initSettingsToolbar() {
+    await this.initThemeToggle();
+    await this.initLanguageSelect();
+    this.applyTranslations();
+  }
+
+  /**
+   * Apply the stored theme and wire up the theme-cycling button.
+   */
+  static async initThemeToggle() {
+    const button = document.getElementById('themeToggle');
+    let theme = await initTheme();
+    this.renderThemeToggle(button, theme);
+
+    button.addEventListener('click', async () => {
+      theme = nextTheme(theme);
+      applyTheme(theme);
+      await setThemePreference(theme);
+      this.renderThemeToggle(button, theme);
+    });
+  }
+
+  /**
+   * @param {HTMLButtonElement} button
+   * @param {'auto'|'light'|'dark'} theme
+   */
+  static renderThemeToggle(button, theme) {
+    const labelKey = theme === 'light' ? 'themeLight' : theme === 'dark' ? 'themeDark' : 'themeAuto';
+    button.textContent = THEME_ICONS[theme];
+    const title = getMessage('themeToggleTitle', getMessage(labelKey));
+    button.title = title;
+    button.setAttribute('aria-label', title);
+  }
+
+  /**
+   * Populate the language select with the stored preference and wire up
+   * language switching.
+   */
+  static async initLanguageSelect() {
+    const select = document.getElementById('languageSelect');
+    select.innerHTML = '';
+    select.setAttribute('aria-label', getMessage('languageSelectLabel'));
+
+    const autoOption = document.createElement('option');
+    autoOption.value = 'auto';
+    autoOption.textContent = LANGUAGE_FLAGS.auto;
+    autoOption.title = getMessage('languageAuto');
+    select.appendChild(autoOption);
+
+    getSupportedLanguages().forEach((lang) => {
+      const option = document.createElement('option');
+      option.value = lang;
+      option.textContent = LANGUAGE_FLAGS[lang];
+      option.title = LANGUAGE_NAMES[lang];
+      select.appendChild(option);
+    });
+
+    select.value = await initLanguage();
+
+    select.addEventListener('change', async () => {
+      await setLanguagePreference(select.value);
+      this.applyTranslations();
+    });
   }
 
   /**
@@ -43,13 +122,7 @@ export default class PopupManager {
    * Apply internationalisation to elements.
    */
   static applyTranslations() {
-    document.querySelectorAll('[data-i18n]').forEach(elem => {
-      const key = elem.getAttribute('data-i18n');
-      const message = chrome.i18n.getMessage(key);
-      if (message) {
-        elem.textContent = message;
-      }
-    });
+    applyI18n(document);
   }
 
   /**
@@ -82,9 +155,13 @@ export default class PopupManager {
           const domain = domainInput.value.trim().toLowerCase();
           if (domain.length > 0) {
             saveRefererHeaderForDomain(domain, mode);
-            this.showStatus(chrome.i18n.getMessage('savedStatus'));
+            this.showStatus(getMessage('savedStatus'));
             this.highlightSelectedButton(mode);
-            this.toggleReloadButton(domain === activeDomain);
+            // Reloading the active tab applies the new setting whenever the
+            // saved domain is the tab's own domain or one it actually talks
+            // to (a related domain observed on that tab).
+            const affectsActiveTab = domain === activeDomain || (this.relatedDomains && this.relatedDomains.has(domain));
+            this.toggleReloadButton(affectsActiveTab);
           }
         });
       });
@@ -93,7 +170,7 @@ export default class PopupManager {
 
   /**
    * Load referer settings for a specific domain.
-   * @param {string} domain 
+   * @param {string} domain
    */
   static loadDomainSettings(domain) {
     this.clearButtonHighlights();
@@ -122,14 +199,14 @@ export default class PopupManager {
       }
     });
   }
-  
+
   /**
    * Show matched domain if it is a wildcard domain (e.g., *.example.com)
    * @param {text} matchDomain
    */
   static showWildcardMatch(matchDomain) {
     const matchInfoEl = document.getElementById('matchInfo');
-    matchInfoEl.textContent = chrome.i18n.getMessage('matchedRuleText', matchDomain);
+    matchInfoEl.textContent = getMessage('matchedRuleText', matchDomain);
     matchInfoEl.style.display = 'block';
     matchInfoEl.onclick = () => {
       const input = document.getElementById('domainInput');
@@ -144,7 +221,7 @@ export default class PopupManager {
 
   /**
    * Highlight the selected referer mode button.
-   * @param {number} selectedMode 
+   * @param {number} selectedMode
    */
   static highlightSelectedButton(selectedMode) {
     document.querySelectorAll('.referer-options button').forEach(button => {
@@ -167,7 +244,7 @@ export default class PopupManager {
 
   /**
    * Display a short status message.
-   * @param {string} message 
+   * @param {string} message
    */
   static showStatus(message) {
     const statusEl = document.getElementById('status');
@@ -203,7 +280,7 @@ export default class PopupManager {
 
   /**
    * Load domains related to the current domain from background script.
-   * @param {string} domain 
+   * @param {string} domain
    */
   static loadRelatedDomains(domain) {
     logger.debug('[popup] Requesting related domains for:', domain);
@@ -231,6 +308,7 @@ export default class PopupManager {
       }
 
       logger.debug('[popup] Related domains found:', relatedDomains);
+      this.relatedDomains = new Set(relatedDomains);
 
       const section = document.getElementById('relatedDomainsSection');
       const list = document.getElementById('relatedDomainsList');
@@ -246,7 +324,8 @@ export default class PopupManager {
         // this page's requests; explain that instead of silently hiding.
         const empty = document.createElement('div');
         empty.className = 'related-domains-empty';
-        empty.textContent = chrome.i18n.getMessage('noRelatedDomains');
+        empty.setAttribute('data-i18n', 'noRelatedDomains');
+        empty.textContent = getMessage('noRelatedDomains');
         list.appendChild(empty);
         section.style.display = 'block';
         return;
@@ -280,8 +359,8 @@ export default class PopupManager {
           card.addEventListener('click', () => {
             document.getElementById('domainInput').value = d;
             PopupManager.loadDomainSettings(d);
-            // Related domains are always distinct from the domain they were
-            // looked up for, so this is never the active tab's own domain.
+            // No new setting has been saved yet for this domain selection,
+            // so there's nothing to reload the tab for until a mode is chosen.
             PopupManager.toggleReloadButton(false);
 
             document.querySelectorAll('.related-domain-card').forEach(c => c.classList.remove('highlight-match'));
