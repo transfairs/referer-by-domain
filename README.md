@@ -21,6 +21,22 @@ It simulates the behaviour of `network.http.sendRefererHeader`, but with fine-gr
 
 ---
 
+## 📸 Screenshots
+
+| Popup (light) | Popup (dark) |
+|:---:|:---:|
+| ![Popup light](src/assets/screenshots/screenshot-popup-2.0.0.png) | ![Popup dark](src/assets/screenshots/screenshot-popup-dark-2.0.0.png) |
+
+| Settings | Import / Export |
+|:---:|:---:|
+| ![Settings](src/assets/screenshots/screenshot-settings-2.0.0.png) | ![Import/Export](src/assets/screenshots/screenshot-importexport-2.0.0.png) |
+
+| Help — Overview | Help — Privacy |
+|:---:|:---:|
+| ![Help overview](src/assets/screenshots/screenshot-help-2.0.0.png) | ![Help privacy](src/assets/screenshots/screenshot-privacy-2.0.0.png) |
+
+---
+
 ## ⚙️ Referer Modes
 
 The options page lets you configure Referer behaviour for any domain:
