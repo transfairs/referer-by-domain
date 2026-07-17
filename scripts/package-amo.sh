@@ -22,12 +22,12 @@ zip -r -X "$OUT_FILE" \
   icons/logo-32x32.png \
   icons/logo-48x48.png \
   icons/logo-128x128.png \
-  src/assets/theme.css \
+  src/assets \
   src/background \
   src/lib \
   src/options \
   src/popup \
-  -x "*.map"
+  -x "*.map" "src/assets/screenshots/*"
 
 echo "Created $OUT_FILE"
 unzip -l "$OUT_FILE"

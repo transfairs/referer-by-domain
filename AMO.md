@@ -52,6 +52,13 @@ Alle Einstellungen werden ausschließlich lokal im Browser gespeichert.
 Es werden keine Daten übertragen, getrackt oder erfasst.
 ---
 # Release Notes
+## Version 2.0.1
+### 🇬🇧 English
+- Fixed Help tab images (GitHub/LinkedIn/YouTube icons, login example screenshots) not loading in the packaged extension
+
+### 🇩🇪 German
+- Fehler behoben: Bilder im Hilfe-Tab (GitHub/LinkedIn/YouTube-Icons, Login-Beispielscreenshots) wurden im gepackten Add-on nicht geladen
+
 ## Version 2.0.0
 ### 🇬🇧 English
 - Added a light/dark/auto theme toggle, applied consistently across the popup and options pages
