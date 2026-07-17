@@ -19,5 +19,8 @@ npm-debug.log*
 # Temp
 *.tmp
 
+# Coverage
+coverage/
+
 # Release
 *.xpi

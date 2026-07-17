@@ -13,13 +13,28 @@ document.addEventListener('DOMContentLoaded', () => {
 /**
  * Class responsible for handling popup page logic.
  */
-class PopupManager {
+export default class PopupManager {
   /**
    * Initialise popup functionalities.
    */
   static init() {
     this.applyTranslations();
     this.initialisePopup();
+    this.bindPopupLinks();
+  }
+
+  /**
+   * Ensure the popup closes after following a Settings/Help link.
+   * Some browsers (e.g. Firefox) don't reliably close the popup on their own
+   * when a target="_blank" link is clicked, since the new tab doesn't always
+   * steal focus away from the popup window.
+   */
+  static bindPopupLinks() {
+    document.querySelectorAll('.popup-link').forEach(link => {
+      link.addEventListener('click', () => {
+        window.close();
+      });
+    });
   }
 
   /**
@@ -251,13 +266,4 @@ class PopupManager {
       }
     });
   }
-}
-
-// Expose for browser and testing
-if (typeof window !== 'undefined') {
-  window.PopupManager = PopupManager;
-}
-
-if (typeof module !== 'undefined') {
-  module.exports = PopupManager;
 }

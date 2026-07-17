@@ -8,6 +8,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
+    "test:coverage": "jest --coverage",
     "start-server": "node test/testserver/server.js"
   },
   "directories": {
@@ -24,15 +25,10 @@
   "devDependencies": {
     "@babel/core": "^7.26.10",
     "@babel/preset-env": "^7.26.9",
-    "babel-jest": "^29.7.0",
+    "babel-jest": "^30.4.1",
     "express": "^5.1.0",
-    "jest": "^29.7.0",
-    "jest-environment-jsdom": "^29.7.0",
+    "jest": "^30.4.2",
+    "jest-environment-jsdom": "^30.4.1",
     "serve-favicon": "^2.5.0"
-  },
-  "dependencies": {
-    "@babel/preset-env": "^7.26.9",
-    "babel-jest": "^29.7.0",
-    "ts-jest": "^29.3.2"
   }
 }

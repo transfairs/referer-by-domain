@@ -179,3 +179,46 @@ h1 {
 .tab-content.active {
   display: block;
 }
+
+@media (max-width: 480px) {
+  body {
+    padding: 10px;
+  }
+
+  .container {
+    padding: 14px;
+  }
+
+  .controls {
+    flex-wrap: wrap;
+  }
+
+  .domain-card {
+    flex-wrap: wrap;
+    row-gap: 8px;
+  }
+
+  .mode-buttons {
+    margin-left: 0;
+  }
+
+  .tabbar button {
+    padding: 0.5rem 1rem;
+    font-size: 13px;
+  }
+}
+
+/* Larger touch targets on touchscreens (e.g. Firefox for Android) */
+@media (pointer: coarse) {
+  .mode-button,
+  .delete-button,
+  #addDomainButton,
+  .tabbar button,
+  .help-subtabs button {
+    padding: 10px 12px;
+  }
+
+  #search {
+    padding: 10px 12px;
+  }
+}

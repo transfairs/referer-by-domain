@@ -238,7 +238,7 @@
   color: #ffffff;
 }
 
-.contact-item.youtube img, .contact-item.github img {
+.contact-item.youtube img, .contact-item.github img, .contact-item.linkedin img {
   filter: invert(100%) sepia(10%) saturate(100%) hue-rotate(292deg) brightness(100%) contrast(96%);
 }
 

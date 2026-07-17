@@ -1,13 +1,6 @@
-// DEBUG MODE: Change to 'true' to enable debug logging
-const DEBUG_MODE = false;
+import { isDebugMode } from './debugMode.js';
 
-/**
- * Checks whether debug mode is enabled.
- * @returns {boolean} True if debug mode is active.
- */
-export function isDebugMode() {
-    return DEBUG_MODE;
-}
+export { isDebugMode };
 
 /**
  * Outputs debug messages if debug mode is enabled.
@@ -44,13 +37,19 @@ export function getRefererHeaderForDomain(domain, callback) {
         debug("Loaded refererHeaders:", refererHeaders);
 
         let refererValue = 0;
-        for (const savedDomain in refererHeaders) {
-            if (Object.prototype.hasOwnProperty.call(refererHeaders, savedDomain)) {
-                debug(`Comparing "${domain}" with "${savedDomain}"`);
-                if (domainMatchesWildcard(domain, savedDomain)) {
-                    refererValue = refererHeaders[savedDomain];
-                    debug(`Match found: ${domain} => ${refererValue}`);
-                    break;
+        if (Object.prototype.hasOwnProperty.call(refererHeaders, domain)) {
+            // Exact matches always take priority over wildcard rules
+            refererValue = refererHeaders[domain];
+            debug(`Exact match found: ${domain} => ${refererValue}`);
+        } else {
+            for (const savedDomain in refererHeaders) {
+                if (Object.prototype.hasOwnProperty.call(refererHeaders, savedDomain)) {
+                    debug(`Comparing "${domain}" with "${savedDomain}"`);
+                    if (domainMatchesWildcard(domain, savedDomain)) {
+                        refererValue = refererHeaders[savedDomain];
+                        debug(`Wildcard match found: ${domain} => ${refererValue}`);
+                        break;
+                    }
                 }
             }
         }

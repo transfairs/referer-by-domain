@@ -7,6 +7,7 @@
 import HelpView from './HelpView.js';
 import TabView from './TabView.js';
 import { parseHTML } from '../lib/lib.js';
+import * as logger from '../lib/logger.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   DomainManager.init();
@@ -18,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
 /**
  * Class responsible for managing domain rules in the extension options page.
  */
-class DomainManager {
+export default class DomainManager {
   static refererModes = [
     { mode: 0, label: "🚫" }, // No Referer
     { mode: 1, label: "🌍" }, // Origin
@@ -214,13 +215,4 @@ class DomainManager {
       }
     }
   }
-}
-
-// Expose for browser and testing
-if (typeof window !== 'undefined') {
-  window.DomainManager = DomainManager;
-}
-
-if (typeof module !== 'undefined') {
-  module.exports = DomainManager;
 }

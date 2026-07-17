@@ -1,9 +1,16 @@
+html, body {
+  width: 100%;
+}
+
 body {
   font-family: 'Segoe UI', Tahoma, sans-serif;
   font-size: 14px;
   padding: 12px;
   padding-top: 6px;
-  width: 270px;
+  width: 100%;
+  max-width: 340px;
+  min-width: 260px;
+  box-sizing: border-box;
   background: #f4f6f8;
   color: #222;
   overflow-x: hidden;
@@ -153,4 +160,29 @@ body {
 }
 .popup-link:hover .icon {
   text-decoration: none;
+}
+
+/* Larger touch targets on touchscreens (e.g. Firefox for Android) */
+@media (pointer: coarse) {
+  body {
+    max-width: 400px;
+    font-size: 15px;
+  }
+
+  .referer-options button {
+    padding: 14px 10px;
+  }
+
+  .related-domain-card {
+    padding: 12px 10px;
+  }
+
+  #domainInput {
+    padding: 10px 6px;
+  }
+
+  .match-info,
+  .popup-link {
+    padding: 4px 0;
+  }
 }
