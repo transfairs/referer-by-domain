@@ -1,6 +1,6 @@
 {
   "name": "customreferer",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "type": "commonjs",
   "description": "Referer By Domain: A Firefox extension to control the Referer header per domain.",
   "author": "Transfairs",

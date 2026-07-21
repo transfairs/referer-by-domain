@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Referer By Domain",
   "description": "Control the Referer header per domain. Improve privacy and compatibility with fine-grained rules.",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "author": "Transfairs",
   "homepage_url": "https://github.com/transfairs/referer-by-domain",
   "default_locale": "en",

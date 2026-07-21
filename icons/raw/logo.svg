@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
   <defs>
     <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#1B2340"/>
-      <stop offset="100%" stop-color="#0FA3A0"/>
+      <stop offset="0%" stop-color="#0A3D7A"/>
+      <stop offset="100%" stop-color="#0078D7"/>
     </linearGradient>
   </defs>
 
@@ -13,14 +13,14 @@
   <path d="M 34 94 Q 42 46 94 34" fill="none" stroke="#FFFFFF" stroke-width="15" stroke-linecap="round"/>
 
   <!-- destination domain node -->
-  <circle cx="94" cy="34" r="17" fill="#5EEAD4"/>
+  <circle cx="94" cy="34" r="17" fill="#FFFFFF"/>
 
   <!-- arrowhead -->
-  <path d="M 94 34 L 72 34 L 84 50 Z" fill="#FFFFFF"/>
+  <path d="M 94 34 L 72 34 L 84 50 Z" fill="#0A3D7A"/>
 
   <!-- origin domain node -->
-  <circle cx="34" cy="94" r="17" fill="#5EEAD4"/>
+  <circle cx="34" cy="94" r="17" fill="#FFFFFF"/>
 
   <!-- control gate crossing the path, representing per-domain control -->
-  <rect x="40" y="46" width="34" height="15" rx="7" fill="#FB923C" transform="rotate(-46 57 53)"/>
+  <rect x="40" y="46" width="34" height="15" rx="7" fill="#F44336" transform="rotate(-46 57 53)"/>
 </svg>

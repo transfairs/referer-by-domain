@@ -52,6 +52,13 @@ Alle Einstellungen werden ausschließlich lokal im Browser gespeichert.
 Es werden keine Daten übertragen, getrackt oder erfasst.
 ---
 # Release Notes
+## Version 2.0.2
+### 🇬🇧 English
+- Redesigned the extension icon to use the actual accent colour from the popup/options theme, improving contrast against the background
+
+### 🇩🇪 German
+- Add-on-Icon überarbeitet: verwendet nun die tatsächliche Akzentfarbe aus dem Popup-/Optionen-Theme und bietet besseren Kontrast zum Hintergrund
+
 ## Version 2.0.1
 ### 🇬🇧 English
 - Fixed Help tab images (GitHub/LinkedIn/YouTube icons, login example screenshots) not loading in the packaged extension
